@@ -958,23 +958,22 @@ section,
 }
 
 /*--------------------------------------------------------------
-# About Section
---------------------------------------------------------------*/
+# About Sections--------------------------*/
 .about .inner-title {
   font-size: 2.75rem;
   font-weight: 700;
-  margin: 30px 0;
+  /* margin: 30px 0; */
 }
 
 @media (min-width: 991px) {
   .about .inner-title {
     max-width: 65%;
-    margin: 0 0 80px 0;
+    margin: 0 0 10pxs 0;
   }
 }
 
 .about .our-story {
-  padding: 40px;
+  padding: 20px;
   background-color: color-mix(in srgb, var(--default-color), transparent 96%);
 }
 
