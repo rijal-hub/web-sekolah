@@ -500,8 +500,9 @@ h6 {
 
 .footer .social-links a {
   display: flex;
-  align-items: center;
+  gap: 10px;
   justify-content: center;
+  align-items: center;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -574,6 +575,7 @@ h6 {
   display: flex;
   background-color: var(--surface-color);
   transition: 0.3s;
+  
 }
 
 .footer .footer-newsletter .newsletter-form:focus-within {
@@ -1375,6 +1377,7 @@ section,
 .team .team-member .member-img {
   position: relative;
   overflow: hidden;
+  
 }
 
 .team .team-member .social {
