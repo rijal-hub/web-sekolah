@@ -175,15 +175,18 @@
         </div>
 
         <div class="col-lg-4 mx-auto footer-newsletter">
-          <h4>Umpan balik</h4>
-          <p>Silakan berikan umpan balik Anda, baik itu kritik maupun saran, untuk membantu kami menjadi lebih baik</p>
-          <form action="forms/newsletter.php" method="post" class="php-email-form">
-            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          <h4>Umpan Balik</h4>
+          <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
+          <form action="forms/feedback.php" method="post" class="php-email-form">
+              <div class="newsletter-form">
+                  <textarea name="feedback" placeholder="Tulis kritik dan saran Anda..." required></textarea>
+                  <input type="submit" value="Kirim">
+              </div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Umpan balik Anda telah dikirim. Terima kasih!</div>
           </form>
-        </div>
+      </div>
 
       </div>
     </div>
