@@ -472,7 +472,9 @@ h6 {
 
 .footer .footer-top {
   padding-top: 50px;
+  padding-left: 80px;
   border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  
 }
 
 .footer .footer-about .logo {
@@ -527,6 +529,7 @@ h6 {
 
 .footer .footer-links {
   margin-bottom: 30px;
+  padding-left: 50px;
 }
 
 .footer .footer-links ul {
@@ -552,7 +555,7 @@ h6 {
 }
 
 .footer .footer-links ul a {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  color: color-mix(in srgb, var(--default-color), transparent 25%);
   display: inline-block;
   line-height: 1;
 }
@@ -575,39 +578,43 @@ h6 {
   display: flex;
   background-color: var(--surface-color);
   transition: 0.3s;
-  
+  flex-direction: column;
 }
 
 .footer .footer-newsletter .newsletter-form:focus-within {
   border-color: var(--accent-color);
 }
 
-.footer .footer-newsletter .newsletter-form input[type=email] {
+.footer .footer-newsletter .newsletter-form textarea {
   border: 0;
-  padding: 4px;
+  padding: 8px;
   width: 100%;
+  height: 80px;
   background-color: var(--surface-color);
   color: var(--default-color);
+  resize: none;
 }
 
-.footer .footer-newsletter .newsletter-form input[type=email]:focus-visible {
+.footer .footer-newsletter .newsletter-form textarea:focus-visible {
   outline: none;
 }
 
 .footer .footer-newsletter .newsletter-form input[type=submit] {
   border: 0;
   font-size: 16px;
-  padding: 0 20px;
-  margin: -7px -8px -7px 0;
+  padding: 10px;
+  margin-top: 10px;
   background: var(--accent-color);
   color: var(--contrast-color);
   transition: 0.3s;
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .footer .footer-newsletter .newsletter-form input[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
+
 
 .footer .copyright {
   padding: 25px 0;
@@ -981,7 +988,7 @@ section,
 
 @media (min-width: 991px) {
   .about .our-story {
-    padding-right: 35%;
+    padding-right: 20%;
   }
 }
 
@@ -1046,7 +1053,7 @@ section,
   .about .about-img {
     position: absolute;
     top: 0;
-    right: 0;
+    right: 0px;
     min-height: 600px;
   }
 }
@@ -1055,11 +1062,14 @@ section,
   position: absolute;
   inset: 0;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   object-fit: cover;
-  object-position: center;
+  object-position: right;
   z-index: 1;
+  padding-left: 80px;
+  
+
 }
 
 /*--------------------------------------------------------------
@@ -1377,7 +1387,7 @@ section,
 .team .team-member .member-img {
   position: relative;
   overflow: hidden;
-  
+  height: 260px;
 }
 
 .team .team-member .social {
