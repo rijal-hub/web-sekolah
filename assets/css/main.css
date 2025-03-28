@@ -60,7 +60,11 @@
   --surface-color: #4a4c58;
   --contrast-color: #ffffff;
 }
-
+.logo-img {
+  width: auto; /* Sesuaikan ukuran logo */
+  height: auto;
+  margin-left: 0px;
+}
 /* Smooth scroll */
 :root {
   scroll-behavior: smooth;
