@@ -1050,6 +1050,14 @@ section,
     min-height: 600px;
   }
 }
+@media (min-width: 992px) {
+  .about .sekolah-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-height: 600px;
+  }
+}
 
 .about .about-img img {
   position: absolute;
