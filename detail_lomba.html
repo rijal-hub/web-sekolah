@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Pricing - Company Bootstrap Template</title>
+  <title>Services - Company Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -36,7 +36,7 @@
   ======================================================== -->
 </head>
 
-<body class="pricing-page">
+<body class="services-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center">
@@ -65,9 +65,9 @@
               </li>
             </ul>
           </li>
-          <li><a href="services.html">Services</a></li>
+          <li><a href="services.html" class="active">Services</a></li>
           <li><a href="portfolio.html">Portfolio</a></li>
-          <li><a href="pricing.html" class="active">Pricing</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
           <li><a href="blog.html">Blog</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -89,79 +89,134 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Pricing</h1>
+        <h1 class="mb-2 mb-lg-0">Services</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">Home</a></li>
-            <li class="current">Pricing</li>
+            <li class="current">Services</li>
           </ol>
         </nav>
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="pricing section">
+   
+
+    <!-- Features Section -->
+    <section id="features" class="features section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up" style="margin-bottom:-45px;" >
+        <h2>Lomba Kalimat motivasi</h2>
+        <p>Diikuti syiffa dea dari kelas 6</p>
+      </div><!-- End Section Title -->
+      
+      <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio section">
 
       <div class="container">
 
-        <div class="row gy-4">
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
-          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="100">
-            <div class="pricing-item">
-              <h3>Free Plan</h3>
-              <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              <h4><sup>$</sup>0<span> / month</span></h4>
-              <a href="#" class="cta-btn">Start a free trial</a>
-              <p class="text-center small">No credit card required</p>
-              <ul>
-                <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
-                <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
-                <li><i class="bi bi-check"></i> <span>Nulla at volutpat diam uteera</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Pharetra massa massa ultricies</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Massa ultricies mi quis hendrerit</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Voluptate id voluptas qui sed aperiam rerum</span></li>
-                <li class="na"><i class="bi bi-x"></i> <span>Iure nihil dolores recusandae odit voluptatibus</span></li>
-              </ul>
-            </div>
-          </div><!-- End Pricing Item -->
+          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+            <li data-filter="*" class="filter-active">Semua</li>
+            <li data-filter=".filter-app">Foto</li>
+            <li data-filter=".filter-product">Video</li>
+          </ul><!-- End Portfolio Filters -->
 
-          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-            <div class="pricing-item featured">
-              <img src="../assets/img/logo.png" alt="Logo Sekolah" class="img-fluid mx-auto d-block" style="max-width: 150px; margin-bottom: 20px;">
-              <h3>Visi</h3>
-              <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              <h3>Misi</h3>
-            </div>
-          </div><!-- End Pricing Item -->
-          
+          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
 
-          <div class="col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-            <div class="pricing-item">
-              <h3>Developer Plan</h3>
-              <p class="description">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              <h4><sup>$</sup>49<span> / month</span></h4>
-              <a href="#" class="cta-btn">Start a free trial</a>
-              <p class="text-center small">No credit card required</p>
-              <ul>
-                <li><i class="bi bi-check"></i> <span>Quam adipiscing vitae proin</span></li>
-                <li><i class="bi bi-check"></i> <span>Nec feugiat nisl pretium</span></li>
-                <li><i class="bi bi-check"></i> <span>Nulla at volutpat diam uteera</span></li>
-                <li><i class="bi bi-check"></i> <span>Pharetra massa massa ultricies</span></li>
-                <li><i class="bi bi-check"></i> <span>Massa ultricies mi quis hendrerit</span></li>
-                <li><i class="bi bi-check"></i> <span>Voluptate id voluptas qui sed aperiam rerum</span></li>
-                <li><i class="bi bi-check"></i> <span>Iure nihil dolores recusandae odit voluptatibus</span></li>
-              </ul>
-            </div>
-          </div><!-- End Pricing Item -->
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="..\aset\foto1.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Syiffa Dea ikut bertasipiasi dalam lomba motivasi</h4>
+                <a href="..\aset\foto1.jpg"  data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="aset\foto 2.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Kegiatan Pramuka Penggalang PERJUSA 2024</h4>
+                <a href="assets/img/masonry-portfolio/Pramuka.jpg" title="App 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="aset/foto3.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Menerima Sertifikat SEKOLAH ADIWIYATA BERPRESTASI</h4>
+                <a href="assets/img/masonry-portfolio/WhatsApp Image 2024-12-23 at 09.55.06.jpg" title="Product 1" data-gallery="portfolio-gallery-app" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="aset/foto 4.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Kepala Sekolah Menerima SK Sekolah Adiwiyata Provinsi Jawa Tengah</h4>
+                <a href="assets/img/masonry-portfolio/WhatsApp Image 2024-10-22 at 08.56.55.jpg" title="Branding 1" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+               
+              </div>
+            </div><!-- End Portfolio Item -->
+
+            <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
+              <img src="aset\foto5.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Penyerahan Bantuan Alat Tulis Kepada Peserta Didik</h4>
+                <a href="assets/img/masonry-portfolio/WhatsApp Image 2024-10-22 at 08.56.51.jpg" title="App 2" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                
+              </div>
+            </div><!-- End Portfolio Item -->
+
+  
+              <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-product">
+                <div class="portfolio-video">
+                    <!-- Gambar Thumbnail YouTube -->
+                    <img id="video-thumbnail" src="aset\Gambar WhatsApp 2025-03-27 pukul 19.07.11_8bc67f6b.jpg" 
+                         class="img-fluid" alt="Urban Farming dan Kerja Bakti" onclick="playVideo()">
+                    
+                    <!-- Iframe Video (Disembunyikan Awal) -->
+                    <iframe 
+                        id="video-iframe"
+                        width="100%" 
+                        height="200" 
+                        src="https://www.youtube.com/embed/skkmNVtF5eI?autoplay=1" 
+                        title="Urban Farming dan Kerja Bakti" 
+                        frameborder="0" 
+                        allowfullscreen 
+                        style="display: none;">
+                    </iframe>
+                </div>
+                <div class="portfolio-info">
+                    <h4>Urban Farming dan Kerja Bakti</h4>
+                    <a href="https://youtu.be/aA15NAC77Yk" title="Tonton Video" target="_blank" class="preview-link">
+                        <i class="bi bi-play-circle"></i>
+                    </a>
+                    <a href="portfolio-details.html" title="More Details" class="details-link">
+                        <i class="bi bi-link-45deg"></i>
+                    </a>
+                </div>
+  
+                    <!-- Script untuk mengganti gambar dengan video saat diklik -->
+                <script>
+                  function playVideo() {
+                      document.getElementById("video-thumbnail").style.display = "none"; // Sembunyikan gambar
+                      document.getElementById("video-iframe").style.display = "block"; // Tampilkan video
+                  }
+                </script>
+              </div><!-- End Portfolio Item -->
+  
+          </div><!-- End Portfolio Container -->
+  
+      </section><!-- /Portfolio Section -->
 
         </div>
 
       </div>
 
-    </section><!-- /Pricing Section -->
+    </section><!-- /Features Section -->
 
   </main>
-
   <footer id="footer" class="footer dark-background">
 
     <div class="container footer-top">

@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Contact - Company Bootstrap Template</title>
+  <title>Services - Company Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -36,7 +36,7 @@
   ======================================================== -->
 </head>
 
-<body class="contact-page">
+<body class="services-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center">
@@ -44,7 +44,7 @@
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">SDN Bangetayu Wetan 02</h1>
+        <h1 class="sitename">Company</h1><span>.</span>
       </a>
 
       <nav id="navmenu" class="navmenu">
@@ -58,9 +58,9 @@
               <li><a href="testimonials.html">Prestasi sekolah</a></li>
             </ul>
           </li>
-          <li><a href="services.html">Lomba</a></li>
+          <li><a href="lomba.html" class="active">Lomba</a></li>
           <li><a href="portfolio.html">Warta sekolah</a></li>
-          <li><a href="contact.html" class="active">Kontak</a></li>
+          <li><a href="contact.html">Kontak</a></li>
           <li><a href="contact.html">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -74,91 +74,120 @@
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">KONTAK</h1>
+        <h1 class="mb-2 mb-lg-0">Lomba-Lomba</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">BERANDA</a></li>
-            <li class="current">KONTAK</li>
+            <li class="current">LOMBA</li>
           </ol>
         </nav>
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
+   
 
-      <div class="mb-5">
-        <iframe style="width: 100%; height: 400px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1980.1144752355945!2d110.485692!3d-6.982287!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708d2561b465cf%3A0x6f662c788b510805!2sSD%20Negeri%20Bangetayu%20Wetan%2002!5e0!3m2!1sid!2sid!4v1742620235937!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allowfullscreen=""></iframe>
-      </div><!-- End Google Maps -->
+    <!-- Features Section -->
+    <section id="features" class="features section">
 
-      <div class="container" data-aos="fade">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Lomba Lomba</h2>
+        <p>Daftar Lomba yang diikuti sekolah kami</p>
+      </div><!-- End Section Title -->
 
-        <div class="row gy-5 gx-lg-5">
+      <div class="container">
 
-          <div class="col-lg-4">
+        <div class="row gy-4">
 
-            <div class="info">
-              <h3>Kontak Kami:</h3>
-              <p>Silahkan tinggalkan pesan Anda pada kolom yang tersedia</p>
-
-              <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>Jl. Sedayu Sawo I RT 01 / RW 07, Bangetayu Wetan, Kec. Genuk, Kota Semarang Prov. Jawa Tengah </p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h4>Email:</h4>
-                  <p>sdnbangetayuwetan34@yahoo.com</p>
-                </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Call:</h4>
-                  <p>024-76451362</p>
-                </div>
-              </div><!-- End Info Item -->
-
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item">
+              <i class="bi bi-mortarboard" style="color: #ffbb2c;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Membuat kalimat motivasi putri</a></h3>
             </div>
+          </div><!-- End Feature Item -->
 
-          </div>
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="features-item">
+              <i class="bi bi-infinity" style="color: #5578ff;"></i>
+              <h3><a href="" class="stretched-link">Dolor Sitema</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
 
-          <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
-                </div>
-                <div class="col-md-6 form-group mt-3 mt-md-0">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
-                </div>
-              </div>
-              <div class="form-group mt-3">
-                <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required="">
-              </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" placeholder="Message" required=""></textarea>
-              </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
-              </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
-          </div><!-- End Contact Form -->
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="features-item">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="" class="stretched-link">Sed perspiciatis</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="features-item">
+              <i class="bi bi-nut" style="color: #e361ff;"></i>
+              <h3><a href="" class="stretched-link">Magni Dolores</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="500">
+            <div class="features-item">
+              <i class="bi bi-shuffle" style="color: #47aeff;"></i>
+              <h3><a href="" class="stretched-link">Nemo Enim</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="600">
+            <div class="features-item">
+              <i class="bi bi-star" style="color: #ffa76e;"></i>
+              <h3><a href="" class="stretched-link">Eiusmod Tempor</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="700">
+            <div class="features-item">
+              <i class="bi bi-x-diamond" style="color: #11dbcf;"></i>
+              <h3><a href="" class="stretched-link">Midela Teren</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="800">
+            <div class="features-item">
+              <i class="bi bi-camera-video" style="color: #4233ff;"></i>
+              <h3><a href="" class="stretched-link">Pira Neve</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="900">
+            <div class="features-item">
+              <i class="bi bi-command" style="color: #b2904f;"></i>
+              <h3><a href="" class="stretched-link">Dirada Pack</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="1000">
+            <div class="features-item">
+              <i class="bi bi-dribbble" style="color: #b20969;"></i>
+              <h3><a href="" class="stretched-link">Moton Ideal</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="1100">
+            <div class="features-item">
+              <i class="bi bi-activity" style="color: #ff5828;"></i>
+              <h3><a href="" class="stretched-link">Verdo Park</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+
+          <div class="col-lg-3 col-md-4" data-aos="fade-up" data-aos-delay="1200">
+            <div class="features-item">
+              <i class="bi bi-brightness-high" style="color: #29cc61;"></i>
+              <h3><a href="" class="stretched-link">Flavor Nivelanda</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
 
         </div>
 
       </div>
 
-    </section><!-- /Contact Section -->
+    </section><!-- /Features Section -->
 
   </main>
 
