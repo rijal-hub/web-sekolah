@@ -768,6 +768,8 @@ section,
   }
 }
 
+
+
 /*--------------------------------------------------------------
 # Global Section Titles
 --------------------------------------------------------------*/
@@ -990,7 +992,7 @@ section,
 
 .about .our-story {
   padding: 20px;
-  background-color: color-mix(in srgb, var(--default-color), transparent 96%);
+  background-color: color-mix(in srgb, var(--default-color), transparent 90%);
 }
 
 @media (min-width: 991px) {
@@ -1055,7 +1057,6 @@ section,
   min-height: 400px;
   position: relative;
 }
-
 @media (min-width: 992px) {
   .about .about-img {
     position: absolute;
