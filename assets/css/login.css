@@ -1,0 +1,100 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+body {
+  background: url("../img/masonry-portfolio/WhatsApp Image 2023-08-01 at 09.08.57.jpg") no-repeat center center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+body::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.3); /* Warna putih transparan */
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.login-box {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.67);
+  -webkit-box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.67);
+  -moz-box-shadow: 0px 1px 10px 0px rgba(0, 0, 0, 0.67);
+  border-radius: 20px;
+  text-align: center;
+  max-width: 100%;
+  width: 35%;
+}
+.login-image {
+  width: 100%;
+  height: 280px;
+  border-radius: 20px 20px 0 0;
+}
+.login-form {
+  padding: 20px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+h2 {
+  margin-bottom: 10px;
+  font-size: medium;
+  font-weight: 150px;
+}
+.options a {
+  color: black;
+  font-size: small;
+  text-decoration: none;
+}
+.input-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 100%;
+  width: 70%;
+  margin: auto;
+}
+input {
+  background-color: rgb(217, 213, 213);
+  border: none;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+.options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 15px;
+  width: 65%;
+  margin: auto;
+  font-size: small;
+}
+.login-button {
+  width: fit-content;
+  padding: 9px 25px 9px 25px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: auto;
+}
+.login-button:hover {
+  background-color: darkred;
+}
