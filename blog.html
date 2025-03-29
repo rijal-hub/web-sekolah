@@ -43,11 +43,8 @@
     <div class="container position-relative d-flex ">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        
 
-    <img src="aset/logo sd.png" alt="Logo SD" class="logo-img">
+      <img src="aset/logo sd.png" alt="Logo SD" class="logo-img">
         <h1 class="sitename">SDN BANGETAYU WETAN 02</h1>
       </a>
       <nav id="navmenu" class="navmenu">
@@ -63,9 +60,14 @@
           </li>
           <li><a href="lomba.html">Lomba</a></li>
           <li><a href="portfolio.html">Warta sekolah</a></li>
-          <li><a href="pricing.html">Website terkait</a></li>
+          <li class="dropdown"><a href="pricing.html"><span>Website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i> </a>
+            <ul>
+              <li><a href= >Pendaftaran siswa</a></li>
+              <li><a href= > Sang Juara</a></li>
+            </ul>
+          </li>
           <li><a href="contact.html">Kontak</a></li>
-          <li><a href="contact.html" class="login-box">Login</a></li>
+          <li><a href="login.html" class="login-box">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -331,53 +333,44 @@
   </main>
 
   <footer id="footer" class="footer dark-background">
-
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">SDN BANGETAYU WETAN 02</span>
-          </a>
-          <div class="footer-contact pt-3">
+            <h4>Alamat</h4>
             <p>Jl. Sedayu Sawo Raya No.1, Bangetayu Wetan, Kec. Genuk, Kota Semarang, Jawa Tengah 50115</p>
-            <p>Kota Semarang</p>
             <p class="mt-3"><strong> Nomor telp:</strong> <span>(024) 76451362</span></p>
             <p><strong>Email:</strong> <span>sdnbangetayuwetan34@yahoo.co.id</span></p>
-          </div>
+         
+        </div>
+    
+        <div class="col-lg-3 col-md-6  align-items-center footer-links">
+          <h4>Tautan</h4>
+          <ul>
+            <li><a href="https://www.kemdikbud.go.id/"> Kemendikbud</a></li>
+            <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
+          </ul>
           <div class="social-links d-flex mt-4">
             <a href="https://www.facebook.com/share/1NbvshQNt8/"><i class="bi bi-facebook"></i></a>
             <a href="https://www.instagram.com/sdnbangetayuwetan02"><i class="bi bi-instagram"></i></a>
             <a href="https://www.youtube.com/@sdnegeribangetayuwetan0259"><i class="bi bi-youtube"></i></a>
           </div>
         </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Tautan</h4>
-          <ul>
-            <li><a href="https://www.kemdikbud.go.id/"> Kemendikbud</a></li>
-            <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-4 mx-auto footer-newsletter">
+    
+        <div class="col-lg-4 col-md-6 footer-about">
           <h4>Umpan Balik</h4>
           <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
-          <form action="forms/feedback.php" method="post" class="php-email-form">
-              <div class="newsletter-form">
-                  <textarea name="feedback" placeholder="Tulis kritik dan saran Anda..." required></textarea>
-                  <input type="submit" value="Kirim">
-              </div>
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Umpan balik Anda telah dikirim. Terima kasih!</div>
-          </form>
+          <br>
+          <a href="contact.html" class="btn btn-dark">Berikan Umpan Balik</a>
+
+        </div>
       </div>
+    </div>    
 
       </div>
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p> <span></span> <strong class="px-1 sitename"></strong> <span> &copy; 2025 SDN Bangetayu Wetan 02. Seluruh hak cipta dilindungi.</span></p>
+      <p> <span></span> <strong class="px-1 sitename"></strong> <span> &copy; 2025 SDN Bangetayu Wetan 02</span></p>
       <div class="credits">
         <!-- All the links in the footer should remain intact. -->
         <!-- You can delete the links only if you've purchased the pro version. -->
