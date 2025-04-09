@@ -1,3 +1,26 @@
+<?php
+// Include file db_connect.php untuk koneksi ke database
+include 'config/db_connect.php';
+
+// ID tetap 1
+$id = 2;
+
+// Query untuk mengambil data beranda berdasarkan id = 1
+$query = "SELECT * FROM profil_karyawan WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $profil_karyawan = $result->fetch_assoc();
+} else {
+    echo "Data beranda tidak ditemukan.";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,7 +122,7 @@
           <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="team-member">
               <div class="member-img">
-                <img src="assets\img\Ummi-Fitrotun1.jpg" class="img-fluid" alt="">
+              <img src="admin/profil_karyawan/uploads/<?php echo htmlspecialchars($profil_karyawan['NISA']); ?>" alt="Foto Kepala Sekolah" width="200" class="img-fluid">
                 <div class="social">
                   <a href=""><i class="bi bi-twitter-x"></i></a>
                   <a href=""><i class="bi bi-facebook"></i></a>
@@ -108,44 +131,9 @@
                 </div>
               </div>
               <div class="member-info">
-                <h4>Ummi Fitrotun Nisa, S.E</h4>
-                <span>Penjaga Sekolah</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
+              <h4><?php echo htmlspecialchars($profil_karyawan['nama']); ?></h4>
+<span><?php echo htmlspecialchars($profil_karyawan['jabatan']); ?></span>
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets\img\Arif-Kurniawan.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Arif Kurniawan</h4>
-                <span>Penjaga Sekolah</span>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets\img\Fitriyani.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Fitriyani Puji Rahayu, S.Pd</h4>
-                <span>Admin Sekolah</span>
               </div>
             </div>
           </div><!-- End Team Member -->
