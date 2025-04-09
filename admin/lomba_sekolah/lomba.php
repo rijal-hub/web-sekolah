@@ -233,7 +233,8 @@ if ($result === false) {
                                             echo "<td>{$lomba['deskripsi']}</td>";
                                             echo "<td>
                                                     <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_lomba.php?id={$lomba['id']}' class='btn btn-danger d-flex'>Hapus</a>
+                                                    <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+
                                                 </td>";
                                             echo "</tr>";
                                             $no++;
