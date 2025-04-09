@@ -1,7 +1,24 @@
 <?php
 // Include file db_connect.php untuk koneksi ke database
-include 'admin/lomba_sekolah/db_connect.php';
+include 'config/db_connect.php';
 
+// ID tetap 1
+$id = 1;
+
+// Query untuk mengambil data beranda berdasarkan id = 1
+$query = "SELECT * FROM profil_sekolah WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $profil_sekolah = $result->fetch_assoc();
+} else {
+    echo "Data beranda tidak ditemukan.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -101,24 +118,20 @@ include 'admin/lomba_sekolah/db_connect.php';
 
   <div class="container">
     <div class="row position-relative ">
-      <div class="col-lg-6 about-img   object-fit: cover;" data-aos="zoom-out" data-aos-delay="100"><img src="assets/img/sdn bangetayu wetan 02.jpg"></div>
+      <div class="col-lg-6 about-img   object-fit: cover;" data-aos="zoom-out" data-aos-delay="100"><img src="admin/profil_sekolah/uploads/<?php echo $profil_sekolah['foto_sekolah']; ?>" alt="Foto Kepala Sekolah" width="200"></div>
       <br><div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
         <br>
         <div class="our-story">
           <h4>Profil SDN Bangetayu Wetan 02</h4>
+        
           <h3>VISI SEKOLAH</h3>
-          <p> Terwujudnya sekolah yang berbudi pekerti luhur, unggul dalam prestasi, berkarakter, peduli terhadap sesama dan lingkungan.</p>
-      <br>
-      <h3>MISI SEKOLAH</h3>
-          <p> Misi dari sekolah kami antara lain: <br>1. Mengembangkan sikap santun, berperilaku religius di lingkungan dalam dan luar sekolah.
-          <br>2. Mengembangkan budaya literasi, kerja keras, kreatif, dan mandiri.
-          <br>3. Mengembangkan budaya nasionalis, gotong royong, dan integritas.
-          <br>4. Menciptakan suasana pembelajaran yang menantang, menyenangkan, komunikatif, tanpa takut salah, dan demokratis.
-          <br>5. Mencegah kerusakan lingkungan
-          <br>6. Menghindari pencemaran lingkungan
-          <br>7. Melestarikan lingkungan
-          <br>8. Memanfaatkan waktu belajar, sumber belajar, sumber daya fisik dan manusia agar memberikan hasil yang terbaik bagi perkembangan peserta didik
-          </p>            
+<p><?php echo nl2br(htmlspecialchars($profil_sekolah['visi'])); ?></p>
+
+<h3>MISI SEKOLAH</h3>
+<p><?php echo nl2br(htmlspecialchars($profil_sekolah['misi'])); ?></p>
+
+  
+        
       </div>
 
     </div>
