@@ -1,3 +1,9 @@
+<?php
+// Include file db_connect.php untuk koneksi ke database
+include 'admin/lomba_sekolah/db_connect.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
