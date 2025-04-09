@@ -245,7 +245,8 @@ if ($result === false) {
                                             echo "<td>{$karyawan['jabatan']}</td>";
                                             echo "<td>
                                                     <a href='edit_karyawan.php?id={$karyawan['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_karyawan.php?id={$karyawan['id']}' class='btn btn-danger d-flex'>Hapus</a>
+                                                    <a href='#' data-id='{$karyawan['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+
                                                 </td>";
                                             echo "</tr>";
                                             $no++;
