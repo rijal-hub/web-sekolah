@@ -1,3 +1,20 @@
+<?php
+// Include file db_connect.php untuk koneksi ke database
+include 'admin/lomba_sekolah/db_connect.php';
+
+// Query untuk mengambil data dari tabel lomba_sekolah
+$query = mysqli_query($conn, "SELECT * FROM beranda LIMIT 1");
+
+if ($query && mysqli_num_rows($query) > 0) {
+    $data = mysqli_fetch_assoc($query);
+} else {
+    $data = [
+        'foto_kepsek' => 'default.jpg',
+        'Nama_Kepsek' => 'Nama Kepala Sekolah',
+        'sambutan' => 'Belum ada sambutan.'
+    ];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -105,31 +122,30 @@
 
     <!-- About Section -->
     <section id="about" class="about section">
+  <div class="container">
+    <div class="row position-relative">
 
-      <div class="container">
-
-        <div class="row position-relative">
-
-          <div class="col-lg-7 about-img" data-aos="zoom-out" data-aos-delay="200"><img src="assets/img/kepala-sekolah.jpg"></div>
-
-          <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
-            <h2 class="inner-title">Sambutan Kepala Sekolah</h2>
-            <div class="our-story">
-              <h5>Kepala SDN Bangetayu Wetan 02</h5>
-              <h3>Samadi, S.Ag., S.Pd.</h3>
-              <p>Assalamualaikum Wr.Wb</p>
-              <p>Puji syukur kami panjatkan ke hadirat Allah SWT, Tuhan Yang Maha Esa, atas rahmat dan hidayah-Nya sehingga website SD Negeri Bangetayu Wetan 02 Semarang dapat diterbitkan. Kehadiran website ini bertujuan untuk memenuhi kebutuhan informasi dengan memanfaatkan perkembangan teknologi yang ada. Kami menyadari bahwa dalam memajukan pendidikan di era digital yang berkembang pesat, diperlukan sarana dan prasarana yang kondusif serta akses informasi yang mudah bagi siswa, guru, orang tua, maupun masyarakat luas.</p>
-              <p>Dengan adanya website ini, kami berharap dapat memberikan manfaat yang sebesar-besarnya, terutama dalam menyajikan informasi seputar pendidikan, ilmu pengetahuan, serta berbagai kegiatan yang berlangsung di SD Negeri Bangetayu Wetan 02 Semarang. Besar harapan kami bahwa website ini dapat menjadi sarana yang bermanfaat bagi seluruh pihak yang berkecimpung dalam dunia pendidikan, khususnya bagi komunitas sekolah kami.</p>
-              <p>Akhirnya, kami sangat mengharapkan masukan serta saran dari berbagai pihak agar website ini dapat terus berkembang dan memberikan informasi yang lebih baik dari waktu ke waktu. Dengan pembaruan yang berkelanjutan, kami yakin website ini dapat menjadi media yang informatif dan bermanfaat bagi semua. Terima kasih atas dukungan dan kerja sama yang telah diberikan. Mari bersama-sama terus maju demi kemajuan SD Negeri Bangetayu Wetan 02 Semarang.</p>
-              <p>Wassalmualaikum Wr.Wb</p>
-            </div>
-          </div>
-
-        </div>
-
+      <div class="col-lg-5 about-img" data-aos="zoom-out" data-aos-delay="200">
+      <img src="admin/uploads/<?php echo $data['foto_kepsek']; ?>" alt="Foto Kepala Sekolah" class="img-fluid rounded">
       </div>
 
-    </section><!-- /About Section -->
+      <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
+        <h2 class="inner-title">Sambutan Kepala Sekolah</h2>
+        <div class="our-story">
+          <h5>Kepala Sekolah SDN 02 Bangetayu Wetan</h5>
+          <h3><?php echo $data['Nama_Kepsek']; ?></h3>
+          <?php
+            $paragraf = explode("\n", $data['sambutan']);
+            foreach ($paragraf as $p) {
+              echo "<p>" . nl2br(trim($p)) . "</p>";
+            }
+          ?>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
     <!-- Services Section -->
 
