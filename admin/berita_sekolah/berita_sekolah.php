@@ -233,7 +233,7 @@ if ($result === false) {
                                             echo "<td><img src='uploads/{$berita['media']}' alt='Media Berita' width='100'></td>";
                                                                                         echo "<td>
                                                     <a href='edit_berita.php?id={$berita['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_berita.php?id={$berita['id']}' class='btn btn-danger d-flex'>Hapus</a>
+                                                    <a href='hapus_berita.php?id={$berita['id']}' class='btn btn-danger d-flex justify-content-center'>Hapus</a>
                                                 </td>";
                                             echo "</tr>";
                                             $no++;

@@ -319,7 +319,19 @@ if ($result === false) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+    <script>
+    // Menangani event klik pada tombol submit
+    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
+        event.preventDefault(); // Menghentikan pengiriman form untuk menampilkan modal
+        $('#confirmModal').modal('show'); // Menampilkan modal konfirmasi
+    });
 
+    // Menangani klik pada tombol "Ya, Simpan" pada modal
+    document.getElementById('confirmSubmit').addEventListener('click', function() {
+        // Kirim form setelah konfirmasi
+        document.querySelector('form').submit();
+    });
+</script>
 </body>
 <?php
 // Menutup koneksi database
