@@ -321,19 +321,25 @@ if ($result === false) {
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
     <script>
-        // Menangani event klik pada tombol submit
-        document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
-            event.preventDefault(); // Menghentikan pengiriman form untuk menampilkan modal
-            $('#confirmModal').modal('show'); // Menampilkan modal konfirmasi
+    // Menangani event klik pada tombol Hapus
+    document.querySelectorAll('.btn-hapus').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default (mengarah ke halaman hapus.php langsung)
+            
+            // Ambil ID sarana prasarana yang akan dihapus
+            var id = this.getAttribute('data-id');
+            
+            // Set link href pada tombol konfirmasi modal
+            var url = "hapus_sarana.php?id=" + id;
+            document.getElementById('confirmHapusBtn').setAttribute('href', url);
+            
+            // Tampilkan modal konfirmasi
+            $('#hapusModal').modal('show');
         });
+    });
 
-        // Menangani klik pada tombol "Ya, Simpan" pada modal
-        document.getElementById('confirmSubmit').addEventListener('click', function() {
-            // Kirim form setelah konfirmasi
-            document.querySelector('form').submit();
-        });
     </script>
-</body>
+    </body>
 <?php
 // Menutup koneksi database
 $conn->close();

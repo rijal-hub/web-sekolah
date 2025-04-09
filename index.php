@@ -1,20 +1,26 @@
 <?php
 // Include file db_connect.php untuk koneksi ke database
-include 'admin/lomba_sekolah/db_connect.php';
+include 'config/db_connect.php';
 
-// Query untuk mengambil data dari tabel lomba_sekolah
-$query = mysqli_query($conn, "SELECT * FROM beranda LIMIT 1");
+// ID tetap 1
+$id = 1;
 
-if ($query && mysqli_num_rows($query) > 0) {
-    $data = mysqli_fetch_assoc($query);
+// Query untuk mengambil data beranda berdasarkan id = 1
+$query = "SELECT * FROM beranda WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $beranda = $result->fetch_assoc();
 } else {
-    $data = [
-        'foto_kepsek' => 'default.jpg',
-        'Nama_Kepsek' => 'Nama Kepala Sekolah',
-        'sambutan' => 'Belum ada sambutan.'
-    ];
+    echo "Data beranda tidak ditemukan.";
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,15 +103,16 @@ if ($query && mysqli_num_rows($query) > 0) {
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
       <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-        <div class="carousel-item active">
-          <img src="assets/img/hero-carousel/plang sekolah.jpg" alt="">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/img/hero-carousel/pelantikan-pres1.jpg" alt="">
-        </div>
-        <div class="carousel-item">
-          <img src="assets/img/hero-carousel/pelantikan-walkot.jpg" alt="">
-        </div>
+      <div class="carousel-item active">
+          <img src="admin/beranda/uploads/<?php echo $beranda['foto_sekolah']; ?>" alt="Foto Sekolah">
+      </div>
+      <div class="carousel-item">
+          <img src="admin/beranda/uploads/<?php echo $beranda['foto_walikota']; ?>" alt="Foto Walikota">
+      </div>
+      <div class="carousel-item">
+          <img src="admin/beranda/uploads/<?php echo $beranda['foto_presiden']; ?>" alt="Foto Presiden">
+      </div>
+
         <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
           <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
         </a>
@@ -125,17 +132,17 @@ if ($query && mysqli_num_rows($query) > 0) {
   <div class="container">
     <div class="row position-relative">
 
-      <div class="col-lg-5 about-img" data-aos="zoom-out" data-aos-delay="200">
-      <img src="admin/uploads/<?php echo $data['foto_kepsek']; ?>" alt="Foto Kepala Sekolah" class="img-fluid rounded">
-      </div>
+    <div class="col-lg-7 about-img" data-aos="zoom-out" data-aos-delay="200">
+    <img src="admin/beranda/uploads/<?php echo $beranda['foto_kepsek']; ?>" alt="Foto Kepala Sekolah" width="200">
+</div>
 
       <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
         <h2 class="inner-title">Sambutan Kepala Sekolah</h2>
         <div class="our-story">
           <h5>Kepala Sekolah SDN 02 Bangetayu Wetan</h5>
-          <h3><?php echo $data['Nama_Kepsek']; ?></h3>
+          <h3><?php echo $beranda['Nama_Kepsek']; ?></h3>
           <?php
-            $paragraf = explode("\n", $data['sambutan']);
+            $paragraf = explode("\n", $beranda['sambutan']);
             foreach ($paragraf as $p) {
               echo "<p>" . nl2br(trim($p)) . "</p>";
             }

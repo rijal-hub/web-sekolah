@@ -266,7 +266,26 @@ if ($result === false) {
                 </div>
 
                 <!-- /.container-fluid -->
-
+                 <!-- Modal Konfirmasi Hapus -->
+            <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hapusModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apakah Anda yakin ingin menghapus sarana prasarana ini?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <a id="confirmHapusBtn" href="#" class="btn btn-danger">Hapus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
 
             <!-- Modal Konfirmasi Hapus -->
@@ -334,35 +353,25 @@ if ($result === false) {
     </div>
     
     <script>
-        var myModal = new bootstrap.Modal(document.getElementById('deleteModal'), {
-        keyboard: true
-    });
-
-    // Variabel untuk menyimpan ID yang akan dihapus
-    var deleteId = null;
-
-    // Menampilkan modal dan menyetel ID prestasi yang akan dihapus
-    function showDeleteModal(id) {
-        // Menyimpan ID yang akan dihapus
-        deleteId = id;
-
-        // Menetapkan URL pada tombol konfirmasi untuk mengarah ke hapus_prestasi.php dengan ID yang tepat
-        document.getElementById('confirmDeleteBtn').href = 'hapus_prestasi.php?id=' + deleteId;
-
-        // Menampilkan modal
-        myModal.show();
-    }
-
-    // Optional: Menangani close modal secara manual
-    document.querySelector('.btn-close').addEventListener('click', function () {
-        myModal.hide();
-    });
-
-    document.querySelector('.btn-secondary').addEventListener('click', function () {
-        myModal.hide();
+    // Menangani event klik pada tombol Hapus
+    document.querySelectorAll('.btn-hapus').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default (mengarah ke halaman hapus.php langsung)
+            
+            // Ambil ID sarana prasarana yang akan dihapus
+            var id = this.getAttribute('data-id');
+            
+            // Set link href pada tombol konfirmasi modal
+            var url = "hapus_sarana.php?id=" + id;
+            document.getElementById('confirmHapusBtn').setAttribute('href', url);
+            
+            // Tampilkan modal konfirmasi
+            $('#hapusModal').modal('show');
+        });
     });
 
     </script>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>

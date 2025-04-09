@@ -263,7 +263,26 @@ if ($result === false) {
                 </div>
 
                 <!-- /.container-fluid -->
-
+                 <!-- Modal Konfirmasi Hapus -->
+            <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hapusModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apakah Anda yakin ingin menghapus sarana prasarana ini?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <a id="confirmHapusBtn" href="#" class="btn btn-danger">Hapus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <!-- End of Main Content -->
 
@@ -325,18 +344,24 @@ if ($result === false) {
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
     <script>
-    // Menangani event klik pada tombol submit
-    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
-        event.preventDefault(); // Menghentikan pengiriman form untuk menampilkan modal
-        $('#confirmModal').modal('show'); // Menampilkan modal konfirmasi
+    // Menangani event klik pada tombol Hapus
+    document.querySelectorAll('.btn-hapus').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default (mengarah ke halaman hapus.php langsung)
+            
+            // Ambil ID sarana prasarana yang akan dihapus
+            var id = this.getAttribute('data-id');
+            
+            // Set link href pada tombol konfirmasi modal
+            var url = "hapus_sarana.php?id=" + id;
+            document.getElementById('confirmHapusBtn').setAttribute('href', url);
+            
+            // Tampilkan modal konfirmasi
+            $('#hapusModal').modal('show');
+        });
     });
 
-    // Menangani klik pada tombol "Ya, Simpan" pada modal
-    document.getElementById('confirmSubmit').addEventListener('click', function() {
-        // Kirim form setelah konfirmasi
-        document.querySelector('form').submit();
-    });
-</script>
+    </script>
 </body>
 <?php
 // Menutup koneksi database

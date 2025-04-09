@@ -233,7 +233,8 @@ if ($result === false) {
                                             echo "<td>{$lomba['deskripsi']}</td>";
                                             echo "<td>
                                                     <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_lomba.php?id={$lomba['id']}' class='btn btn-danger d-flex'>Hapus</a>
+                                                    <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+
                                                 </td>";
                                             echo "</tr>";
                                             $no++;
@@ -249,7 +250,26 @@ if ($result === false) {
                 </div>
 
                 <!-- /.container-fluid -->
-
+                <!-- Modal Konfirmasi Hapus -->
+            <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hapusModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apakah Anda yakin ingin menghapus sarana prasarana ini?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <a id="confirmHapusBtn" href="#" class="btn btn-danger">Hapus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <!-- End of Main Content -->
 
@@ -329,6 +349,7 @@ if ($result === false) {
     });
 
     </script>
+
 </body>
 <?php
 // Menutup koneksi database

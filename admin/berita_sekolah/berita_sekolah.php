@@ -273,7 +273,26 @@ if ($result === false) {
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
+<!-- Modal Konfirmasi Hapus -->
+<div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="hapusModalLabel">Konfirmasi Hapus</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Apakah Anda yakin ingin menghapus sarana prasarana ini?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <a id="confirmHapusBtn" href="#" class="btn btn-danger">Hapus</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
     <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -310,7 +329,29 @@ if ($result === false) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
+    <script>
+    // Menangani event klik pada tombol Hapus
+    document.querySelectorAll('.btn-hapus').forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            event.preventDefault(); // Mencegah aksi default (mengarah ke halaman hapus.php langsung)
+            
+            // Ambil ID sarana prasarana yang akan dihapus
+            var id = this.getAttribute('data-id');
+            
+            // Set link href pada tombol konfirmasi modal
+            var url = "hapus_sarana.php?id=" + id;
+            document.getElementById('confirmHapusBtn').setAttribute('href', url);
+            
+            // Tampilkan modal konfirmasi
+            $('#hapusModal').modal('show');
+        });
+    });
 
+    </script>
+    <script>$(document).ready(function() {
+    $('#dataTable').DataTable(); // Inisialisasi DataTables pada tabel dengan ID dataTable
+});
+</script>
 </body>
 <?php
 // Menutup koneksi database
