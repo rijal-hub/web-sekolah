@@ -329,6 +329,7 @@ if ($result === false) {
     });
 
     </script>
+
 </body>
 <?php
 // Menutup koneksi database

@@ -471,10 +471,7 @@ if ($result === false) {
     });
 
     </script>
-    <script>$(document).ready(function() {
-    $('#dataTable').DataTable(); // Inisialisasi DataTables pada tabel dengan ID dataTable
-});
-</script>
+    
 </body>
 
 <?php
