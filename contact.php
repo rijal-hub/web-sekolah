@@ -1,3 +1,41 @@
+<?php
+// Include file db_connect.php untuk koneksi ke database
+// Include file db_connect.php untuk koneksi ke database
+include 'config/db_connect.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Cek apakah data sudah terkirim
+    echo '<pre>';
+    print_r($_POST); // Ini akan menampilkan data yang terkirim dari form
+    echo '</pre>';
+
+    // Mengambil data dari formulir
+    $nama = $_POST['nama'];
+    $no_kontak = $_POST['no_kontak'];
+    $email = $_POST['email'];
+    $deskripsi = $_POST['deskripsi'];
+    $tanggal = date('Y-m-d'); // Mengambil tanggal hari ini
+
+    // Tampilkan data yang diterima untuk debug
+    echo $nama . "<br>" . $no_kontak . "<br>" . $email . "<br>" . $deskripsi;
+
+    // Prepared statement untuk menghindari SQL Injection
+    $stmt = $conn->prepare("INSERT INTO pengaduan (nama, deskripsi, email, no_kontak, tanggal) 
+                            VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $nama, $deskripsi, $email, $no_kontak, $tanggal);
+
+    if ($stmt->execute()) {
+        echo "Pengaduan Anda telah terkirim dan berhasil disimpan!";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Menutup statement dan koneksi ke database
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,30 +173,28 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="form-group mt-3">
-                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Masukkan Nama Anda" required="">
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan No.Telepon Anda" required="">
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email Anda" required="">
-                </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" placeholder="Tuliskan kritik, saran, atau pengaduan yang ingin ANda sampaikan" required=""></textarea>
-              </div>
-            </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Pesan Anda sudah terkirim. Terima kasih!</div>
-              </div>
-              <div class="text-center"><button type="submit">Kirim Umpan Balik</button></div>
-            </form>
-          </div><!-- End Contact Form -->
+          <form action="contact.php" method="POST" role="form" class="php-email-form">
+  <div class="row">
+    <div class="form-group mt-3">
+      <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Anda" required="">
+    </div>
+    <div class="col-md-6 form-group">
+      <input type="text" name="no_kontak" class="form-control" id="no_kontak" placeholder="Masukkan No.Telepon Anda" required="">
+    </div>
+    <div class="col-md-6 form-group">
+      <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email Anda" required="">
+    </div>
+    <div class="form-group mt-3">
+      <textarea class="form-control" name="deskripsi" placeholder="Tuliskan pengaduan Anda" required=""></textarea>
+    </div>
+  </div>
+  <div class="text-center"><button type="submit">Kirim Pengaduan</button></div>
+</form>
 
+
+
+
+            </div>
         </div>
 
       </div>
