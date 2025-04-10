@@ -161,7 +161,7 @@ $result = $conn->query($query);
               <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
                   <div class="service-item item-teal position-relative">
                       <!-- Menampilkan gambar -->
-                      <img src="assets/img/<?php echo $row['foto']; ?>" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
+                      <img src="admin/profil_sekolah/uploads/<?php echo $row['foto']; ?>" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
                       <!-- Menampilkan nama -->
                       <h3 class="text-center"><?php echo $row['nama']; ?></h3>
                       <!-- Menampilkan deskripsi -->

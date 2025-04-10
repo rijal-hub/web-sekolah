@@ -1,16 +1,18 @@
 <?php
 // Include file db_connect.php untuk koneksi ke database
+// Include file db_connect.php untuk koneksi ke database
 include 'config/db_connect.php';
 
 // Query untuk mengambil semua data dari tabel profil_guru
-$query = "SELECT * FROM profil_karyawan";
+$query = "SELECT * FROM profil_guru";
 $result = $conn->query($query);
 
 // Cek apakah data ditemukan
 if (!$result || $result->num_rows === 0) {
-    echo "Tidak ada data karyawan yang ditemukan.";
+    echo "Tidak ada data guru yang ditemukan.";
     exit;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -75,11 +77,10 @@ if (!$result || $result->num_rows === 0) {
           </li>
           <li><a href="lomba.html">Lomba</a></li>
           <li><a href="portfolio.html">Warta sekolah</a></li>
-          <li class="dropdown"><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><span>Website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i> </a>
             <ul>
               <li><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/" >Pendaftaran siswa</a></li>
               <li><a href="https://sangjuara.semarangkota.go.id/kejuaraan_siswa?tingkat=&sekolah=309&q="> Sang Juara</a></li>
-              
             </ul>
           </li>
           <li><a href="contact.html">Kontak</a></li>
@@ -95,10 +96,11 @@ if (!$result || $result->num_rows === 0) {
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Daftar Karyawan</h1>
+        <h1 class="mb-2 mb-lg-0">Daftar Guru</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">BERANDA</a></li>
+            <li class="current">Daftar Guru</li>
           </ol>
         </nav>
       </div>
@@ -115,24 +117,26 @@ if (!$result || $result->num_rows === 0) {
   if ($result->num_rows > 0) {
       while ($row = $result->fetch_assoc()) {
   ?>
-   <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-  <div class="team-member">
-    <div class="member-img" 
-         style="background-image: url('admin/profil_karyawan/uploads/<?php echo htmlspecialchars($row['foto']); ?>'); 
-                background-size: cover; 
-                background-position: center; 
-                width: 100%; 
-                height: 250px; 
-                margin-bottom: 20px;">
-      <!-- No need for <img> tag here -->
-    </div>
-    <div class="member-info">
-      <h4><?php echo htmlspecialchars($row['nama']); ?></h4>
-      <span><?php echo htmlspecialchars($row['jabatan']); ?></span>
-    </div>
-  </div>
-</div><!-- End Team Member -->
-
+    <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+      <div class="team-member">
+        <div class="member-img">
+          <img src="admin/profil_guru/uploads/<?php echo htmlspecialchars($row['foto']); ?>" 
+               alt="Foto" class="img-fluid mx-auto d-block" 
+               style="width: 100%; height: auto; margin-bottom: 20px;"
+               onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+          <div class="social">
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-instagram"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="member-info">
+          <h4><?php echo htmlspecialchars($row['nama']); ?></h4>
+          <span><?php echo htmlspecialchars($row['jabatan']); ?></span>
+        </div>
+      </div>
+    </div><!-- End Team Member -->
   <?php
       }
   } else {
@@ -140,7 +144,8 @@ if (!$result || $result->num_rows === 0) {
   }
   ?>
 </div> <!-- tutup row gy-4 -->
-        </div>
+
+
 
       </div>
 
