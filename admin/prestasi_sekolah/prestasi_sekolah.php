@@ -230,6 +230,7 @@ if ($result === false) {
                                     <tr>
                                         <th>No</th>
                                         <th>Prestasi</th>
+                                        <th>Kategori</th>
                                         <th>Foto</th>
                                         <th>Deskripsi</th>
                                         <th>Aksi</th>
@@ -245,6 +246,7 @@ if ($result === false) {
                                             echo "<tr>";
                                             echo "<td>{$no}</td>";
                                             echo "<td>{$prestasi['nama_prestasi']}</td>";
+                                            echo "<td>{$prestasi['kategori']}</td>";
                                             echo "<td><img src='uploads/{$prestasi['foto']}' alt='Foto Prestasi' width='100'></td>";
                                             echo "<td>{$prestasi['deskripsi']}</td>";
                                             echo "<td>
