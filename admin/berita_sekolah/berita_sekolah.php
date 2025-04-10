@@ -339,7 +339,7 @@ if ($result === false) {
             var id = this.getAttribute('data-id');
             
             // Set link href pada tombol konfirmasi modal
-            var url = "hapus_sarana.php?id=" + id;
+            var url = "hapus_berita.php?id=" + id;
             document.getElementById('confirmHapusBtn').setAttribute('href', url);
             
             // Tampilkan modal konfirmasi
