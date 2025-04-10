@@ -6,6 +6,7 @@ include 'db_connect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_prestasi = $_POST['nama_prestasi'];
     $deskripsi = $_POST['deskripsi'];
+    $kategori = $_POST['kategori']; // Mengambil kategori dari dropdown
 
     // Upload foto
     $target_dir = "uploads/";
@@ -48,8 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // If everything is ok, try to upload file
     } else {
         if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
-            // Masukkan data ke database
-            $query = "INSERT INTO prestasi_sekolah (nama_prestasi, foto, deskripsi) VALUES ('$nama_prestasi', '" . basename($_FILES["foto"]["name"]) . "', '$deskripsi')";
+            // Masukkan data ke database termasuk kategori
+            $query = "INSERT INTO prestasi_sekolah (nama_prestasi, foto, deskripsi, kategori) 
+                      VALUES ('$nama_prestasi', '" . basename($_FILES["foto"]["name"]) . "', '$deskripsi', '$kategori')";
             if ($conn->query($query) === TRUE) {
                 header("Location: prestasi_sekolah.php");
                 exit;
@@ -61,9 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -269,6 +269,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <label for="nama_prestasi">Nama Prestasi</label>
                                     <input type="text" class="form-control" id="nama_prestasi" name="nama_prestasi" required>
+                                </div>
+                                <!-- Dropdown Kategori -->
+                                <div class="form-group">
+                                    <label for="kategori">Kategori</label>
+                                    <select class="form-control" id="kategori" name="kategori" required>
+                                        <option value="Akademik">Akademik</option>
+                                        <option value="Akademik">Akademik</option>
+                                        <option value="Non Akademik">Non Akademik</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="foto">Foto</label>
