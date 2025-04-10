@@ -24,11 +24,10 @@ if (isset($_GET['id'])) {
     echo "ID tidak ditemukan.";
     exit;
 }
-
-// Proses update data jika form disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nama_prestasi = $_POST['nama_prestasi'];
     $deskripsi = $_POST['deskripsi'];
+    $kategori = $_POST['kategori'];  // Menambahkan kategori
 
     // Cek apakah ada file foto yang diupload
     if ($_FILES['foto']['error'] == 0) {
@@ -39,15 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Menyimpan foto di folder uploads
         move_uploaded_file($foto_tmp, 'uploads/' . $foto_name);
 
-        // Update database dengan foto baru
-        $query = "UPDATE prestasi_sekolah SET nama_prestasi = ?, deskripsi = ?, foto = ? WHERE id = ?";
+        // Update database dengan foto baru dan kategori
+        $query = "UPDATE prestasi_sekolah SET nama_prestasi = ?, deskripsi = ?, foto = ?, kategori = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssi", $nama_prestasi, $deskripsi, $foto_name, $id);
+        $stmt->bind_param("ssssi", $nama_prestasi, $deskripsi, $foto_name, $kategori, $id);
     } else {
         // Update tanpa foto jika tidak ada foto yang diupload
-        $query = "UPDATE prestasi_sekolah SET nama_prestasi = ?, deskripsi = ? WHERE id = ?";
+        $query = "UPDATE prestasi_sekolah SET nama_prestasi = ?, deskripsi = ?, kategori = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssi", $nama_prestasi, $deskripsi, $id);
+        $stmt->bind_param("sssi", $nama_prestasi, $deskripsi, $kategori, $id);
     }
 
     // Eksekusi query update
@@ -253,6 +252,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label for="nama_prestasi">Nama Prestasi:</label>
                                 <input type="text" class="form-control" name="nama_prestasi" id="nama_prestasi" value="<?php echo $prestasi['nama_prestasi']; ?>" required>
                             </div>
+                            <div>
+                                <label for="kategori">Kategori:</label>
+                                <select name="kategori" class="form-control" id="kategori" required>
+                                    <option value="Akademik" <?php echo ($prestasi['kategori'] == 'Akademik') ? 'selected' : ''; ?>>Akademik</option>
+                                    <option value="Non-Akademik" <?php echo ($prestasi['kategori'] == 'Non-Akademik') ? 'selected' : ''; ?>>Non-Akademik</option>
+                                    <!-- Tambahkan kategori lain sesuai kebutuhan -->
+                                </select>
+                            </div>
+
                             <div>
                                 <label for="foto">Foto:</label>
                                 <input type="file" class="form-control" name="foto" id="foto">
