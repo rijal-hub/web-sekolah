@@ -19,6 +19,8 @@ if ($result->num_rows > 0) {
     echo "Data beranda tidak ditemukan.";
     exit;
 }
+$query = "SELECT nama, foto, deskripsi FROM sarana_prasarana";
+$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
@@ -148,58 +150,31 @@ if ($result->num_rows > 0) {
       <div class="section-title" data-aos="fade-up">
           <h2>Sarana Prasarana</h2>
           <p>Berikut merupakan sarana dan prasarana yang disediakan oleh SDN Bangetayu Wetan 02</p>
-      </div>
-      <div class="row gy-4">
-          <!-- Kotak Lapangan 1 -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-              <div class="service-item item-teal position-relative">
-                  <img src="assets/img/lapangan.jpg" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                  <h3 class="text-center">Lapangan 1</h3>
-                  <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              </div>
-          </div>
-          <!-- Kotak Lapangan 2 -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-              <div class="service-item item-teal position-relative">
-                  <img src="assets/img/taman.jpeg" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                  <h3 class="text-center">Perpustakaan</h3>
-                  <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              </div>
-          </div>
-          <!-- Kotak Lapangan 3 -->
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-              <div class="service-item item-teal position-relative">
-                  <img src="assets/img/lapangan.jpg" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                  <h3 class="text-center">Lapangan 3</h3>
-                  <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-              </div>
-          </div>
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item item-teal position-relative">
-                <img src="assets/img/lapangan.jpg" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                <h3 class="text-center">Lapangan 1</h3>
-                <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-            </div>
         </div>
-        <!-- Kotak Lapangan 2 -->
-        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item item-teal position-relative">
-                <img src="assets/img/taman.jpeg" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                <h3 class="text-center">Perpustakaan</h3>
-                <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-            </div>
-        </div>
-        <!-- Kotak Lapangan 3 -->
-        <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="service-item item-teal position-relative">
-                <img src="assets/img/lapangan.jpg" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                <h3 class="text-center">Lapangan 3</h3>
-                <p class="description text-center">Ullam mollitia quasi nobis soluta in voluptatum et sint palora dex strater</p>
-            </div>
-        </div>
-      </div>
+
+  <div class="row gy-4">
+      <?php
+      // Menampilkan data dari database
+      if ($result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+              ?>
+              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                  <div class="service-item item-teal position-relative">
+                      <!-- Menampilkan gambar -->
+                      <img src="assets/img/<?php echo $row['foto']; ?>" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
+                      <!-- Menampilkan nama -->
+                      <h3 class="text-center"><?php echo $row['nama']; ?></h3>
+                      <!-- Menampilkan deskripsi -->
+                      <p class="description text-center"><?php echo $row['deskripsi']; ?></p>
+                  </div>
+              </div>
+              <?php
+          }
+      } else {
+          echo "Data tidak ditemukan.";
+      }
+      ?>
   </div>
-</section>
 
   </main>
   <footer id="footer" class="footer dark-background">

@@ -73,9 +73,9 @@ if ($result->num_rows > 0) {
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.html">Beranda</a></li>
-          <li class="dropdown"><a href="profil_sekolah.html"> <span>profil</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown"><a href="profil_sekolah.php"> <span>profil</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="profil_sekolah.html">Profil sekolah</a></li>
+              <li><a href="profil_sekolah.php">Profil sekolah</a></li>
               <li><a href="team.html"> Daftar Guru</a></li>
               <li><a href="karyawan.html"  class="active">Daftar Karyawan</a></li>
               <li><a href="testimonials.html">Prestasi sekolah</a></li>
