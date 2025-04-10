@@ -1,40 +1,37 @@
 <?php
-// Include file db_connect.php untuk koneksi ke database
-// Include file db_connect.php untuk koneksi ke database
-include 'config/db_connect.php';
+include 'config/db_connect.php';       // koneksi database
+include 'tambah_adu.php';      // fungsi pengaduan
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Cek apakah data sudah terkirim
-    echo '<pre>';
-    print_r($_POST); // Ini akan menampilkan data yang terkirim dari form
-    echo '</pre>';
+    // Tangkap input dari form
+    $nama       = htmlspecialchars(trim($_POST['nama']));
+    $no_kontak  = htmlspecialchars(trim($_POST['no_kontak']));
+    $email      = htmlspecialchars(trim($_POST['email']));
+    $deskripsi  = htmlspecialchars(trim($_POST['deskripsi']));
 
-    // Mengambil data dari formulir
-    $nama = $_POST['nama'];
-    $no_kontak = $_POST['no_kontak'];
-    $email = $_POST['email'];
-    $deskripsi = $_POST['deskripsi'];
-    $tanggal = date('Y-m-d'); // Mengambil tanggal hari ini
-
-    // Tampilkan data yang diterima untuk debug
-    echo $nama . "<br>" . $no_kontak . "<br>" . $email . "<br>" . $deskripsi;
-
-    // Prepared statement untuk menghindari SQL Injection
-    $stmt = $conn->prepare("INSERT INTO pengaduan (nama, deskripsi, email, no_kontak, tanggal) 
-                            VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nama, $deskripsi, $email, $no_kontak, $tanggal);
-
-    if ($stmt->execute()) {
-        echo "Pengaduan Anda telah terkirim dan berhasil disimpan!";
-    } else {
-        echo "Error: " . $stmt->error;
+    // Validasi dasar (boleh dikembangkan lagi)
+    if (empty($nama) || empty($no_kontak) || empty($email) || empty($deskripsi)) {
+        echo "<script>alert('Semua field harus diisi.'); window.location.href='contact.html';</script>";
+        exit;
     }
 
-    // Menutup statement dan koneksi ke database
-    $stmt->close();
-    $conn->close();
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Email tidak valid.'); window.location.href='contact.html';</script>";
+        exit;
+    }
+
+    // Kirim pengaduan
+    $hasil = kirimPengaduan($conn, $nama, $no_kontak, $email, $deskripsi);
+
+    // Tampilkan pesan hasil
+    if ($hasil['status']) {
+        echo "<script>alert('{$hasil['message']}'); window.location.href='contact.php';</script>";
+    } else {
+        echo "<script>alert('Gagal mengirim pengaduan: {$hasil['message']}'); window.location.href='contact.php';</script>";
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -261,7 +258,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
