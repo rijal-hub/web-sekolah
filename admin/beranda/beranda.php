@@ -298,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <textarea name="sambutan" class="form-control" id="sambutan" required><?php echo $beranda['sambutan']; ?></textarea>
                             </div><br>
                             <div>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">Update beranda</button>
+                            <button type="submit" class="btn btn-primary">Update beranda</button>
                             </div>
                         </form>
                         </div>
@@ -347,36 +347,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <!-- Modal Konfirmasi Update -->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="updateModalLabel">Konfirmasi Update</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Apakah Anda yakin ingin menyimpan perubahan pada data Beranda ini?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary" id="confirmUpdateBtn">Ya, Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Tangani konfirmasi update saat tombol "Ya, Update" diklik
-    document.getElementById('confirmUpdateBtn').addEventListener('click', function() {
-        // Submit form secara manual
-        document.querySelector('form').submit();
-    });
-    
-</script>
-
     <!-- Bootstrap core JavaScript-->
     <script src="../vendor/jquery/jquery.min.js"></script>
     <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -393,7 +363,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
-
+    
 </body>
 <?php
 // Menutup koneksi database
