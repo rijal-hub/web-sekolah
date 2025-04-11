@@ -278,26 +278,7 @@ if ($result === false) {
                         </form>
                         </div>
                     </div>
-                <!-- Modal Konfirmasi Edit -->
-                <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="confirmModalLabel">Konfirmasi Edit</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                Apakah Anda yakin ingin menyimpan perubahan pada Visi dan Misi?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                <button type="button" class="btn btn-primary" id="confirmSubmit">Ya, Simpan</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
 
                 <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Sarana Prasarana SDN Bangetayu Wetan 02</h1>
                     <p class="mb-4">Halaman ini menampilka sarana prasarana di SDN Bangetayu Wetan 02. Pastikan data yang ditampilkan selalu diperbarui untuk memberikan gambaran yang jelas mengenai pencapaian sekolah.</p>
@@ -333,7 +314,7 @@ if ($result === false) {
                                             echo "<tr>";
                                             echo "<td>{$no}</td>";
                                             echo "<td>{$sarana_prasarana['nama']}</td>";
-                                            echo "<td><img src='uploads/{$sarana_prasarana['foto']}' alt='Foto' width='200'></td>";
+                                            echo "<td><img src='uploads/{$sarana_prasarana['foto']}' alt='Foto' width='200' height='200px'></td>";
                                             echo "<td><textarea class='form-control' rows='4' readonly>{$sarana_prasarana['deskripsi']}</textarea></td>";
                                             echo "<td>
                                                     <a href='edit_sarana.php?id={$sarana_prasarana['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
@@ -344,6 +325,8 @@ if ($result === false) {
                                         }
                                         
                                     } else {
+
+                                        
                                         echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
                                     }
                                     ?>
@@ -352,26 +335,7 @@ if ($result === false) {
                         </div>
                     </div>
                 </div>
-            <!-- Modal Konfirmasi Hapus -->
-            <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="hapusModalLabel">Konfirmasi Hapus</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Apakah Anda yakin ingin menghapus sarana prasarana ini?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                            <a id="confirmHapusBtn" href="#" class="btn btn-danger">Hapus</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+     
 
 
                 <!-- /.container-fluid -->
@@ -455,20 +419,7 @@ if ($result === false) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
-    
-    <script>
-    // Menangani event klik pada tombol submit
-    document.querySelector('button[type="submit"]').addEventListener('click', function(event) {
-        event.preventDefault(); // Menghentikan pengiriman form untuk menampilkan modal
-        $('#confirmModal').modal('show'); // Menampilkan modal konfirmasi
-    });
 
-    // Menangani klik pada tombol "Ya, Simpan" pada modal
-    document.getElementById('confirmSubmit').addEventListener('click', function() {
-        // Kirim form setelah konfirmasi
-        document.querySelector('form').submit();
-    });
-    </script>
 
     <!-- Script untuk menampilkan Modal dan mengarahkan ke halaman hapus -->
     <script>
