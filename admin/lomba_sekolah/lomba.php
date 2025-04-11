@@ -220,43 +220,46 @@ if ($result === false) {
                                     </tr>
                                 </thead>
                                 <tbody>
-    <?php
-    // Mengecek apakah ada data
-    if ($result->num_rows > 0) {
-        // Menampilkan data dari tabel lomba_sekolah
-        $no = 1;
-        while($lomba = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>{$no}</td>";
-            echo "<td>{$lomba['nama_lomba']}</td>";
+                                <?php
+                                // Mengecek apakah ada data
+                                if ($result->num_rows > 0) {
+                                    // Menampilkan data dari tabel lomba_sekolah
+                                    $no = 1;
+                                    while($lomba = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>{$no}</td>";
+                                        echo "<td>{$lomba['nama_lomba']}</td>";
 
-            // Mengecek apakah media berupa gambar atau URL video
-            if (filter_var($lomba['media'], FILTER_VALIDATE_URL)) {
-                // Jika media berupa URL video
-                if (strpos($lomba['media'], 'youtube') !== false || strpos($lomba['media'], 'youtu.be') !== false) {
-                    echo "<td><iframe width='200'  src='{$lomba['media']}' frameborder='0' allowfullscreen></iframe></td>";
-                } else {
-                    // Jika media adalah URL selain video (misalnya link gambar eksternal)
-                    echo "<td><a href='{$lomba['media']}' target='_blank'>Lihat Media</a></td>";
-                }
-            } else {
-                // Jika media berupa file gambar
-                echo "<td><img src='uploads/{$lomba['media']}' alt='media lomba' width='200'></td>";
-            }
+                                        // Mengecek apakah media berupa gambar atau URL video
+                                        if (filter_var($lomba['media'], FILTER_VALIDATE_URL)) {
+                                            // Jika media berupa URL video
+                                            if (strpos($lomba['media'], 'youtube') !== false || strpos($lomba['media'], 'youtu.be') !== false) {
+                                                // Menambahkan 'embed' pada URL untuk format yang dapat diputar di iframe
+                                                $embed_url = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", $lomba['media']);
+                                                echo "<td><iframe width='200' src='{$embed_url}' frameborder='0' allowfullscreen></iframe></td>";
+                                            } else {
+                                                // Jika media adalah URL selain video (misalnya link gambar eksternal)
+                                                echo "<td><a href='{$lomba['media']}' target='_blank'>Lihat Media</a></td>";
+                                            }
+                                        } else {
+                                            // Jika media berupa file gambar
+                                            echo "<td><img src='uploads/{$lomba['media']}' alt='media lomba' width='200'></td>";
+                                        }
 
-            echo "<td>{$lomba['deskripsi']}</td>";
-            echo "<td>
-                    <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                    <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
-                  </td>";
-            echo "</tr>";
-            $no++;
-        }
-    } else {
-        echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
-    }
-    ?>
-</tbody>
+                                        echo "<td>{$lomba['deskripsi']}</td>";
+                                        echo "<td>
+                                                <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
+                                                <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+                                            </td>";
+                                        echo "</tr>";
+                                        $no++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
+                                }
+                                ?>
+                                </tbody>
+
 
                             </table>
                         </div>
@@ -354,7 +357,7 @@ if ($result === false) {
             var id = this.getAttribute('data-id');
             
             // Set link href pada tombol konfirmasi modal
-            var url = "hapus_sarana.php?id=" + id;
+            var url = "hapus_lomba.php?id=" + id;
             document.getElementById('confirmHapusBtn').setAttribute('href', url);
             
             // Tampilkan modal konfirmasi
