@@ -325,6 +325,8 @@ if ($result === false) {
                                         }
                                         
                                     } else {
+
+                                        
                                         echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
                                     }
                                     ?>

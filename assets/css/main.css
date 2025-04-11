@@ -1235,7 +1235,7 @@ section,
 
 .portfolio .portfolio-filters li:hover,
 .portfolio .portfolio-filters li.filter-active {
-  color: var(--contrast-color);
+  color: white;
   background-color: var(--accent-color);
 }
 
