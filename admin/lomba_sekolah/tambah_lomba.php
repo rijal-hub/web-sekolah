@@ -271,10 +271,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <label for="jenis_lomba">Jenis Lomba</label>
                                     <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
+                                        <option>--- Pilih Jenis Lomba ---</option>
                                         <option value="motivasi">Motivasi</option>
                                         <option value="bahasa_jawa">Bahasa Jawa</option>
                                         <option value="literasi">Literasi</option>
-                                        <option value="mapsi">Maps</option>
+                                        <option value="mapsi">Mapsi</option>
                                         <option value="adiwiyata">Adiwiyata</option>
                                         <option value="karya_ilmiah_medio">Karya Ilmiah Medio</option>
                                         <option value="karya_ilmiah_cabster">Karya Ilmiah Cabster</option>
@@ -284,6 +285,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <label for="jenis_media">Jenis Media</label>
                                     <select class="form-control" id="jenis_media" name="jenis_media" required>
+                                        <option>--- Pilih Jenis Media ---</option>
                                         <option value="foto">Foto</option>
                                         <option value="video">Video</option>
                                     </select>
