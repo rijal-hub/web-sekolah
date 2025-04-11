@@ -117,16 +117,17 @@ if ($filter == '*') {
     <div class="container">
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
         <ul class="portfolio-filters">
-  <li class="<?= $_GET['filter'] == '' ? 'filter-active' : '' ?>">
+  <li class="<?= !isset($_GET['filter']) || $_GET['filter'] == '' ? 'filter-active' : '' ?>">
     <a href="?filter=">Semua</a>
   </li>
-  <li class="<?= $_GET['filter'] == 'akademik' ? 'filter-active' : '' ?>">
+  <li class="<?= isset($_GET['filter']) && $_GET['filter'] == 'akademik' ? 'filter-active' : '' ?>">
     <a href="?filter=akademik">Akademik</a>
   </li>
-  <li class="<?= $_GET['filter'] == 'non-akademik' ? 'filter-active' : '' ?>">
+  <li class="<?= isset($_GET['filter']) && $_GET['filter'] == 'non-akademik' ? 'filter-active' : '' ?>">
     <a href="?filter=non-akademik">Non-Akademik</a>
   </li>
 </ul>
+
 
 <div id="all-container" class="content-container" style="display:block;">
     <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">

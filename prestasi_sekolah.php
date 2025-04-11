@@ -118,9 +118,15 @@ if ($filter == '*') {
     <div class="container">
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
         <ul class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
-    <li id="all" data-filter="*" class="filter-active" onclick="switchTab(this, 'all-container')"><a href="?filter=*">Semua</a></li>
-    <li id="akademik" data-filter=".filter-akademik" onclick="switchTab(this, 'akademik-container')"><a href="?filter=akademik">Akademik</a></li>
-    <li id="non-akademik" data-filter=".filter-non-akademik" onclick="switchTab(this, 'non-akademik-container')"><a href="?filter=non-akademik">Non-Akademik</a></li>
+  <li id="all" data-filter="*" class="<?= $filter == '*' || $filter == '' ? 'filter-active' : '' ?>" onclick="switchTab(this, 'all-container')">
+    <a href="?filter=*">Semua</a>
+  </li>
+  <li id="akademik" data-filter=".filter-akademik" class="<?= $filter == 'akademik' ? 'filter-active' : '' ?>" onclick="switchTab(this, 'akademik-container')">
+    <a href="?filter=akademik">Akademik</a>
+  </li>
+  <li id="non-akademik" data-filter=".filter-non-akademik" class="<?= $filter == 'non-akademik' ? 'filter-active' : '' ?>" onclick="switchTab(this, 'non-akademik-container')">
+    <a href="?filter=non-akademik">Non-Akademik</a>
+  </li>
 </ul>
 
 <div id="all-container" class="content-container" style="display:block;">
