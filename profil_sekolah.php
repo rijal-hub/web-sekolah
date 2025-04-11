@@ -120,7 +120,8 @@ $result = $conn->query($query);
 
   <div class="container">
     <div class="row position-relative ">
-      <div class="col-lg-6 about-img   object-fit: cover;" data-aos="zoom-out" data-aos-delay="100"><img src="admin/profil_sekolah/uploads/<?php echo $profil_sekolah['foto_sekolah']; ?>" alt="Foto Kepala Sekolah" width="200"></div>
+      <div class="col-lg-6 about-img   object-fit: cover;" data-aos="zoom-out" data-aos-delay="100">
+        <img src="admin/profil_sekolah/uploads/<?php echo $profil_sekolah['foto_sekolah']; ?>" alt="Foto Kepala Sekolah" width="200"></div>
       <br><div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
         <br>
         <div class="our-story">
@@ -153,28 +154,37 @@ $result = $conn->query($query);
         </div>
 
   <div class="row gy-4">
-      <?php
-      // Menampilkan data dari database
-      if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) {
-              ?>
-              <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                  <div class="service-item item-teal position-relative">
-                      <!-- Menampilkan gambar -->
-                      <img src="admin/profil_sekolah/uploads/<?php echo $row['foto']; ?>" alt="Foto" class="img-fluid mx-auto d-block" style="width: 100%; height: auto; margin-bottom: 20px;">
-                      <!-- Menampilkan nama -->
-                      <h3 class="text-center"><?php echo $row['nama']; ?></h3>
-                      <!-- Menampilkan deskripsi -->
-                      <p class="description text-center"><?php echo $row['deskripsi']; ?></p>
-                  </div>
-              </div>
-              <?php
-          }
-      } else {
-          echo "Data tidak ditemukan.";
-      }
-      ?>
-  </div>
+  <?php
+// Menampilkan data dari database
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+?>
+    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+        <div class="service-item item-teal position-relative">
+            <!-- Menampilkan gambar sebagai background -->
+            <div 
+                style="background-image: url('admin/profil_sekolah/uploads/<?php echo htmlspecialchars($row['foto']); ?>');
+                       background-size: cover; 
+                       background-position: center; 
+                       width: 100%; 
+                       height: 200px; 
+                       margin-bottom: 20px;">
+            </div>
+
+            <!-- Menampilkan nama -->
+            <h3 class="text-center"><?php echo htmlspecialchars($row['nama']); ?></h3>
+
+            <!-- Menampilkan deskripsi -->
+            <p class="description text-center"><?php echo htmlspecialchars($row['deskripsi']); ?></p>
+        </div>
+    </div>
+<?php
+    }
+} else {
+    echo "<p class='text-center'>Data tidak ditemukan.</p>";
+}
+?>
+
 
   </main>
   <footer id="footer" class="footer dark-background">

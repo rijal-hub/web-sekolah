@@ -1,3 +1,38 @@
+<?php
+include 'config/db_connect.php';       // koneksi database
+include 'tambah_adu.php';      // fungsi pengaduan
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Tangkap input dari form
+    $nama       = htmlspecialchars(trim($_POST['nama']));
+    $no_kontak  = htmlspecialchars(trim($_POST['no_kontak']));
+    $email      = htmlspecialchars(trim($_POST['email']));
+    $deskripsi  = htmlspecialchars(trim($_POST['deskripsi']));
+
+    // Validasi dasar (boleh dikembangkan lagi)
+    if (empty($nama) || empty($no_kontak) || empty($email) || empty($deskripsi)) {
+        echo "<script>alert('Semua field harus diisi.'); window.location.href='contact.html';</script>";
+        exit;
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "<script>alert('Email tidak valid.'); window.location.href='contact.html';</script>";
+        exit;
+    }
+
+    // Kirim pengaduan
+    $hasil = kirimPengaduan($conn, $nama, $no_kontak, $email, $deskripsi);
+
+    // Tampilkan pesan hasil
+    if ($hasil['status']) {
+        echo "<script>alert('{$hasil['message']}'); window.location.href='contact.php';</script>";
+    } else {
+        echo "<script>alert('Gagal mengirim pengaduan: {$hasil['message']}'); window.location.href='contact.php';</script>";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -135,30 +170,28 @@
           </div>
 
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-              <div class="row">
-                <div class="form-group mt-3">
-                  <input type="text" class="form-control" name="subject" id="subject" placeholder="Masukkan Nama Anda" required="">
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan No.Telepon Anda" required="">
-                </div>
-                <div class="col-md-6 form-group">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email Anda" required="">
-                </div>
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" placeholder="Tuliskan kritik, saran, atau pengaduan yang ingin ANda sampaikan" required=""></textarea>
-              </div>
-            </div>
-              <div class="my-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Pesan Anda sudah terkirim. Terima kasih!</div>
-              </div>
-              <div class="text-center"><button type="submit">Kirim Umpan Balik</button></div>
-            </form>
-          </div><!-- End Contact Form -->
+          <form action="contact.php" method="POST" role="form" class="php-email-form">
+  <div class="row">
+    <div class="form-group mt-3">
+      <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Anda" required="">
+    </div>
+    <div class="col-md-6 form-group">
+      <input type="text" name="no_kontak" class="form-control" id="no_kontak" placeholder="Masukkan No.Telepon Anda" required="">
+    </div>
+    <div class="col-md-6 form-group">
+      <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email Anda" required="">
+    </div>
+    <div class="form-group mt-3">
+      <textarea class="form-control" name="deskripsi" placeholder="Tuliskan pengaduan Anda" required=""></textarea>
+    </div>
+  </div>
+  <div class="text-center"><button type="submit">Kirim Pengaduan</button></div>
+</form>
 
+
+
+
+            </div>
         </div>
 
       </div>
@@ -225,7 +258,6 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
