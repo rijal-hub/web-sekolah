@@ -6,20 +6,22 @@ include 'db_connect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_lomba = $_POST['nama_lomba'];
     $deskripsi = $_POST['deskripsi'];
+    $jenis_media = $_POST['jenis_media'];  // Menyimpan jenis media (foto/video)
+    $jenis_lomba = $_POST['jenis_lomba'];  // Menyimpan jenis lomba
     $media = '';
 
     // Cek apakah ada URL video yang diinputkan
-    if (!empty($_POST['url_video'])) {
+    if ($jenis_media == 'video' && !empty($_POST['url_video'])) {
         $media = $_POST['url_video'];  // Menyimpan URL video jika ada
-    } else {
-        // Jika URL video tidak diisi, maka foto wajib di-upload
+    } elseif ($jenis_media == 'foto') {
+        // Jika jenis media adalah foto, lakukan proses upload foto
         if (isset($_FILES["media"]) && $_FILES["media"]["error"] == 0) {
             $target_dir = "uploads/";
             $target_file = $target_dir . basename($_FILES["media"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-            // Check if image file is a actual image or fake image
+            // Cek apakah file adalah gambar
             $check = getimagesize($_FILES["media"]["tmp_name"]);
             if ($check !== false) {
                 $uploadOk = 1;
@@ -28,44 +30,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $uploadOk = 0;
             }
 
-            // Check if file already exists
+            // Cek jika file sudah ada
             if (file_exists($target_file)) {
                 echo "Sorry, file already exists.";
                 $uploadOk = 0;
             }
 
-            // Check file size
+            // Cek ukuran file
             if ($_FILES["media"]["size"] > 500000) {
                 echo "Sorry, your file is too large.";
                 $uploadOk = 0;
             }
 
-            // Allow certain file formats
+            // Hanya izinkan file JPG, JPEG, PNG, GIF
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
                 echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
                 $uploadOk = 0;
             }
 
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == 0) {
-                echo "Sorry, your file was not uploaded.";
-            // If everything is ok, try to upload file
+            // Jika semua oke, coba upload file
+            if ($uploadOk == 1 && move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
+                $media = basename($_FILES["media"]["name"]);  // Menyimpan nama file foto
             } else {
-                if (move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
-                    $media = basename($_FILES["media"]["name"]);  // Menyimpan nama file foto
-                } else {
-                    echo "Sorry, there was an error uploading your file.";
-                }
+                echo "Sorry, there was an error uploading your file.";
             }
         } else {
-            // Jika tidak ada foto dan tidak ada URL video, beri pesan error
-            echo "Foto atau URL video harus diisi.";
+            echo "Foto harus diupload.";
         }
     }
 
     // Masukkan data ke database jika media tersedia
     if ($media != '') {
-        $query = "INSERT INTO lomba_lomba (nama_lomba, media, deskripsi) VALUES ('$nama_lomba', '$media', '$deskripsi')";
+        $query = "INSERT INTO lomba_lomba (nama_lomba, media, deskripsi, jenis_media, jenis_lomba) VALUES ('$nama_lomba', '$media', '$deskripsi', '$jenis_media', '$jenis_lomba')";
         if ($conn->query($query) === TRUE) {
             header("Location: lomba.php");
             exit;
@@ -271,13 +267,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label for="nama_lomba">Nama lomba</label>
                                     <input type="text" class="form-control" id="nama_lomba" name="nama_lomba" required>
                                 </div>
+                                <!-- Jenis Lomba (Dropdown) -->
                                 <div class="form-group">
-                                    <label for="media">Foto</label>
+                                    <label for="jenis_lomba">Jenis Lomba</label>
+                                    <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
+                                        <option value="motivasi">Motivasi</option>
+                                        <option value="bahasa_jawa">Bahasa Jawa</option>
+                                        <option value="literasi">Literasi</option>
+                                        <option value="mapsi">Maps</option>
+                                        <option value="adiwiyata">Adiwiyata</option>
+                                        <option value="karya_ilmiah_medio">Karya Ilmiah Medio</option>
+                                        <option value="karya_ilmiah_cabster">Karya Ilmiah Cabster</option>
+                                    </select>
+                                </div>
+                                <!-- Jenis Media (Foto/Video) -->
+                                <div class="form-group">
+                                    <label for="jenis_media">Jenis Media</label>
+                                    <select class="form-control" id="jenis_media" name="jenis_media" required>
+                                        <option value="foto">Foto</option>
+                                        <option value="video">Video</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="media">Foto (salah satu)</label>
                                     <input type="file" class="form-control" id="media" name="media" accept="image/*" >
                                 </div>
                                  <!-- Input URL Video -->
                                  <div class="form-group">
-                                    <label for="url_video">URL Video (Opsional)</label>
+                                    <label for="url_video">URL Video (salah satu)</label>
                                     <input type="url" class="form-control" id="url_video" name="url_video" placeholder="https://example.com/video">
                                 </div>
                                 <div class="form-group">
