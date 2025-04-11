@@ -229,13 +229,23 @@ if ($result === false) {
                                         echo "<tr>";
                                         echo "<td>{$no}</td>";
                                         echo "<td>{$lomba['nama_lomba']}</td>";
-
                                         // Mengecek apakah media berupa gambar atau URL video
                                         if (filter_var($lomba['media'], FILTER_VALIDATE_URL)) {
-                                            // Jika media berupa URL video
+                                            // Jika media berupa URL video (YouTube atau youtu.be)
                                             if (strpos($lomba['media'], 'youtube') !== false || strpos($lomba['media'], 'youtu.be') !== false) {
-                                                // Menambahkan 'embed' pada URL untuk format yang dapat diputar di iframe
-                                                $embed_url = str_replace("https://www.youtube.com/watch?v=", "https://www.youtube.com/embed/", $lomba['media']);
+                                                // Cek apakah URLnya dari youtu.be
+                                                if (strpos($lomba['media'], 'youtu.be') !== false) {
+                                                    // Mengambil ID video dari URL youtu.be
+                                                    preg_match('/youtu\.be\/([a-zA-Z0-9_-]+)/', $lomba['media'], $matches);
+                                                    $video_id = $matches[1]; // ID video
+                                                } else {
+                                                    // Jika URL dari youtube.com, ambil ID video setelah 'v='
+                                                    parse_str(parse_url($lomba['media'], PHP_URL_QUERY), $url_params);
+                                                    $video_id = $url_params['v']; // ID video
+                                                }
+                                                
+                                                // Membuat URL embed
+                                                $embed_url = "https://www.youtube.com/embed/{$video_id}";
                                                 echo "<td><iframe width='200' src='{$embed_url}' frameborder='0' allowfullscreen></iframe></td>";
                                             } else {
                                                 // Jika media adalah URL selain video (misalnya link gambar eksternal)
@@ -245,7 +255,7 @@ if ($result === false) {
                                             // Jika media berupa file gambar
                                             echo "<td><img src='uploads/{$lomba['media']}' alt='media lomba' width='200'></td>";
                                         }
-
+                                
                                         echo "<td>{$lomba['deskripsi']}</td>";
                                         echo "<td>
                                                 <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
