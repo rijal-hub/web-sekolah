@@ -1239,6 +1239,16 @@ section,
   background-color: var(--accent-color);
 }
 
+.portfolio .portfolio-filters li.filter-active a {
+  color: white;
+}
+
+.portfolio .portfolio-filters li a {
+  color: inherit;        /* ikut warna dari li */
+  text-decoration: none; /* hapus underline */
+}
+
+
 .portfolio .portfolio-filters li:first-child {
   margin-left: 0;
 }
