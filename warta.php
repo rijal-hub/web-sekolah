@@ -9,7 +9,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null; // Tangkap ID gambar jika ada
 // Menentukan query berdasarkan kategori yang dipilih
 if ($filter == '*') {
     // Jika tidak ada filter, tampilkan semua data
-    $query = "SELECT id,judul, media, isi, kategori FROM berita_sekolah";
+    $query = "SELECT id, judul, media, isi, kategori FROM berita_sekolah";
     $result = $conn->query($query); // Jika query biasa
 } else {
     // Jika filter akademik dipilih, tampilkan data dengan kategori akademik
@@ -130,7 +130,7 @@ if ($filter == '*') {
             while ($row = $result->fetch_assoc()) {
         ?>
         <div class="col-lg-4 col-md-6 portfolio-item isotope-item">
-            <img src="admin/prestasi_sekolah/uploads/<?php echo $row['media']; ?>" class="img-fluid" alt="">
+            <img src="admin/berita_sekolah/uploads/<?php echo $row['media']; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
                 <h4><?php echo $row['judul']; ?></h4>
                 <a href="admin/berita_sekolah/uploads/<?php echo $row['media']; ?>" title="<?php echo $row['judul']; ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
