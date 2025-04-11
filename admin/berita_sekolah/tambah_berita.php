@@ -260,8 +260,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type="text" class="form-control" id="judul" name="judul" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="isi">Isi</label>
-                                    <textarea class="form-control" id="isi" name="isi" rows="4" required></textarea>
+                                    <label for="kategori">Kategori</label>
+                                    <select class="form-control" id="kategori" name="kategori" required>
+                                        <option value="akademik">Akademik</option>
+                                        <option value="non-akademik">Non-Akademik</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="tanggal">Tanggal</label>
@@ -271,7 +274,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <label for="media">Media</label>
                                     <input type="file" class="form-control" id="media" name="media" accept="image/*" required>
                                 </div>
-                                                                <button type="submit" class="btn btn-primary">Tambah Berita</button>
+                                <div class="form-group">
+                                    <label for="isi">Isi</label>
+                                    <textarea class="form-control" id="isi" name="isi" rows="4" required></textarea>
+                                </div>
+                               
+                                <button type="submit" class="btn btn-primary">Tambah Berita</button>
                             </form>
                         </div>
                     </div>
