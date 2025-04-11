@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Gagal mengirim pengaduan: {$hasil['message']}'); window.location.href='contact.php';</script>";
     }
 }
+
+$query = "SELECT * FROM profil_sekolah LIMIT 1";
+$result = mysqli_query($conn, $query);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    $data = mysqli_fetch_assoc($result);
+} else {
+    $data = []; // Atur ke array kosong jika gagal ambil data
+}
 ?>
 
 
@@ -142,29 +151,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <p>Silahkan tinggalkan pesan Anda pada kolom yang tersedia</p>
 
               <div class="info-item d-flex">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h4>Location:</h4>
-                  <p>Jl. Sedayu Sawo I RT 01 / RW 07, Bangetayu Wetan, Kec. Genuk, Kota Semarang Prov. Jawa Tengah </p>
-                </div>
-              </div><!-- End Info Item -->
+  <i class="bi bi-geo-alt flex-shrink-0"></i>
+  <div>
+    <h4>Location:</h4>
+    <p><?= htmlspecialchars($data['alamat']); ?></p>
+  </div>
+</div><!-- End Info Item -->
 
-              <div class="info-item d-flex">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h4>Email:</h4>
-                  <p>sdnbangetayuwetan34@yahoo.com</p>
-                </div>
-              </div><!-- End Info Item -->
+<div class="info-item d-flex">
+  <i class="bi bi-envelope flex-shrink-0"></i>
+  <div>
+    <h4>Email:</h4>
+    <p><?= htmlspecialchars($data['email']); ?></p>
+  </div>
+</div><!-- End Info Item -->
 
-              <div class="info-item d-flex">
-                <i class="bi bi-phone flex-shrink-0"></i>
-                <div>
-                  <h4>Telepon:</h4>
-                  <p>024-76451362</p>
-                </div>
-              </div><!-- End Info Item -->
-
+<div class="info-item d-flex">
+  <i class="bi bi-phone flex-shrink-0"></i>
+  <div>
+    <h4>Telepon:</h4>
+    <p><?= htmlspecialchars($data['telepon']); ?></p>
+  </div>
+</div><!-- End Info Item -->
             </div>
 
           </div>
