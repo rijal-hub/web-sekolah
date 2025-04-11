@@ -6,62 +6,76 @@ include 'db_connect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama_lomba = $_POST['nama_lomba'];
     $deskripsi = $_POST['deskripsi'];
+    $media = '';
 
-    // Upload foto
-    $target_dir = "uploads/";
-    $target_file = $target_dir . basename($_FILES["media"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-    // Check if image file is a actual image or fake image
-    if (isset($_POST["submit"])) {
-        $check = getimagesize($_FILES["media"]["tmp_name"]);
-        if ($check !== false) {
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-    }
-
-    // Check if file already exists
-    if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-    }
-
-    // Check file size
-    if ($_FILES["media"]["size"] > 500000) {
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-    }
-
-    // Allow certain file formats
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
-    }
-
-    // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-    // If everything is ok, try to upload file
+    // Cek apakah ada URL video yang diinputkan
+    if (!empty($_POST['url_video'])) {
+        $media = $_POST['url_video'];  // Menyimpan URL video jika ada
     } else {
-        if (move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
-            // Masukkan data ke database
-            $query = "INSERT INTO lomba_lomba (nama_lomba, media, deskripsi) VALUES ('$nama_lomba', '" . basename($_FILES["media"]["name"]) . "', '$deskripsi')";
-            if ($conn->query($query) === TRUE) {
-                header("Location: lomba.php");
-                exit;
+        // Jika URL video tidak diisi, maka foto wajib di-upload
+        if (isset($_FILES["media"]) && $_FILES["media"]["error"] == 0) {
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename($_FILES["media"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+            // Check if image file is a actual image or fake image
+            $check = getimagesize($_FILES["media"]["tmp_name"]);
+            if ($check !== false) {
+                $uploadOk = 1;
             } else {
-                echo "Error: " . $query . "<br>" . $conn->error;
+                echo "File is not an image.";
+                $uploadOk = 0;
+            }
+
+            // Check if file already exists
+            if (file_exists($target_file)) {
+                echo "Sorry, file already exists.";
+                $uploadOk = 0;
+            }
+
+            // Check file size
+            if ($_FILES["media"]["size"] > 500000) {
+                echo "Sorry, your file is too large.";
+                $uploadOk = 0;
+            }
+
+            // Allow certain file formats
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                $uploadOk = 0;
+            }
+
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == 0) {
+                echo "Sorry, your file was not uploaded.";
+            // If everything is ok, try to upload file
+            } else {
+                if (move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
+                    $media = basename($_FILES["media"]["name"]);  // Menyimpan nama file foto
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
             }
         } else {
-            echo "Sorry, there was an error uploading your file.";
+            // Jika tidak ada foto dan tidak ada URL video, beri pesan error
+            echo "Foto atau URL video harus diisi.";
         }
     }
-}
 
+    // Masukkan data ke database jika media tersedia
+    if ($media != '') {
+        $query = "INSERT INTO lomba_lomba (nama_lomba, media, deskripsi) VALUES ('$nama_lomba', '$media', '$deskripsi')";
+        if ($conn->query($query) === TRUE) {
+            header("Location: lomba.php");
+            exit;
+        } else {
+            echo "Error: " . $query . "<br>" . $conn->error;
+        }
+    } else {
+        echo "Media is required.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -259,7 +273,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                                 <div class="form-group">
                                     <label for="media">Foto</label>
-                                    <input type="file" class="form-control" id="media" name="media" accept="image/*" required>
+                                    <input type="file" class="form-control" id="media" name="media" accept="image/*" >
+                                </div>
+                                 <!-- Input URL Video -->
+                                 <div class="form-group">
+                                    <label for="url_video">URL Video (Opsional)</label>
+                                    <input type="url" class="form-control" id="url_video" name="url_video" placeholder="https://example.com/video">
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsi">Deskripsi</label>

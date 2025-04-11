@@ -220,30 +220,44 @@ if ($result === false) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    // Mengecek apakah ada data
-                                    if ($result->num_rows > 0) {
-                                        // Menampilkan data dari tabel lomba_sekolah
-                                        $no = 1;
-                                        while($lomba = $result->fetch_assoc()) {
-                                            echo "<tr>";
-                                            echo "<td>{$no}</td>";
-                                            echo "<td>{$lomba['nama_lomba']}</td>";
-                                            echo "<td><img src='uploads/{$lomba['media']}' alt='media lomba' width='100'></td>";
-                                            echo "<td>{$lomba['deskripsi']}</td>";
-                                            echo "<td>
-                                                    <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+    <?php
+    // Mengecek apakah ada data
+    if ($result->num_rows > 0) {
+        // Menampilkan data dari tabel lomba_sekolah
+        $no = 1;
+        while($lomba = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>{$no}</td>";
+            echo "<td>{$lomba['nama_lomba']}</td>";
 
-                                                </td>";
-                                            echo "</tr>";
-                                            $no++;
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
-                                    }
-                                    ?>
-                                </tbody>
+            // Mengecek apakah media berupa gambar atau URL video
+            if (filter_var($lomba['media'], FILTER_VALIDATE_URL)) {
+                // Jika media berupa URL video
+                if (strpos($lomba['media'], 'youtube') !== false || strpos($lomba['media'], 'youtu.be') !== false) {
+                    echo "<td><iframe width='200'  src='{$lomba['media']}' frameborder='0' allowfullscreen></iframe></td>";
+                } else {
+                    // Jika media adalah URL selain video (misalnya link gambar eksternal)
+                    echo "<td><a href='{$lomba['media']}' target='_blank'>Lihat Media</a></td>";
+                }
+            } else {
+                // Jika media berupa file gambar
+                echo "<td><img src='uploads/{$lomba['media']}' alt='media lomba' width='200'></td>";
+            }
+
+            echo "<td>{$lomba['deskripsi']}</td>";
+            echo "<td>
+                    <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
+                    <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+                  </td>";
+            echo "</tr>";
+            $no++;
+        }
+    } else {
+        echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
+    }
+    ?>
+</tbody>
+
                             </table>
                         </div>
                     </div>
