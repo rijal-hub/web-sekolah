@@ -1219,6 +1219,7 @@ section,
   text-align: center;
 }
 
+
 .portfolio .portfolio-filters li {
   cursor: pointer;
   display: inline-block;
@@ -1238,6 +1239,16 @@ section,
   color: white;
   background-color: var(--accent-color);
 }
+
+.portfolio .portfolio-filters li.filter-active a {
+  color: white;
+}
+
+.portfolio .portfolio-filters li a {
+  color: inherit;        /* ikut warna dari li */
+  text-decoration: none; /* hapus underline */
+}
+
 
 .portfolio .portfolio-filters li:first-child {
   margin-left: 0;
@@ -1548,6 +1559,7 @@ section,
   font-size: 32px;
   padding-right: 10px;
   line-height: 0;
+  
 }
 
 .features .features-item h3 {

@@ -9,7 +9,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : null; // Tangkap ID gambar jika ada
 // Menentukan query berdasarkan kategori yang dipilih
 if ($filter == '*') {
     // Jika tidak ada filter, tampilkan semua data
-    $query = "SELECT id,judul, media, isi, kategori FROM berita_sekolah";
+    $query = "SELECT id, judul, media, isi, kategori FROM berita_sekolah";
     $result = $conn->query($query); // Jika query biasa
 } else {
     // Jika filter akademik dipilih, tampilkan data dengan kategori akademik
@@ -116,11 +116,18 @@ if ($filter == '*') {
   <section id="portfolio" class="portfolio section">
     <div class="container">
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-        <ul class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
-    <li id="all" data-filter="*" class="filter-active" onclick="switchTab(this, 'all-container')"><a href="?filter=*">Semua</a></li>
-    <li id="akademik" data-filter=".filter-akademik" onclick="switchTab(this, 'akademik-container')"><a href="?filter=akademik">Akademik</a></li>
-    <li id="non-akademik" data-filter=".filter-non-akademik" onclick="switchTab(this, 'non-akademik-container')"><a href="?filter=non-akademik">Non-Akademik</a></li>
+        <ul class="portfolio-filters">
+  <li class="<?= !isset($_GET['filter']) || $_GET['filter'] == '' ? 'filter-active' : '' ?>">
+    <a href="?filter=">Semua</a>
+  </li>
+  <li class="<?= isset($_GET['filter']) && $_GET['filter'] == 'akademik' ? 'filter-active' : '' ?>">
+    <a href="?filter=akademik">Akademik</a>
+  </li>
+  <li class="<?= isset($_GET['filter']) && $_GET['filter'] == 'non-akademik' ? 'filter-active' : '' ?>">
+    <a href="?filter=non-akademik">Non-Akademik</a>
+  </li>
 </ul>
+
 
 <div id="all-container" class="content-container" style="display:block;">
     <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
@@ -130,7 +137,7 @@ if ($filter == '*') {
             while ($row = $result->fetch_assoc()) {
         ?>
         <div class="col-lg-4 col-md-6 portfolio-item isotope-item">
-            <img src="admin/prestasi_sekolah/uploads/<?php echo $row['media']; ?>" class="img-fluid" alt="">
+            <img src="admin/berita_sekolah/uploads/<?php echo $row['media']; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
                 <h4><?php echo $row['judul']; ?></h4>
                 <a href="admin/berita_sekolah/uploads/<?php echo $row['media']; ?>" title="<?php echo $row['judul']; ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>

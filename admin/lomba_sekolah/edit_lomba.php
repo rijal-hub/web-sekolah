@@ -256,11 +256,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label for="nama_lomba">Nama lomba:</label>
                                 <input type="text" class="form-control" name="nama_lomba" id="nama_lomba" value="<?php echo $lomba['nama_lomba']; ?>" required>
                             </div>
-                            <div>
-                                <label for="media">media:</label>
+                            <label>Foto atau Video saat ini:</label><br>
+                            <?php
+                            if (!empty($lomba['media'])) {
+                                $file_extension = pathinfo($lomba['media'], PATHINFO_EXTENSION);
+                                if (in_array(strtolower($file_extension), ['jpg', 'jpeg', 'png', 'gif'])) {
+                                    echo "<img src='uploads/{$lomba['media']}' width='200'>";
+                                } elseif (in_array(strtolower($file_extension), ['mp4', 'mov', 'avi'])) {
+                                    echo "<video width='200' controls><source src='uploads/{$lomba['media']}' type='video/{$file_extension}'></video>";
+                                }
+                            } elseif (!empty($lomba['youtube_link'])) {
+                                echo "<iframe width='200' height='150' src='{$lomba['youtube_link']}' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
+                            }
+                             ?><br>
+                            <label for="media">Media:</label>
                                 <input type="file" class="form-control" name="media" id="media">
-                                <p>Foto saat ini:<br> <img src="uploads/<?php echo $lomba['media']; ?>" width="200"></p>
-                            </div>
+                                <p>Atau masukkan URL YouTube:</p>
+                                <input type="url" class="form-control" name="youtube_link" id="youtube_link" placeholder="https://www.youtube.com/your_video_link">
+                                
                             <div>
                                 <label for="deskripsi">Deskripsi:</label>
                                 <textarea name="deskripsi" class="form-control" id="deskripsi" required><?php echo $lomba['deskripsi']; ?></textarea>

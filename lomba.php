@@ -1,34 +1,10 @@
-<?php
-// Menyertakan file koneksi database
-include('config/db_connect.php');
-
-// Menangkap parameter filter kategori
-$filter = isset($_GET['filter']) ? $_GET['filter'] : '*';
-$id = isset($_GET['id']) ? $_GET['id'] : null; // Tangkap ID gambar jika ada
-
-// Menentukan query berdasarkan kategori yang dipilih
-if ($filter == '*') {
-    // Jika tidak ada filter, tampilkan semua data
-    $query = "SELECT nama_prestasi, foto, deskripsi, kategori FROM prestasi_sekolah";
-    $result = $conn->query($query); // Jika query biasa
-} else {
-    // Jika filter akademik dipilih, tampilkan data dengan kategori akademik
-    $query = $conn->prepare("SELECT nama_prestasi, foto, deskripsi, kategori FROM prestasi_sekolah WHERE kategori = ?");
-    $query->bind_param("s", $filter);  // "s" berarti string
-    $query->execute();
-    $result = $query->get_result(); // Dapatkan hasil query
-}
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Portfolio - Company Bootstrap Template</title>
+  <title>Services - Company Bootstrap Template</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -47,7 +23,7 @@ if ($filter == '*') {
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  
+
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
@@ -58,10 +34,6 @@ if ($filter == '*') {
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
-
-<body class="portfolio-page">
-
   <header id="header" class="header d-flex align-items-center sticky-top">
     
     <div class="container position-relative d-flex ">
@@ -100,129 +72,82 @@ if ($filter == '*') {
   </header>
 
   <main class="main">
+
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">PRESTASI SEKOLAH</h1>
+        <h1 class="mb-2 mb-lg-0">Lomba-Lomba</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.html">BERANDA</a></li>
-            <li class="current">PRESTASI SEKOLAH</li>
+            <li class="current">LOMBA</li>
           </ol>
         </nav>
       </div>
     </div><!-- End Page Title -->
 
-  <!-- Portfolio Section -->
-<section id="portfolio" class="portfolio section">
-    <div class="container">
-        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-        <ul class="portfolio-filters" data-aos="fade-up" data-aos-delay="100">
-  <li id="all" data-filter="*" class="<?= $filter == '*' || $filter == '' ? 'filter-active' : '' ?>" onclick="switchTab(this, 'all-container')">
-    <a href="?filter=*">Semua</a>
-  </li>
-  <li id="akademik" data-filter=".filter-akademik" class="<?= $filter == 'akademik' ? 'filter-active' : '' ?>" onclick="switchTab(this, 'akademik-container')">
-    <a href="?filter=akademik">Akademik</a>
-  </li>
-  <li id="non-akademik" data-filter=".filter-non-akademik" class="<?= $filter == 'non-akademik' ? 'filter-active' : '' ?>" onclick="switchTab(this, 'non-akademik-container')">
-    <a href="?filter=non-akademik">Non-Akademik</a>
-  </li>
-</ul>
+   
 
-<div id="all-container" class="content-container" style="display:block;">
-    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-        <?php
-        // Menampilkan data dari database untuk Semua
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-        ?>
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item">
-            <img src="admin/prestasi_sekolah/uploads/<?php echo $row['foto']; ?>" class="img-fluid" alt="">
-            <div class="portfolio-info">
-                <h4><?php echo $row['nama_prestasi']; ?></h4>
-                <a href="admin/prestasi_sekolah/uploads/<?php echo $row['foto']; ?>" title="<?php echo $row['deskripsi']; ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+    <!-- Features Section -->
+    <section id="features" class="features section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Lomba Lomba</h2>
+        <p>Daftar Lomba yang diikuti sekolah kami</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4 justify-content-center">
+
+          <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Membuat Kalimat Motivasi</a></h3>
             </div>
-        </div><!-- End Portfolio Item -->
-        <?php
-            }
-        } else {
-            echo "Data tidak ditemukan.";
-        }
-        ?>
-    </div>
-</div><!-- End All Container -->
-
-<div id="akademik-container" class="content-container" style="display:none;">
-    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-        <?php
-        // Menampilkan data untuk kategori akademik
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if ($row['kategori'] == 'akademik') {
-        ?>
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-akademik">
-            <img src="admin/prestasi_sekolah/uploads/<?php echo $row['foto']; ?>" class="img-fluid" alt="">
-            <div class="portfolio-info">
-                <h4><?php echo $row['nama_prestasi']; ?></h4>
-                <a href="admin/prestasi_sekolah/uploads/<?php echo $row['foto']; ?>" title="<?php echo $row['deskripsi']; ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          </div><!-- End Feature Item -->
+          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Lomba Bahasa Jawa</a></h3>
             </div>
-        </div><!-- End Portfolio Item -->
-        <?php
-                }
-            }
-        } else {
-            echo "Data tidak ditemukan.";
-        }
-        ?>
-    </div>
-</div><!-- End Akademik Container -->
-
-<div id="non-akademik-container" class="content-container" style="display:none;">
-    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-        <?php
-        // Menampilkan data untuk kategori non-akademik
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if ($row['kategori'] == 'non-akademik') {
-        ?>
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-non-akademik">
-            <img src="admin/prestasi_sekolah/uploads/<?php echo $row['foto']; ?>" class="img-fluid" alt="">
-            <div class="portfolio-info">
-                <h4><?php echo $row['nama_prestasi']; ?></h4>
-                <a href="admin/prestasi_sekolah/uploads/<?php echo $row['foto']; ?>" title="<?php echo $row['deskripsi']; ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+          </div><!-- End Feature Item -->
+          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Lomba Literasi 2021</a></h3>
             </div>
-        </div><!-- End Portfolio Item -->
-        <?php
-                }
-            }
-        } else {
-            echo "Data tidak ditemukan.";
-        }
-        ?>
-    </div>
-</div><!-- End Non-Akademik Container -->
+          </div><!-- End Feature Item -->
+          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Lomba MAPSI</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Lomba Adiwiyata</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Lomba Karya Ilmiah Medio</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
+            <div class="features-item justify-content-center">
+              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+              <h3><a href="detail_lomba.html" class="stretched-link">Lomba Karya Ilmiah Cabster</a></h3>
+            </div>
+          </div><!-- End Feature Item -->
+        </div>
 
-<script>
-function switchTab(element, containerId) {
-    // Menyembunyikan semua kontainer
-    var containers = document.querySelectorAll('.content-container');
-    containers.forEach(function(container) {
-        container.style.display = 'none';
-    });
+      </div>
 
-    // Menonaktifkan semua tombol filter
-    var options = document.querySelectorAll('.portfolio-filters li');
-    options.forEach(function(option) {
-        option.classList.remove('filter-active');
-    });
-
-    // Menampilkan kontainer yang dipilih
-    document.getElementById(containerId).style.display = 'block';
-
-    // Menandai tombol yang aktif
-    element.classList.add('filter-active');
-}
-</script>
+    </section><!-- /Features Section -->
 
   </main>
 
@@ -293,29 +218,8 @@ function switchTab(element, containerId) {
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script> 
-  <script>function switchTab(element, containerId) {
-    // Menyembunyikan semua kontainer
-    var containers = document.querySelectorAll('.content-container');
-    containers.forEach(function(container) {
-        container.style.display = 'none';
-    });
+  <script src="assets/js/main.js"></script>
 
-    // Menonaktifkan semua tombol
-    var options = document.querySelectorAll('.portfolio-filters li');
-    options.forEach(function(option) {
-        option.classList.remove('filter-active');
-    });
-
-    // Menampilkan kontainer yang dipilih
-    document.getElementById(containerId).style.display = 'block';
-
-    // Menandai tombol yang aktif
-    element.classList.add('filter-active');
-}
-
-</script>
-  
 </body>
 
 </html>
