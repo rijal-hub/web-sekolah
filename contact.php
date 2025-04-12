@@ -31,13 +31,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-$query = "SELECT * FROM profil_sekolah LIMIT 1";
-$result = mysqli_query($conn, $query);
+$id = 1;
 
-if ($result && mysqli_num_rows($result) > 0) {
-    $data = mysqli_fetch_assoc($result);
+// Query untuk mengambil data beranda berdasarkan id = 1
+$query = "SELECT * FROM kontak WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $kontak = $result->fetch_assoc();
 } else {
-    $data = []; // Atur ke array kosong jika gagal ambil data
+    echo "Data beranda tidak ditemukan.";
+    exit;
 }
 ?>
 
@@ -154,7 +162,7 @@ if ($result && mysqli_num_rows($result) > 0) {
   <i class="bi bi-geo-alt flex-shrink-0"></i>
   <div>
     <h4>Location:</h4>
-    <p><?= htmlspecialchars($data['alamat']); ?></p>
+    <p><?php echo nl2br(htmlspecialchars($kontak['alamat'])); ?></p>
   </div>
 </div><!-- End Info Item -->
 
@@ -162,7 +170,7 @@ if ($result && mysqli_num_rows($result) > 0) {
   <i class="bi bi-envelope flex-shrink-0"></i>
   <div>
     <h4>Email:</h4>
-    <p><?= htmlspecialchars($data['email']); ?></p>
+    <p><?php echo nl2br(htmlspecialchars($kontak['email'])); ?></p>
   </div>
 </div><!-- End Info Item -->
 
@@ -170,7 +178,7 @@ if ($result && mysqli_num_rows($result) > 0) {
   <i class="bi bi-phone flex-shrink-0"></i>
   <div>
     <h4>Telepon:</h4>
-    <p><?= htmlspecialchars($data['telepon']); ?></p>
+    <p><?php echo nl2br(htmlspecialchars($kontak['telepon'])); ?></p>
   </div>
 </div><!-- End Info Item -->
             </div>
@@ -213,9 +221,9 @@ if ($result && mysqli_num_rows($result) > 0) {
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
             <h4>Alamat</h4>
-            <p>Jl. Sedayu Sawo Raya No.1, Bangetayu Wetan, Kec. Genuk, Kota Semarang, Jawa Tengah 50115</p>
-            <p class="mt-3"><strong> Nomor telp:</strong> <span>(024) 76451362</span></p>
-            <p><strong>Email:</strong> <span>sdnbangetayuwetan34@yahoo.co.id</span></p>
+            <p><?php echo nl2br(htmlspecialchars($kontak['alamat'])); ?></p>
+            <p class="mt-3"><strong> Nomor telp:</strong> <?php echo nl2br(htmlspecialchars($kontak['telepon'])); ?></p>
+            <p><strong>Email:</strong> <?php echo nl2br(htmlspecialchars($kontak['email'])); ?></p>
          
         </div>
     
