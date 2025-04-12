@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     if ($result->num_rows > 0) {
         $lomba = $result->fetch_assoc();
     } else {
-        echo "lomba tidak ditemukan.";
+        echo "Lomba tidak ditemukan.";
         exit;
     }
 } else {
@@ -25,34 +25,59 @@ if (isset($_GET['id'])) {
     exit;
 }
 
+// Fungsi untuk ekstrak ID video YouTube dari URL
+function extractYouTubeID($url) {
+    // Cek jika URL memiliki format 'youtu.be'
+    if (preg_match('/youtu\.be\/([a-zA-Z0-9_-]{11})/', $url, $matches)) {
+        return $matches[1]; // Mengambil ID video
+    }
+    return null;
+}
+
+$jenis_lomba = isset($_POST['jenis_lomba']) ? $_POST['jenis_lomba'] : $lomba['jenis_lomba']; 
+$jenis_media = isset($_POST['jenis_media']) ? $_POST['jenis_media'] : $lomba['jenis_media']; 
+
 // Proses update data jika form disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $judul = $_POST['judul'];
+    $judul = $_POST['nama_lomba'];
+    $jenis_lomba = $_POST['jenis_lomba'];
+    $jenis_media = $_POST['jenis_media'];
     $deskripsi = $_POST['deskripsi'];
+    $media = null;
 
-    // Cek apakah ada file foto yang diupload
+    // Cek apakah ada file foto atau URL YouTube yang diupload
     if ($_FILES['media']['error'] == 0) {
+        // Jika ada file yang diupload
         $foto = $_FILES['media'];
         $foto_name = $foto['name'];
         $foto_tmp = $foto['tmp_name'];
 
         // Menyimpan foto di folder uploads
         move_uploaded_file($foto_tmp, 'uploads/' . $foto_name);
-
-        // Update database dengan foto baru
-        $query = "UPDATE lomba_lomba SET judul = ?, deskripsi = ?, media = ? WHERE id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssi", $judul, $deskripsi, $foto_name, $id);
-    } else {
-        // Update tanpa foto jika tidak ada foto yang diupload
-        $query = "UPDATE lomba_lomba SET nama_lomba = ?, deskripsi = ? WHERE id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssi", $nama_lomba, $deskripsi, $id);
+        $media = $foto_name;
+    } elseif (!empty($_POST['media'])) {
+        // Jika ada URL YouTube yang dimasukkan, ekstrak ID video
+        $youtube_url = $_POST['media'];
+        $video_id = extractYouTubeID($youtube_url);
+        if ($video_id) {
+            $media = "https://www.youtube.com/embed/" . $video_id; // Embed video YouTube
+        }
     }
 
+    // Update database dengan media baru (foto atau link YouTube)
+    if ($media !== null) {
+        $query = "UPDATE lomba_lomba SET nama_lomba = ?, jenis_lomba = ?, jenis_media = ?, deskripsi = ?, media = ? WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("sssssi", $judul, $jenis_lomba, $jenis_media, $deskripsi, $media, $id);
+    } else {
+        // Update query tanpa media
+        $query = "UPDATE lomba_lomba SET nama_lomba = ?, jenis_lomba = ?, jenis_media = ?, deskripsi = ? WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssssi", $judul, $jenis_lomba, $jenis_media, $deskripsi, $id);
+    }
     // Eksekusi query update
     if ($stmt->execute()) {
-        echo "lomba berhasil diperbarui!";
+        echo "Lomba berhasil diperbarui!";
         header("Location: lomba.php"); // Kembali ke halaman daftar lomba setelah update
         exit;
     } else {
@@ -242,13 +267,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Tambah lomba</h1>
+                    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Edit lomba</h1>
                     <p class="mb-4">Halaman ini digunakan untuk menambah data lomba sekolah.</p>
 
                     <!-- Konten-->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah lomba</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Form Edit lomba</h6>
                         </div>
                         <div class="card-body">
                         <form action="edit_lomba.php?id=<?php echo $lomba['id']; ?>" method="POST" enctype="multipart/form-data">
@@ -256,23 +281,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label for="nama_lomba">Nama lomba:</label>
                                 <input type="text" class="form-control" name="nama_lomba" id="nama_lomba" value="<?php echo $lomba['nama_lomba']; ?>" required>
                             </div>
-                            <label>Foto atau Video saat ini:</label><br>
+                            <!-- Jenis Lomba -->
+                        <div class="form-group">
+                            <label for="jenis_lomba">Jenis Lomba</label>
+                            <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
+                                <option value="motivasi" <?php echo ($jenis_lomba == 'motivasi') ? 'selected' : ''; ?>>Motivasi</option>
+                                <option value="bahasa_jawa" <?php echo ($jenis_lomba == 'bahasa_jawa') ? 'selected' : ''; ?>>Bahasa Jawa</option>
+                                <option value="literasi" <?php echo ($jenis_lomba == 'literasi') ? 'selected' : ''; ?>>Literasi</option>
+                                <option value="mapsi" <?php echo ($jenis_lomba == 'mapsi') ? 'selected' : ''; ?>>Mapsi</option>
+                                <option value="adiwiyata" <?php echo ($jenis_lomba == 'adiwiyata') ? 'selected' : ''; ?>>Adiwiyata</option>
+                                <option value="karya_ilmiah_medio" <?php echo ($jenis_lomba == 'karya_ilmiah_medio') ? 'selected' : ''; ?>>Karya Ilmiah Medio</option>
+                                <option value="karya_ilmiah_cabster" <?php echo ($jenis_lomba == 'karya_ilmiah_cabster') ? 'selected' : ''; ?>>Karya Ilmiah Cabster</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="jenis_media">Jenis Media</label>
+                            <select class="form-control" id="jenis_media" name="jenis_media" required>
+                                <option value="foto" <?php echo ($jenis_media == 'foto') ? 'selected' : ''; ?>>Foto</option>
+                                <option value="video" <?php echo ($jenis_media == 'video') ? 'selected' : ''; ?>>Video</option>
+                            </select>
+                        </div>
+                            <label>Media saat ini:</label><br>
                             <?php
-                            if (!empty($lomba['media'])) {
-                                $file_extension = pathinfo($lomba['media'], PATHINFO_EXTENSION);
-                                if (in_array(strtolower($file_extension), ['jpg', 'jpeg', 'png', 'gif'])) {
-                                    echo "<img src='uploads/{$lomba['media']}' width='200'>";
-                                } elseif (in_array(strtolower($file_extension), ['mp4', 'mov', 'avi'])) {
-                                    echo "<video width='200' controls><source src='uploads/{$lomba['media']}' type='video/{$file_extension}'></video>";
-                                }
-                            } elseif (!empty($lomba['youtube_link'])) {
-                                echo "<iframe width='200' height='150' src='{$lomba['youtube_link']}' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>";
-                            }
-                             ?><br>
+                            if (filter_var($lomba['media'], FILTER_VALIDATE_URL)) {
+                                            // Jika media berupa URL video (YouTube atau youtu.be)
+                                            if (strpos($lomba['media'], 'youtube') !== false || strpos($lomba['media'], 'youtu.be') !== false) {
+                                                // Cek apakah URLnya dari youtu.be
+                                                if (strpos($lomba['media'], 'youtu.be') !== false) {
+                                                    // Mengambil ID video dari URL youtu.be
+                                                    preg_match('/youtu\.be\/([a-zA-Z0-9_-]+)/', $lomba['media'], $matches);
+                                                    $video_id = $matches[1]; // ID video
+                                                } else {
+                                                    // Jika URL dari youtube.com, ambil ID video setelah 'v='
+                                                    parse_str(parse_url($lomba['media'], PHP_URL_QUERY), $url_params);
+                                                    $video_id = $url_params['v']; // ID video
+                                                }
+                                                
+                                                // Membuat URL embed
+                                                $embed_url = "https://www.youtube.com/embed/{$video_id}";
+                                                echo "<iframe width='200' src='{$embed_url}' frameborder='0' allowfullscreen></iframe>";
+                                            } else {
+                                                // Jika media adalah URL selain video (misalnya link gambar eksternal)
+                                                echo "<a href='{$lomba['media']}' target='_blank'>Lihat Media</a>";
+                                            }
+                                        } else {
+                                            // Jika media berupa file gambar
+                                            echo "<img src='uploads/{$lomba['media']}' alt='media lomba' width='200'>";
+                                        }?><br>
                             <label for="media">Media:</label>
                                 <input type="file" class="form-control" name="media" id="media">
                                 <p>Atau masukkan URL YouTube:</p>
-                                <input type="url" class="form-control" name="youtube_link" id="youtube_link" placeholder="https://www.youtube.com/your_video_link">
+                                <input type="url" class="form-control" name="media" id="media" value="<?php echo $lomba['media']; ?>">
                                 
                             <div>
                                 <label for="deskripsi">Deskripsi:</label>
