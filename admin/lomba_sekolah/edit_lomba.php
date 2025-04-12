@@ -27,15 +27,14 @@ if (isset($_GET['id'])) {
 
 // Fungsi untuk ekstrak ID video YouTube dari URL
 function extractYouTubeID($url) {
-    // Cek jika URL memiliki format 'youtu.be'
     if (preg_match('/youtu\.be\/([a-zA-Z0-9_-]{11})/', $url, $matches)) {
-        return $matches[1]; // Mengambil ID video
+        return $matches[1];
     }
     return null;
 }
 
-$jenis_lomba = isset($_POST['jenis_lomba']) ? $_POST['jenis_lomba'] : $lomba['jenis_lomba']; 
-$jenis_media = isset($_POST['jenis_media']) ? $_POST['jenis_media'] : $lomba['jenis_media']; 
+$jenis_lomba = isset($_POST['jenis_lomba']) ? $_POST['jenis_lomba'] : $lomba['jenis_lomba'];
+$jenis_media = isset($_POST['jenis_media']) ? $_POST['jenis_media'] : $lomba['jenis_media'];
 
 // Proses update data jika form disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -47,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Cek apakah ada file foto atau URL YouTube yang diupload
     if ($_FILES['media']['error'] == 0) {
-        // Jika ada file yang diupload
         $foto = $_FILES['media'];
         $foto_name = $foto['name'];
         $foto_tmp = $foto['tmp_name'];
@@ -60,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $youtube_url = $_POST['media'];
         $video_id = extractYouTubeID($youtube_url);
         if ($video_id) {
-            $media = "https://www.youtube.com/embed/" . $video_id; // Embed video YouTube
+            $media = "https://youtu.be/" . $video_id; // Embed video YouTube
         }
     }
 
@@ -75,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare($query);
         $stmt->bind_param("ssssi", $judul, $jenis_lomba, $jenis_media, $deskripsi, $id);
     }
+
     // Eksekusi query update
     if ($stmt->execute()) {
         echo "Lomba berhasil diperbarui!";
@@ -314,7 +313,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                 } else {
                                                     // Jika URL dari youtube.com, ambil ID video setelah 'v='
                                                     parse_str(parse_url($lomba['media'], PHP_URL_QUERY), $url_params);
-                                                    $video_id = $url_params['v']; // ID video
+                                                    $video_id = isset($url_params['v']) ? $url_params['v'] : ''; // ID video
                                                 }
                                                 
                                                 // Membuat URL embed
