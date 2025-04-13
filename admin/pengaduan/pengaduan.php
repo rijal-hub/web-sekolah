@@ -113,7 +113,7 @@ if ($result === false) {
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="../beranda/beranda.php">
                 <i class="fas fa-fw fa-home"></i> <!-- Ikon rumah untuk Beranda -->
                 <span>Beranda</span>
@@ -153,14 +153,14 @@ if ($result === false) {
         </li>
 
         <!-- Nav Item - Pelayanan Publik -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-cogs"></i> <!-- Ikon pengaturan untuk Pelayanan Publik -->
                 <span>Pelayanan Publik</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href="../pengaduan/pengaduan.php">Pengaduan</a>
+                    <a class="collapse-item active" href="../pengaduan/pengaduan.php">Pengaduan</a>
                 </div>
             </div>
         </li>
@@ -354,7 +354,7 @@ if ($result === false) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>

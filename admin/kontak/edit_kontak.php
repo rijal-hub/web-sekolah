@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="../beranda/beranda.php">
                 <i class="fas fa-fw fa-home"></i> <!-- Ikon rumah untuk Beranda -->
                 <span>Beranda</span>
@@ -156,7 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </li>
 
         <!-- Nav Item - Kontak -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="../kontak/edit_kontak.php">
                 <i class="fas fa-fw fa-phone-alt"></i> <!-- Ikon telepon untuk Kontak -->
                 <span>Kontak</span>
@@ -321,7 +321,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
