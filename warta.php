@@ -1,22 +1,20 @@
 <?php
 // Menyertakan file koneksi database
-include('config/db_connect.php');
-
 // Menangkap parameter filter kategori
-$filter = isset($_GET['filter']) ? $_GET['filter'] : '*';
-$id = isset($_GET['id']) ? $_GET['id'] : null; // Tangkap ID gambar jika ada
+include 'config/db_connect.php';
+$filter = isset($_GET['filter']) && $_GET['filter'] != '' ? $_GET['filter'] : 'all';
 
 // Menentukan query berdasarkan kategori yang dipilih
-if ($filter == '*') {
+if ($filter == 'all') {
     // Jika tidak ada filter, tampilkan semua data
     $query = "SELECT id, judul, media, isi, kategori FROM berita_sekolah";
-    $result = $conn->query($query); // Jika query biasa
+    $result = $conn->query($query);
 } else {
-    // Jika filter akademik dipilih, tampilkan data dengan kategori akademik
+    // Jika filter dipilih, tampilkan data dengan kategori yang sesuai
     $query = $conn->prepare("SELECT id, judul, media, isi, kategori FROM berita_sekolah WHERE kategori = ?");
-    $query->bind_param("s", $filter);  // "s" berarti string
+    $query->bind_param("s", $filter);
     $query->execute();
-    $result = $query->get_result(); // Dapatkan hasil query
+    $result = $query->get_result();
 }
 ?>
 
@@ -117,8 +115,8 @@ if ($filter == '*') {
     <div class="container">
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
         <ul class="portfolio-filters">
-  <li class="<?= !isset($_GET['filter']) || $_GET['filter'] == '' ? 'filter-active' : '' ?>">
-    <a href="?filter=">Semua</a>
+  <li class="<?= !isset($_GET['filter']) || $_GET['filter'] == 'all' ? 'filter-active' : '' ?>">
+    <a href="?filter=all">Semua</a>
   </li>
   <li class="<?= isset($_GET['filter']) && $_GET['filter'] == 'akademik' ? 'filter-active' : '' ?>">
     <a href="?filter=akademik">Akademik</a>
@@ -129,30 +127,26 @@ if ($filter == '*') {
 </ul>
 
 
-<div id="all-container" class="content-container" style="display:block;">
-    <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-        <?php
-        // Menampilkan data dari database untuk Semua
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-        ?>
-        <div class="col-lg-4 col-md-6 portfolio-item isotope-item">
-            <img src="admin/berita_sekolah/uploads/<?php echo $row['media']; ?>" class="img-fluid" alt="">
-            <div class="portfolio-info">
-                <h4><?php echo $row['judul']; ?></h4>
-                <a href="admin/berita_sekolah/uploads/<?php echo $row['media']; ?>" title="<?php echo $row['judul']; ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
-                <a href="detail_warta.php?id=<?php echo $row['id']; ?>" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
-
-            </div>
-        </div><!-- End Portfolio Item -->
-        <?php
-            }
-        } else {
-            echo "Data tidak ditemukan.";
+<div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+    <?php
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+    ?>
+    <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-<?= $row['kategori'] ?>">
+        <img src="admin/berita_sekolah/uploads/<?= $row['media'] ?>" class="img-fluid" alt="">
+        <div class="portfolio-info">
+            <h4><?= $row['judul'] ?></h4>
+            <a href="admin/berita_sekolah/uploads/<?= $row['media'] ?>" title="<?= $row['judul'] ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+            <a href="detail_warta.php?id=<?= $row['id'] ?>" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
+        </div>
+    </div><!-- End Portfolio Item -->
+    <?php
         }
-        ?>
-    </div>
-</div><!-- End All Container -->
+    } else {
+        echo "<div class='col-12'><p>Data tidak ditemukan.</p></div>";
+    }
+    ?>
+</div>
 
 <div id="akademik-container" class="content-container" style="display:none;">
     <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
