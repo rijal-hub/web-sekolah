@@ -112,33 +112,31 @@ if (!$result || $result->num_rows === 0) {
       <div class="row gy-4">
   <?php
   // Menampilkan data dari database
+  // Menampilkan data dari database
   if ($result->num_rows > 0) {
-      while ($row = $result->fetch_assoc()) {
-  ?>
-   <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-  <div class="team-member">
-    <div class="member-img" 
-         style="background-image: url('admin/profil_karyawan/uploads/<?php echo htmlspecialchars($row['foto']); ?>'); 
-                background-size: cover; 
-                background-position: center; 
-                width: 100%; 
-                height: 250px; 
-                margin-bottom: 20px;">
-      <!-- No need for <img> tag here -->
+    while ($row = $result->fetch_assoc()) {
+?>
+  <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+    <div class="team-member">
+      <div class="member-img">
+        <img src="admin/profil_karyawan/uploads/<?php echo htmlspecialchars($row['foto']); ?>" 
+             alt="Foto" class="img-fluid mx-auto d-block" 
+             style="width: 100%; height: auto; margin-bottom: 20px;"
+             onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+       
+      </div>
+      <div class="member-info">
+        <h4><?php echo htmlspecialchars($row['nama']); ?></h4>
+        <span><?php echo htmlspecialchars($row['jabatan']); ?></span>
+      </div>
     </div>
-    <div class="member-info">
-      <h4><?php echo htmlspecialchars($row['nama']); ?></h4>
-      <span><?php echo htmlspecialchars($row['jabatan']); ?></span>
-    </div>
-  </div>
-</div><!-- End Team Member -->
-
-  <?php
-      }
-  } else {
-      echo "<p>Tidak ada data guru yang ditemukan.</p>";
-  }
-  ?>
+  </div><!-- End Team Member -->
+<?php
+    }
+} else {
+    echo "<p>Tidak ada data guru yang ditemukan.</p>";
+}
+?>
 </div> <!-- tutup row gy-4 -->
         </div>
 

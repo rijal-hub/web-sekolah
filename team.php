@@ -125,12 +125,7 @@ if (!$result || $result->num_rows === 0) {
                alt="Foto" class="img-fluid mx-auto d-block" 
                style="width: 100%; height: auto; margin-bottom: 20px;"
                onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
-          <div class="social">
-            <a href="#"><i class="bi bi-twitter-x"></i></a>
-            <a href="#"><i class="bi bi-facebook"></i></a>
-            <a href="#"><i class="bi bi-instagram"></i></a>
-            <a href="#"><i class="bi bi-linkedin"></i></a>
-          </div>
+         
         </div>
         <div class="member-info">
           <h4><?php echo htmlspecialchars($row['nama']); ?></h4>
