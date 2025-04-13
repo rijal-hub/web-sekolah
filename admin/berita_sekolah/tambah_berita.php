@@ -1,4 +1,13 @@
 <?php
+session_start(); // WAJIB sebelum HTML atau echo apapun
+
+if (!isset($_SESSION['username'])) {
+    header("Location: ../../login.php");
+    exit;
+}
+?>
+
+<?php
 // Include file db_connect.php untuk koneksi ke database
 include 'db_connect.php';
 
