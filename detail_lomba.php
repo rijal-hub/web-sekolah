@@ -100,7 +100,7 @@ $conn->close();
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Lomba Lomba</title>
+  <title>Detail Lomba</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
