@@ -247,8 +247,8 @@ if ($result === false) {
                                             echo "<td>{$no}</td>";
                                             echo "<td>{$prestasi['nama_prestasi']}</td>";
                                             echo "<td>{$prestasi['kategori']}</td>";
-                                            echo "<td><img src='uploads/{$prestasi['foto']}' alt='Foto Prestasi' width='100'></td>";
-                                            echo "<td>{$prestasi['deskripsi']}</td>";
+                                            echo "<td><img src='uploads/{$prestasi['foto']}' alt='Foto Prestasi' width='200'></td>";
+                                            echo "<td><textarea class='form-control' rows='6' cols='70'readonly>{$prestasi['deskripsi']}</textarea></td>";
                                             echo "<td>
                                                     <a href='edit_prestasi.php?id={$prestasi['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
                                                     <a href='#' class='btn btn-danger d-flex justify-content-center' onclick='showDeleteModal({$prestasi['id']})'>Hapus</a>

@@ -212,9 +212,9 @@ if ($result === false) {
                                     <tr>
                                         <th>No</th>
                                         <th>Judul</th>
-                                        <th>Isi</th>
-                                        <th>Tanggal</th>
                                         <th>Media</th>
+                                        <th>Isi</th>
+                                        <th>tanggal</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -228,13 +228,14 @@ if ($result === false) {
                                             echo "<tr>";
                                             echo "<td>{$no}</td>";
                                             echo "<td>{$berita['judul']}</td>";
-                                            echo "<td>{$berita['isi']}</td>";
+                                            echo "<td><img src='uploads/{$berita['media']}' alt='Media Berita' width='200'></td>";
+                                            echo "<td><textarea class='form-control' rows='5' cols='100'readonly>{$berita['isi']}</textarea></td>";
                                             echo "<td>{$berita['tanggal']}</td>";
-                                            echo "<td><img src='uploads/{$berita['media']}' alt='Media Berita' width='100'></td>";
-                                                                                        echo "<td>
+                                            echo "<td>
                                                     <a href='edit_berita.php?id={$berita['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
                                                     <a href='hapus_berita.php?id={$berita['id']}' class='btn btn-danger d-flex justify-content-center'>Hapus</a>
                                                 </td>";
+                                           
                                             echo "</tr>";
                                             $no++;
                                         }

@@ -298,7 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                  <!-- Input URL Video -->
                                  <div class="form-group">
                                     <label for="url_video">URL Video (salah satu)</label>
-                                    <input type="url" class="form-control" id="url_video" name="url_video" placeholder="https://example.com/video">
+                                    <input type="url" class="form-control" id="url_video" name="url_video" placeholder="https://youtu.be/">
                                 </div>
                                 <div class="form-group">
                                     <label for="deskripsi">Deskripsi</label>

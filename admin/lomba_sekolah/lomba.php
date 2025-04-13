@@ -256,7 +256,7 @@ if ($result === false) {
                                             echo "<td><img src='uploads/{$lomba['media']}' alt='media lomba' width='200'></td>";
                                         }
                                 
-                                        echo "<td>{$lomba['deskripsi']}</td>";
+                                        echo "<td><textarea class='form-control' rows='6' cols='70'readonly>{$lomba['deskripsi']}</textarea></td>";
                                         echo "<td>
                                                 <a href='edit_lomba.php?id={$lomba['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
                                                 <a href='#' data-id='{$lomba['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
