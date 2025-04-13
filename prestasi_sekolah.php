@@ -83,7 +83,7 @@ if ($filter == '*') {
             </ul>
           </li>
           <li><a href="lomba.php">Lomba</a></li>
-          <li><a href="portfolio.php">Warta sekolah</a></li>
+          <li><a href="warta.php">Warta sekolah</a></li>
           <li class="dropdown"><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/" >Pendaftaran siswa</a></li>
