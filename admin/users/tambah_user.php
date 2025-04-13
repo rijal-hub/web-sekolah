@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="sidebar-brand-icon d-flex flex-column align-items-center justify-content-center">
         <img src="../img/logo sd.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">     
         </div>  
-            <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center" >
                 <div class="sidebar-brand-text mx-3 text-center">SDN BANGETAYU WETAN 02</div>
             </a>
 
@@ -176,20 +176,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
                         </button>
-                    </form>
-
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
                     </form>
 
                     <!-- Topbar Navbar -->

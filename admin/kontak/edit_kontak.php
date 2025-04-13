@@ -10,10 +10,6 @@ if (!isset($_SESSION['username'])) {
 <?php
 // Include file db_connect.php untuk koneksi ke database
 include 'db_connect.php';
-
-// Memulai session untuk menampilkan notifikasi
-session_start();
-
 // Query untuk mengambil data Kontak dengan id = 1
 $query = "SELECT * FROM kontak WHERE id = 1";
 $stmt = $conn->prepare($query);
@@ -96,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="sidebar-brand-icon d-flex flex-column align-items-center justify-content-center">
         <img src="../img/logo sd.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">     
         </div>  
-            <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center" >
                 <div class="sidebar-brand-text mx-3 text-center">SDN BANGETAYU WETAN 02</div>
             </a>
 

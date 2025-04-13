@@ -66,7 +66,7 @@ if ($filter == '*') {
     
     <div class="container position-relative d-flex ">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="index.php" class="logo d-flex align-items-center me-auto">
 
       <img src="aset/logo sd.png" alt="Logo SD" class="logo-img">
         <h1 class="sitename">SDN BANGETAYU WETAN 02</h1>
@@ -106,7 +106,7 @@ if ($filter == '*') {
         <h1 class="mb-2 mb-lg-0">PRESTASI SEKOLAH</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">BERANDA</a></li>
+            <li><a href="index.php">BERANDA</a></li>
             <li class="current">PRESTASI SEKOLAH</li>
           </ol>
         </nav>
@@ -260,7 +260,7 @@ $kontak = [
           <h4>Umpan Balik</h4>
           <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
           <br>
-          <a href="contact.html" class="btn btn-dark">Berikan Umpan Balik</a>
+          <a href="contact.php" class="btn btn-dark">Berikan Umpan Balik</a>
 
         </div>
       </div>

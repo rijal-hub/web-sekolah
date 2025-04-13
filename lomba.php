@@ -39,7 +39,7 @@
     
     <div class="container position-relative d-flex ">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="index.php" class="logo d-flex align-items-center me-auto">
 
       <img src="aset/logo sd.png" alt="Logo SD" class="logo-img">
         <h1 class="sitename">SDN BANGETAYU WETAN 02</h1>
@@ -80,7 +80,7 @@
         <h1 class="mb-2 mb-lg-0">Lomba-Lomba</h1>
         <nav class="breadcrumbs">
           <ol>
-            <li><a href="index.html">BERANDA</a></li>
+            <li><a href="index.php">BERANDA</a></li>
             <li class="current">LOMBA</li>
           </ol>
         </nav>

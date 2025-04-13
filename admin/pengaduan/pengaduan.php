@@ -114,7 +114,7 @@ if ($result === false) {
         <div class="sidebar-brand-icon d-flex flex-column align-items-center justify-content-center">
         <img src="../img/logo sd.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">     
         </div>  
-            <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center">
                 <div class="sidebar-brand-text mx-3 text-center">SDN BANGETAYU WETAN 02</div>
             </a>
 

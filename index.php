@@ -201,7 +201,7 @@ if ($result_kontak->num_rows > 0) {
           <h4>Umpan Balik</h4>
           <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
           <br>
-          <a href="contact.html" class="btn btn-dark">Berikan Umpan Balik</a>
+          <a href="contact.php" class="btn btn-dark">Berikan Umpan Balik</a>
 
         </div>
       </div>
