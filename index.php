@@ -19,7 +19,23 @@ if ($result->num_rows > 0) {
     echo "Data beranda tidak ditemukan.";
     exit;
 }
+
+// Query untuk mengambil data kontak
+$query_kontak = "SELECT * FROM kontak WHERE id = ?";
+$stmt_kontak = $conn->prepare($query_kontak);
+$stmt_kontak->bind_param("i", $id);
+$stmt_kontak->execute();
+$result_kontak = $stmt_kontak->get_result();
+
+// Cek apakah data kontak ditemukan
+if ($result_kontak->num_rows > 0) {
+    $kontak = $result_kontak->fetch_assoc();
+} else {
+    echo "Data kontak tidak ditemukan.";
+    exit;
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +98,7 @@ if ($result->num_rows > 0) {
             </ul>
           </li>
           <li><a href="lomba.php">Lomba</a></li>
-          <li><a href="warta.php">Warta sekolah</a></li>
+          <li><a href="portfolio.php">Warta sekolah</a></li>
           <li class="dropdown"><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/" >Pendaftaran siswa</a></li>
