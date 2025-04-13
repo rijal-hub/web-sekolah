@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -103,43 +104,43 @@
 
           <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color:rgba(230, 196, 7, 0.97);"></i>
             <h3><a href="detail_lomba.php?jenis_lomba=motivasi" class="stretched-link">Membuat Kalimat Motivasi</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color: #FFD700;"></i>
             <h3><a href="detail_lomba.php?jenis_lomba=bahasa_jawa" class="stretched-link">Lomba Bahasa Jawa</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color: #FFD700;"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=literasi" class="stretched-link">Lomba Literasi 2021</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color: #FFD700;"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=mapsi" class="stretched-link">Lomba MAPSI</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color: #FFD700;"></i>
             <h3><a href="detail_lomba.php?jenis_lomba=adiwiyata" class="stretched-link">Lomba Adiwiyata</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color: #FFD700;"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=karya_ilmiah_medio" class="stretched-link">Lomba Karya Ilmiah Medio</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <i class="bi bi-trophy" style="color: #FFD700;"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=karya_ilmiah_cabster" class="stretched-link">Lomba Karya Ilmiah Cabster</a></h3>
             </div>
           </div><!-- End Feature Item -->
@@ -150,19 +151,24 @@
     </section><!-- /Features Section -->
 
   </main>
+  <?php
+$kontak = [
+  'alamat' => 'Jl. Sedayu Sawo Raya No.1, Bangetayu Wetan, Kec. Genuk, Kota Semarang, Jawa Tengah 50115',
+  'telp' => '(024) 76451362',
+  'email' => 'sdnbangetayuwetan34@yahoo.co.id'
+];
+?>
 
   <footer id="footer" class="footer dark-background">
     <div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-            <h4>Alamat</h4>
-            <p>Jl. Sedayu Sawo Raya No.1, Bangetayu Wetan, Kec. Genuk, Kota Semarang, Jawa Tengah 50115</p>
-            <p class="mt-3"><strong> Nomor telp:</strong> <span>(024) 76451362</span></p>
-            <p><strong>Email:</strong> <span>sdnbangetayuwetan34@yahoo.co.id</span></p>
-         
-        </div>
-    
-        <div class="col-lg-3 col-md-6  align-items-center footer-links">
+      <div class="col-lg-4 col-md-6 footer-about">
+        <h4>Alamat</h4>
+        <p><?= $kontak['alamat']; ?></p>
+        <p class="mt-3"><strong> Nomor telp:</strong> <span><?= $kontak['telp']; ?></span></p>
+        <p><strong>Email:</strong> <span><?= $kontak['email']; ?></span></p>
+      </div>
+      <div class="col-lg-3 col-md-6  align-items-center footer-links">
           <h4>Tautan</h4>
           <ul>
             <li><a href="https://www.kemdikbud.go.id/"> Kemendikbud</a></li>
@@ -179,7 +185,7 @@
           <h4>Umpan Balik</h4>
           <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
           <br>
-          <a href="contact.html" class="btn btn-dark">Berikan Umpan Balik</a>
+          <a href="contact.php" class="btn btn-dark">Berikan Umpan Balik</a>
 
         </div>
       </div>
