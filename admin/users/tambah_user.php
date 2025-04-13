@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="../beranda/beranda.php">
                 <i class="fas fa-fw fa-home"></i> <!-- Ikon rumah untuk Beranda -->
                 <span>Beranda</span>
@@ -136,7 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </li>
 
         <!-- Nav Item - Kelola User -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="../users/users.php">
                 <i class="fas fa-fw fa-users-cog"></i> <!-- Ikon pengaturan pengguna untuk Kelola User -->
                 <span>Kelola User</span>

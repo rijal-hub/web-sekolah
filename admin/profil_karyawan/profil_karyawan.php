@@ -60,7 +60,7 @@ if ($result === false) {
         <hr class="sidebar-divider my-0">
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="../beranda/beranda.php">
                 <i class="fas fa-fw fa-home"></i> <!-- Ikon rumah untuk Beranda -->
                 <span>Beranda</span>
@@ -68,7 +68,7 @@ if ($result === false) {
         </li>
 
         <!-- Nav Item - Profil -->
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-user"></i> <!-- Ikon user untuk Profil -->
                 <span>Profil</span>
@@ -77,7 +77,7 @@ if ($result === false) {
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="../profil_sekolah/profil_sekolah.php">Profil Sekolah</a>
                     <a class="collapse-item" href="../profil_guru/guru.php">Profil Guru</a>
-                    <a class="collapse-item" href="../profil_karyawan/profil_karyawan.php">Profil Karyawan</a>
+                    <a class="collapse-item active" href="../profil_karyawan/profil_karyawan.php">Profil Karyawan</a>
                     <a class="collapse-item" href="../prestasi_sekolah/prestasi_sekolah.php">Prestasi Sekolah</a>
                 </div>
             </div>

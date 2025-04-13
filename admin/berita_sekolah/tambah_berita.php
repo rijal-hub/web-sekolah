@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="../beranda/beranda.php">
             <i class="fas fa-fw fa-home"></i> <!-- Ikon rumah untuk Beranda -->
             <span>Beranda</span>
@@ -145,7 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </li>
 
     <!-- Nav Item - Berita -->
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link" href="../berita_sekolah/berita_sekolah.php">
             <i class="fas fa-fw fa-newspaper"></i> <!-- Ikon surat kabar untuk Berita -->
             <span>Berita</span>
