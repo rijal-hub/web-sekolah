@@ -192,9 +192,9 @@ if ($result->num_rows > 0) {
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
             <h4>Alamat</h4>
-            <p>Jl. Sedayu Sawo Raya No.1, Bangetayu Wetan, Kec. Genuk, Kota Semarang, Jawa Tengah 50115</p>
-            <p class="mt-3"><strong> Nomor telp:</strong> <span>(024) 76451362</span></p>
-            <p><strong>Email:</strong> <span>sdnbangetayuwetan34@yahoo.co.id</span></p>
+            <p><?php echo nl2br(htmlspecialchars($kontak['alamat'])); ?></p>
+            <p class="mt-3"><strong> Nomor telp:</strong> <?php echo nl2br(htmlspecialchars($kontak['telepon'])); ?></p>
+            <p><strong>Email:</strong> <?php echo nl2br(htmlspecialchars($kontak['email'])); ?></p>
          
         </div>
     
