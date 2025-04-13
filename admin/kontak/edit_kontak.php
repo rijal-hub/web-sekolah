@@ -31,14 +31,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $telepon = $_POST['telepon'];
     $jam_kerja = $_POST['jam_kerja'];
-    $twitter = $_POST['twitter'];  // Ambil data Twitter
+    $facebook = $_POST['facebook'];  
     $instagram = $_POST['instagram'];  // Ambil data Instagram
     $youtube = $_POST['youtube'];  // Ambil data YouTube
 
     // Query untuk update data kontak
-    $query = "UPDATE kontak SET alamat = ?, maps = ?, email = ?, telepon = ?, jam_kerja = ?, twitter = ?, instagram = ?, youtube = ? WHERE id = 1";
+    $query = "UPDATE kontak SET alamat = ?, maps = ?, email = ?, telepon = ?, jam_kerja = ?, facebook = ?, instagram = ?, youtube = ? WHERE id = 1";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssssssss", $alamat, $maps, $email, $telepon, $jam_kerja, $twitter, $instagram, $youtube);
+    $stmt->bind_param("ssssssss", $alamat, $maps, $email, $telepon, $jam_kerja, $facebook, $instagram, $youtube);
 
     // Eksekusi query update
     if ($stmt->execute()) {
@@ -263,8 +263,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="text" class="form-control" name="jam_kerja" id="jam_kerja" value="<?php echo $kontak['jam_kerja']; ?>" required>
                             </div><br>
                             <div>
-                                <label for="twitter">Twitter:</label>
-                                <input type="url" class="form-control" name="twitter" id="twitter" value="<?php echo $kontak['twitter']; ?>">
+                                <label for="facebook">Facebook:</label>
+                                <input type="url" class="form-control" name="facebook" id="facebook" value="<?php echo $kontak['facebook']; ?>">
                             </div>
 
                             <div>
@@ -295,7 +295,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; SDN Bangetayu Wetan 02</span>
                     </div>
                 </div>
             </footer>
