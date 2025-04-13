@@ -221,25 +221,35 @@ $conn->close();
 
                     // Menyesuaikan query SQL berdasarkan filter dan jenis_lomba
                     $sql = "SELECT * FROM lomba_lomba WHERE 1";
-
-                    // Menambahkan filter jenis_lomba jika ada
                     if ($jenis_lomba_filter != '') {
-                        $sql .= " AND jenis_lomba = '{$jenis_lomba_filter}'";
-                    }
-
-                    // Menambahkan filter foto atau video
-                    if ($filter == 'foto') {
-                        $sql .= " AND media LIKE '%.jpg' OR media LIKE '%.png' OR media LIKE '%.jpeg'";
-                    } elseif ($filter == 'video') {
-                        $sql .= " AND (media LIKE '%youtube%' OR media LIKE '%youtu.be%')";
-                    }
-
-                    $result = $conn->query($sql);
-
+                      if ($filter != '') {
+                          $sql = "SELECT * FROM lomba_lomba WHERE jenis_lomba = ? AND jenis_media = ?";
+                          $stmt = $conn->prepare($sql);
+                          $stmt->bind_param('ss', $jenis_lomba_filter, $filter);
+                      } else {
+                          $sql = "SELECT * FROM lomba_lomba WHERE jenis_lomba = ?";
+                          $stmt = $conn->prepare($sql);
+                          $stmt->bind_param('s', $jenis_lomba_filter);
+                      }
+                  } else {
+                      if ($filter != '') {
+                          $sql = "SELECT * FROM lomba_lomba WHERE jenis_media = ?";
+                          $stmt = $conn->prepare($sql);
+                          $stmt->bind_param('s', $filter);
+                      } else {
+                          $sql = "SELECT * FROM lomba_lomba";
+                          $stmt = $conn->prepare($sql);
+                      }
+                  }
+                  
+                  $stmt->execute();
+                  $result = $stmt->get_result();
+                  
                     if ($result->num_rows > 0) {
                         while ($lomba = $result->fetch_assoc()) {
                             $media = $lomba['media'];
                             $nama_lomba = $lomba['nama_lomba'];
+                            $deskripsi = $lomba['deskripsi'];
                             $jenis_lomba = $lomba['jenis_lomba'];
 
                             // Mengecek apakah media berupa URL (gambar atau video)
@@ -290,7 +300,7 @@ $conn->close();
                                     <img src="admin/lomba_sekolah/uploads/<?php echo $media; ?>" class="img-fluid" alt="<?php echo $nama_lomba; ?>">
                                     <div class="portfolio-info">
                                         <h4><?php echo $nama_lomba; ?></h4>
-                                        <a href="uploads/<?php echo $media; ?>" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                                        <a href="admin/lomba_sekolah/uploads/<?php echo $media; ?>" title="<?php echo $deskripsi; ?>"class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                                     </div>
                                 </div><!-- End Portfolio Item -->
                                 <?php
