@@ -34,11 +34,12 @@ if (isset($_GET['id'])) {
     exit;
 }
 
-/// Proses update data jika form disubmit
+// Proses update data jika form disubmit
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $judul = $_POST['judul'];
     $isi = $_POST['isi'];
     $tanggal = $_POST['tanggal'];
+    $kategori = $_POST['kategori']; // Mengambil kategori dari form
     $foto_name = $berita['media']; // Gunakan nama file lama jika tidak ada upload baru
 
     // Cek apakah ada file foto yang diupload
@@ -47,15 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $foto_tmp = $_FILES['media']['tmp_name'];
         move_uploaded_file($foto_tmp, 'uploads/' . $foto_name);
 
-        // Query update dengan foto baru
-        $query = "UPDATE berita_sekolah SET judul = ?, isi = ?, tanggal = ?, media = ? WHERE id = ?";
+        // Query update dengan foto baru dan kategori
+        $query = "UPDATE berita_sekolah SET judul = ?, isi = ?, tanggal = ?, media = ?, kategori = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssssi", $judul, $isi, $tanggal, $foto_name, $id);
+        $stmt->bind_param("sssssi", $judul, $isi, $tanggal, $foto_name, $kategori, $id);
     } else {
-        // Query update tanpa perubahan foto
-        $query = "UPDATE berita_sekolah SET judul = ?, isi = ?, tanggal = ? WHERE id = ?";
+        // Query update tanpa perubahan foto tetapi dengan kategori
+        $query = "UPDATE berita_sekolah SET judul = ?, isi = ?, tanggal = ?, kategori = ? WHERE id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sssi", $judul, $isi, $tanggal, $id);
+        $stmt->bind_param("ssssi", $judul, $isi, $tanggal, $kategori, $id);
     }
 
     // Eksekusi query update
@@ -67,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Error: " . $stmt->error;
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -261,6 +261,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <div>
                                 <label for="judul">Judul Berita:</label>
                                 <input type="text" class="form-control" name="judul" id="judul" value="<?php echo $berita['judul']; ?>" required>
+                            </div><br>
+                            <div>
+                                <label for="kategori">Kategori:</label>
+                                <select name="kategori" class="form-control" id="kategori" required>
+                                    <option value="Akademik" <?php echo ($berita['kategori'] == 'Akademik') ? 'selected' : ''; ?>>Akademik</option>
+                                    <option value="Non-Akademik" <?php echo ($berita['kategori'] == 'Non-Akademik') ? 'selected' : ''; ?>>Non-Akademik</option>
+                                    <!-- Tambahkan kategori lain sesuai kebutuhan -->
+                                </select>
                             </div><br>
                             <div>
                                 <label for="isi">Deskripsi:</label>

@@ -220,6 +220,7 @@ if ($result === false) {
                                     <tr>
                                         <th>No</th>
                                         <th>Judul</th>
+                                        <th>Kategori</th>
                                         <th>Media</th>
                                         <th>Isi</th>
                                         <th>tanggal</th>
@@ -236,6 +237,7 @@ if ($result === false) {
                                             echo "<tr>";
                                             echo "<td>{$no}</td>";
                                             echo "<td>{$berita['judul']}</td>";
+                                            echo "<td>{$berita['kategori']}</td>";
                                             echo "<td><img src='uploads/{$berita['media']}' alt='Media Berita' width='200'></td>";
                                             echo "<td><textarea class='form-control' rows='5' cols='100'readonly>{$berita['isi']}</textarea></td>";
                                             echo "<td>{$berita['tanggal']}</td>";

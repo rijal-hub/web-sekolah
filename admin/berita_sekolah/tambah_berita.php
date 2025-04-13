@@ -17,7 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $isi = $_POST['isi'];
     $tanggal = $_POST['tanggal'];
     $media = $_POST['media'];
-    
+    $kategori = $_POST['kategori']; // Mengambil kategori dari dropdown
+
     // Upload foto
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["media"]["name"]);
@@ -60,9 +61,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         if (move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
             // Masukkan data ke database
-            $query = "INSERT INTO berita_sekolah (judul, isi, tanggal, media) 
-            VALUES ('$judul', '$isi', '$tanggal', '" . basename($_FILES["media"]["name"]) . "')";
-              if ($conn->query($query) === TRUE) {
+            $query = "INSERT INTO berita_sekolah (judul, isi, tanggal, media, kategori) 
+            VALUES ('$judul', '$isi', '$tanggal', '" . basename($_FILES["media"]["name"]) . "', '$kategori')";
+            
+            if ($conn->query($query) === TRUE) {
                 header("Location: berita_sekolah.php");
                 exit;
             } else {
@@ -73,8 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 }
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
