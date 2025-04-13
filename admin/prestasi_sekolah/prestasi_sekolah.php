@@ -251,7 +251,7 @@ if ($result === false) {
                                             echo "<td><textarea class='form-control' rows='6' cols='70'readonly>{$prestasi['deskripsi']}</textarea></td>";
                                             echo "<td>
                                                     <a href='edit_prestasi.php?id={$prestasi['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='#' class='btn btn-danger d-flex justify-content-center' onclick='showDeleteModal({$prestasi['id']})'>Hapus</a>
+                                                    <a href='#' data-id='{$prestasi['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
                                                 </td>";
                                         
                                             echo "</tr>";

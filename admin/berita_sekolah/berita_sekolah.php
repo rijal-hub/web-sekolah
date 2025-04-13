@@ -233,7 +233,7 @@ if ($result === false) {
                                             echo "<td>{$berita['tanggal']}</td>";
                                             echo "<td>
                                                     <a href='edit_berita.php?id={$berita['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_berita.php?id={$berita['id']}' class='btn btn-danger d-flex justify-content-center'>Hapus</a>
+                                                    <a href='#' data-id='{$berita['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
                                                 </td>";
                                            
                                             echo "</tr>";

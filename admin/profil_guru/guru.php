@@ -246,8 +246,8 @@ if ($result === false) {
                                             echo "<td>{$guru['jabatan']}</td>";
                                             echo "<td>
                                                     <a href='edit_guru.php?id={$guru['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_guru.php?id={$guru
-                                                    ['id']}' class='btn btn-danger d-flex'>Hapus</a>
+                                                     <a href='#' data-id='{$guru['id']}' class='btn btn-danger btn-hapus d-flex justify-content-center'>Hapus</a>
+
                                                 </td>";
                                             echo "</tr>";
                                             $no++;
@@ -353,7 +353,7 @@ if ($result === false) {
             var id = this.getAttribute('data-id');
             
             // Set link href pada tombol konfirmasi modal
-            var url = "hapus_sarana.php?id=" + id;
+            var url = "hapus_guru.php?id=" + id;
             document.getElementById('confirmHapusBtn').setAttribute('href', url);
             
             // Tampilkan modal konfirmasi
