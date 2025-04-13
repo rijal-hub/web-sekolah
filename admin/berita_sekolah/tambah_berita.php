@@ -132,7 +132,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <a class="collapse-item" href="../profil_guru/guru.php">Profil Guru</a>
                 <a class="collapse-item" href="../profil_karyawan/profil_karyawan.php">Profil Karyawan</a>
                 <a class="collapse-item" href="../prestasi_sekolah/prestasi_sekolah.php">Prestasi Sekolah</a>
-                <a class="collapse-item" href="../kegiatan_sekolah/kegiatan.php">Kegiatan Sekolah</a>
             </div>
         </div>
     </li>
