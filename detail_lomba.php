@@ -90,6 +90,21 @@ if ($result->num_rows > 0) {
     echo "Tidak ada data lomba ditemukan";
 }
 
+// Query untuk mengambil data kontak
+$query_kontak = "SELECT * FROM kontak WHERE id = ?";
+$stmt_kontak = $conn->prepare($query_kontak);
+$stmt_kontak->bind_param("i", $id);
+$stmt_kontak->execute();
+$result_kontak = $stmt_kontak->get_result();
+
+// Cek apakah data kontak ditemukan
+if ($result_kontak->num_rows > 0) {
+    $kontak = $result_kontak->fetch_assoc();
+} else {
+    echo "Data kontak tidak ditemukan.";
+    exit;
+}
+
 // Menutup koneksi
 $conn->close();
 ?>
