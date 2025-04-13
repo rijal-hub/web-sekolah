@@ -65,24 +65,24 @@ if ($result->num_rows > 0) {
     
     <div class="container position-relative d-flex ">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="index.php" class="logo d-flex align-items-center me-auto">
 
       <img src="aset/logo sd.png" alt="Logo SD" class="logo-img">
         <h1 class="sitename">SDN BANGETAYU WETAN 02</h1>
       </a>
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Beranda</a></li>
+          <li><a href="index.php">Beranda</a></li>
           <li class="dropdown"><a href="profil_sekolah.php"> <span>profil</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="profil_sekolah.php">Profil sekolah</a></li>
-              <li><a href="team.html"> Daftar Guru</a></li>
-              <li><a href="karyawan.html"  class="active">Daftar Karyawan</a></li>
-              <li><a href="testimonials.html">Prestasi sekolah</a></li>
+              <li><a href="team.php"> Daftar Guru</a></li>
+              <li><a href="karyawan.php"  class="active">Daftar Karyawan</a></li>
+              <li><a href="prestasi_sekolah.php">Prestasi sekolah</a></li>
             </ul>
           </li>
-          <li><a href="lomba.html">Lomba</a></li>
-          <li><a href="portfolio.html">Warta sekolah</a></li>
+          <li><a href="lomba.php">Lomba</a></li>
+          <li><a href="portfolio.php">Warta sekolah</a></li>
           <li class="dropdown"><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/" >Pendaftaran siswa</a></li>
@@ -90,7 +90,7 @@ if ($result->num_rows > 0) {
               
             </ul>
           </li>
-          <li><a href="contact.html">Kontak</a></li>
+          <li><a href="contact.php">Kontak</a></li>
           <li><a href="login.php" class="login-box">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -185,7 +185,7 @@ if ($result->num_rows > 0) {
           <h4>Umpan Balik</h4>
           <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
           <br>
-          <a href="contact.html" class="btn btn-dark">Berikan Umpan Balik</a>
+          <a href="contact.php" class="btn btn-dark">Berikan Umpan Balik</a>
 
         </div>
       </div>
