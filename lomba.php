@@ -99,56 +99,102 @@
       </div><!-- End Section Title -->
 
       <div class="container">
+  <div class="row gy-4 justify-content-center">
 
-        <div class="row gy-4 justify-content-center">
-
-          <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color:rgba(230, 196, 7, 0.97);"></i>
-            <h3><a href="detail_lomba.php?jenis_lomba=motivasi" class="stretched-link">Membuat Kalimat Motivasi</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
-          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color: #FFD700;"></i>
-            <h3><a href="detail_lomba.php?jenis_lomba=bahasa_jawa" class="stretched-link">Lomba Bahasa Jawa</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
-          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color: #FFD700;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=literasi" class="stretched-link">Lomba Literasi 2021</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
-          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color: #FFD700;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=mapsi" class="stretched-link">Lomba MAPSI</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
-          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color: #FFD700;"></i>
-            <h3><a href="detail_lomba.php?jenis_lomba=adiwiyata" class="stretched-link">Lomba Adiwiyata</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
-          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color: #FFD700;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=karya_ilmiah_medio" class="stretched-link">Lomba Karya Ilmiah Medio</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
-          <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
-            <div class="features-item justify-content-center">
-            <i class="bi bi-trophy" style="color: #FFD700;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=karya_ilmiah_cabster" class="stretched-link">Lomba Karya Ilmiah Cabster</a></h3>
-            </div>
-          </div><!-- End Feature Item -->
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=motivasi" class="stretched-link text-dark text-decoration-none">
+              Membuat Kalimat Motivasi
+            </a>
+          </h5>
         </div>
-
       </div>
+    </div>
 
-    </section><!-- /Features Section -->
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=bahasa_jawa" class="stretched-link text-dark text-decoration-none">
+              Lomba Bahasa Jawa
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=literasi" class="stretched-link text-dark text-decoration-none">
+              Lomba Literasi 2021
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=mapsi" class="stretched-link text-dark text-decoration-none">
+              Lomba MAPSI
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=adiwiyata" class="stretched-link text-dark text-decoration-none">
+              Lomba Adiwiyata
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=karya_ilmiah_medio" class="stretched-link text-dark text-decoration-none">
+              Lomba Karya Ilmiah Medio
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+      <div class="card text-center shadow-sm p-4 w-100">
+        <div class="card-body">
+          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
+          <h5 class="card-title">
+            <a href="detail_lomba.php?jenis_lomba=karya_ilmiah_cabster" class="stretched-link text-dark text-decoration-none">
+              Lomba Karya Ilmiah Cabster
+            </a>
+          </h5>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 
   </main>
   <?php
