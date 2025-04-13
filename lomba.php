@@ -103,43 +103,43 @@
 
           <div class="col-lg-4 col-md-4" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=motivasi" class="stretched-link">Membuat Kalimat Motivasi</a></h3>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <h3><a href="detail_lomba.php?jenis_lomba=motivasi" class="stretched-link">Membuat Kalimat Motivasi</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=bahasa_jawa" class="stretched-link">Lomba Bahasa Jawa</a></h3>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <h3><a href="detail_lomba.php?jenis_lomba=bahasa_jawa" class="stretched-link">Lomba Bahasa Jawa</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=literasi" class="stretched-link">Lomba Literasi 2021</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=mapsi" class="stretched-link">Lomba MAPSI</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
-              <h3><a href="detail_lomba.php?jenis_lomba=adiwiyata" class="stretched-link">Lomba Adiwiyata</a></h3>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
+            <h3><a href="detail_lomba.php?jenis_lomba=adiwiyata" class="stretched-link">Lomba Adiwiyata</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=karya_ilmiah_medio" class="stretched-link">Lomba Karya Ilmiah Medio</a></h3>
             </div>
           </div><!-- End Feature Item -->
           <div class="col-lg-4 col-md-5" data-aos="fade-up" data-aos-delay="100">
             <div class="features-item justify-content-center">
-              <i class="bi bi-mortarboard" style="color: #e80368;"></i>
+            <i class="bi bi-trophy" style="color:rgb(241, 180, 12);"></i>
               <h3><a href="detail_lomba.php?jenis_lomba=karya_ilmiah_cabster" class="stretched-link">Lomba Karya Ilmiah Cabster</a></h3>
             </div>
           </div><!-- End Feature Item -->
