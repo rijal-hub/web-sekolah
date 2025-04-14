@@ -26,6 +26,20 @@ if ($id) {
 } else {
     echo "ID berita tidak tersedia.";
 }
+
+$query = "SELECT * FROM kontak WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $kontak = $result->fetch_assoc();
+} else {
+    echo "Data beranda tidak ditemukan.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -168,21 +182,28 @@ if ($id) {
           </div>
         </div>
       </div>
+      <div class="container mt-5">
+  <div class="d-flex justify-content-end">
+    <a href="javascript:history.back()" 
+       class="btn px-4 py-2 rounded-pill" 
+       style="background-color: #4a4c58; color: white; border-color: #4a4c58;">
+      <i class="bi bi-arrow-left me-2"></i>Kembali
+    </a>
+  </div>
+</div>
     </section><!-- /Portfolio Details Section -->
   </main>
 
   <footer id="footer" class="footer dark-background">
     <div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-            <h4>Alamat</h4>
-            <p><?php echo nl2br(htmlspecialchars($kontak['alamat'])); ?></p>
-            <p class="mt-3"><strong> Nomor telp:</strong> <?php echo nl2br(htmlspecialchars($kontak['telepon'])); ?></p>
-            <p><strong>Email:</strong> <?php echo nl2br(htmlspecialchars($kontak['email'])); ?></p>
-         
-        </div>
-    
-        <div class="col-lg-3 col-md-6  align-items-center footer-links">
+      <div class="col-lg-4 col-md-6 footer-about">
+        <h4>Alamat</h4>
+        <p><?= $kontak['alamat']; ?></p>
+        <p class="mt-3"><strong> Nomor telp:</strong> <span><?= $kontak['telp']; ?></span></p>
+        <p><strong>Email:</strong> <span><?= $kontak['email']; ?></span></p>
+      </div>
+      <div class="col-lg-3 col-md-6  align-items-center footer-links">
           <h4>Tautan</h4>
           <ul>
             <li><a href="https://www.kemdikbud.go.id/"> Kemendikbud</a></li>
@@ -220,6 +241,7 @@ if ($id) {
     </div>
 
   </footer>
+
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
