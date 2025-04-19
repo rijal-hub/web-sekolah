@@ -41,6 +41,159 @@ if ($result_kontak->num_rows > 0) {
 <html lang="en">
 
 <head>
+<style>
+    /* Section Berita Terbaru */
+
+    .news-card {
+        display: flex;
+        gap: 20px;
+        border-left: 3px solid #1977cc;
+        padding: 15px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+        align-items: center;
+    }
+    
+    .news-image {
+        width: 120px;
+        height: 80px;
+        border-radius: 5px;
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    
+    .news-content {
+        flex: 1;
+    }
+    
+    .news-date {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+    
+    .news-date i {
+        color: #1977cc;
+        margin-right: 5px;
+    }
+    
+    .news-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .news-section {
+        background-color: #f8f9fa;
+        padding: 60px 0;
+    }
+    
+    .section-title {
+        text-align: center;
+        padding-bottom: 30px;
+    }
+    
+    .section-title h2 {
+        font-size: 32px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        position: relative;
+        color: #2c4964;
+    }
+    
+    .section-title h2::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 120px;
+        height: 1px;
+        background: #ddd;
+        bottom: 1px;
+        left: calc(50% - 60px);
+    }
+    
+    .section-title h2::after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 40px;
+        height: 3px;
+        background: #1977cc;
+        bottom: 0;
+        left: calc(50% - 20px);
+    }
+    
+    .news-container {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+        overflow: hidden;
+        padding: 30px;
+    }
+    
+    .news-card {
+        border-left: 3px solid #1977cc;
+        padding: 15px 0 15px 20px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .news-card:hover {
+        transform: translateX(5px);
+    }
+    
+    .news-date {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 5px;
+    }
+    
+    .news-date i {
+        color: #1977cc;
+        margin-right: 5px;
+    }
+    
+    .news-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    
+    .news-title a {
+        color: #2c4964;
+        transition: 0.3s;
+        text-decoration: none;
+    }
+    
+    .news-title a:hover {
+        color: #1977cc;
+    }
+    
+    .news-more {
+        text-align: center;
+        margin-top: 20px;
+    }
+    
+    .news-more a {
+        color: #1977cc;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+    
+    .news-more a i {
+        margin-left: 5px;
+        transition: 0.3s;
+    }
+    
+    .news-more a:hover i {
+        transform: translateX(5px);
+    }
+  </style>
+
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Beranda</title>
@@ -169,6 +322,50 @@ if ($result_kontak->num_rows > 0) {
     </div>
   </div>
 </section>
+
+<!-- Berita Terbaru Section dengan Foto -->
+<section id="news" class="news-section">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>Berita Terbaru</h2>
+        <p>Informasi terkini dari SDN Bangetayu Wetan 02</p>
+      </div>
+
+      <div class="news-container">
+        <!-- Berita 2 dengan Foto -->
+        <div class="news-card">
+  <img src="admin/berita/uploads/ppdb.jpg" alt="Pendaftaran PPDB" class="news-image">
+  <div class="news-content">
+    <div class="news-date">
+      <i class="bi bi-calendar-event"></i> 06 Juni 2023
+    </div>
+    <h3 class="news-title">
+      <a href="detail_warta.php">Pra Pendaftaran PPDB Tanggal 12-16 Juni 2023</a>
+    </h3>
+  </div>
+</div>
+
+
+        <!-- Berita 3 dengan Foto -->
+        <div class="news-card">
+          <img src="admin/berita/uploads/pat.jpg" alt="Pelaksanaan PAT" class="news-image">
+          <div class="news-content">
+            <div class="news-date">
+              <i class="bi bi-calendar-event"></i> 01 Juni 2023
+            </div>
+            <h3 class="news-title">
+              <a href="detail_warta.php">Pelaksanaan Penilaian Akhir Tahun (PAT) Genap dan Sumatif Akhir Semester (SAS) Genap</a>
+            </h3>
+          </div>
+        </div>
+
+        <div class="news-more">
+          <a href="warta.php">Lihat Semua Berita <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 
     <!-- Services Section -->
 
