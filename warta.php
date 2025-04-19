@@ -88,7 +88,8 @@ if ($filter == 'all') {
             </ul>
           </li>
           <li><a href="contact.php">Kontak</a></li>
-          <li><a href="login.php" class="login-box">Login</a></li>
+          <li id="admin-login-btn" style="display: none;">
+          <a href="login.php" class="login-box">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -133,7 +134,7 @@ if ($filter == 'all') {
         while ($row = $result->fetch_assoc()) {
     ?>
     <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-<?= $row['kategori'] ?>">
-        <img src="admin/berita_sekolah/uploads/<?= $row['media'] ?>" class="img-fluid" alt="">
+        <img src="admin/berita_sekolah/uploads/<?= $row['media'] ?>" class="img-fluid img-ratio" alt="<?= $row['judul'] ?>">
         <div class="portfolio-info">
             <h4><?= $row['judul'] ?></h4>
             <a href="admin/berita_sekolah/uploads/<?= $row['media'] ?>" title="<?= $row['judul'] ?>" data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
@@ -277,6 +278,14 @@ if ($filter == 'all') {
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === 'l') {
+      document.getElementById('admin-login-btn').style.display = 'block';
+    }
+  });
+</script>
 
 </body>
 
