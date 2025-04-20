@@ -34,6 +34,30 @@ if ($result_kontak->num_rows > 0) {
     echo "Data kontak tidak ditemukan.";
     exit;
 }
+
+// Query untuk mengambil data berita terbaru dari tabel berita_sekolah
+$query_berita = "SELECT id, judul, isi, tanggal, media, kategori 
+                FROM berita_sekolah 
+                ORDER BY tanggal DESC 
+                LIMIT 3";
+$stmt_berita = $conn->prepare($query_berita);
+
+// Periksa apakah prepare berhasil
+if ($stmt_berita === false) {
+    die("Error preparing statement: " . $conn->error);
+}
+
+if (!$stmt_berita->execute()) {
+    die("Error executing statement: " . $stmt_berita->error);
+}
+
+$result_berita = $stmt_berita->get_result();
+
+if ($result_berita === false) {
+    die("Error getting result set: " . $conn->error);
+}
+
+$berita_items = $result_berita->fetch_all(MYSQLI_ASSOC);
 ?>
 
 
@@ -325,6 +349,7 @@ if ($result_kontak->num_rows > 0) {
 </section>
 
 <!-- Berita Terbaru Section dengan Foto -->
+<!-- Berita Terbaru Section dengan Foto -->
 <section id="news" class="news-section">
     <div class="container" data-aos="fade-up">
       <div class="section-title">
@@ -333,39 +358,38 @@ if ($result_kontak->num_rows > 0) {
       </div>
 
       <div class="news-container">
-        <!-- Berita 2 dengan Foto -->
+        <?php foreach ($berita_items as $berita): ?>
+        <!-- Loop melalui setiap berita -->
         <div class="news-card">
-  <img src="admin/berita/uploads/ppdb.jpg" alt="Pendaftaran PPDB" class="news-image">
-  <div class="news-content">
-    <div class="news-date">
-      <i class="bi bi-calendar-event"></i> 06 Juni 2023
-    </div>
-    <h3 class="news-title">
-      <a href="detail_warta.php">Pra Pendaftaran PPDB Tanggal 12-16 Juni 2023</a>
-    </h3>
-  </div>
-</div>
-
-
-        <!-- Berita 3 dengan Foto -->
-        <div class="news-card">
-          <img src="admin/berita/uploads/pat.jpg" alt="Pelaksanaan PAT" class="news-image">
+          <?php if (!empty($berita['media'])): ?>
+          <img src="admin/berita_sekolah/uploads/<?php echo htmlspecialchars($berita['media']); ?>" alt="<?php echo htmlspecialchars($berita['judul']); ?>" class="news-image">
+          <?php endif; ?>
           <div class="news-content">
             <div class="news-date">
-              <i class="bi bi-calendar-event"></i> 01 Juni 2023
+              <i class="bi bi-calendar-event"></i> 
+              <?php 
+                if (!empty($berita['tanggal'])) {
+                  $tanggal = new DateTime($berita['tanggal']);
+                  echo $tanggal->format('d F Y'); 
+                }
+              ?>
             </div>
             <h3 class="news-title">
-              <a href="detail_warta.php">Pelaksanaan Penilaian Akhir Tahun (PAT) Genap dan Sumatif Akhir Semester (SAS) Genap</a>
+            <a href="detail_warta.php?id=<?= $berita['id'] ?>">
+    <?= htmlspecialchars($berita['judul']) ?>
+</a>
             </h3>
+            <p><?php echo !empty($berita['kategori']) ? 'Kategori: ' . htmlspecialchars($berita['kategori']) : ''; ?></p>
           </div>
         </div>
+        <?php endforeach; ?>
 
         <div class="news-more">
           <a href="warta.php">Lihat Semua Berita <i class="bi bi-arrow-right"></i></a>
         </div>
       </div>
     </div>
-  </section>
+</section>
 
 
     <!-- Services Section -->
