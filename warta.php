@@ -74,7 +74,6 @@ if ($filter == 'all') {
             <ul>
               <li><a href="profil_sekolah.php">Profil sekolah</a></li>
               <li><a href="team.php"> Daftar Guru</a></li>
-              <li><a href="karyawan.php"  class="active">Daftar Karyawan</a></li>
               <li><a href="prestasi_sekolah.php">Prestasi sekolah</a></li>
             </ul>
           </li>

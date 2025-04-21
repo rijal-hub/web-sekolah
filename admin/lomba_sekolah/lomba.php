@@ -86,7 +86,6 @@ if ($result === false) {
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="../profil_sekolah/profil_sekolah.php">Profil Sekolah</a>
                     <a class="collapse-item" href="../profil_guru/guru.php">Profil Guru</a>
-                    <a class="collapse-item" href="../profil_karyawan/profil_karyawan.php">Profil Karyawan</a>
                     <a class="collapse-item" href="../prestasi_sekolah/prestasi_sekolah.php">Prestasi Sekolah</a>
                 </div>
             </div>
