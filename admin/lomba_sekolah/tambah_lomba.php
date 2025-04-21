@@ -5,7 +5,28 @@ if (!isset($_SESSION['username'])) {
     header("Location: ../../login.php");
     exit;
 }
+?>
+<?php
+// Koneksi ke database
+include 'db_connect.php';
 
+// Ambil data untuk halaman beranda
+$id = 1; // ID tetap 1
+$query = "SELECT * FROM beranda WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $beranda = $result->fetch_assoc();
+} else {
+    echo "Data beranda tidak ditemukan.";
+    exit;
+}
+?>
+<?php
 // Include file db_connect.php untuk koneksi ke database
 include 'db_connect.php';
 
@@ -143,7 +164,7 @@ $result_jenis_lomba = $conn->query($query_jenis_lomba);
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
         
         <div class="sidebar-brand-icon d-flex flex-column align-items-center justify-content-center">
-        <img src="../img/logo sd.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">     
+        <img src="../beranda/uploads/<?php echo $beranda['logo']; ?>" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">
         </div>  
             <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center">
                 <div class="sidebar-brand-text mx-3 text-center">SDN BANGETAYU WETAN 02</div>

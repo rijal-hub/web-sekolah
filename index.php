@@ -1,7 +1,8 @@
 <?php
 // Include file db_connect.php untuk koneksi ke database
 include 'config/db_connect.php';
-
+$query = "SELECT * FROM slider ORDER BY id DESC";
+$result = mysqli_query($conn, $query);
 // ID tetap 1
 $id = 1;
 
@@ -294,31 +295,53 @@ $berita_items = $result_berita->fetch_all(MYSQLI_ASSOC);
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-      <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-      <div class="carousel-item active">
-          <img src="admin/beranda/uploads/<?php echo $beranda['foto_sekolah']; ?>" alt="Foto Sekolah">
-      </div>
-      <div class="carousel-item">
-          <img src="admin/beranda/uploads/<?php echo $beranda['foto_walikota']; ?>" alt="Foto Walikota">
-      </div>
-      <div class="carousel-item">
-          <img src="admin/beranda/uploads/<?php echo $beranda['foto_presiden']; ?>" alt="Foto Presiden">
-      </div>
+    
+<section id="hero" class="hero section dark-background">
+    <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+            <?php
+            // Cek apakah ada data gambar
+            if (mysqli_num_rows($result) > 0) {
+                $first = true;
+                // Loop untuk menampilkan gambar-gambar dari slider
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $foto = $row['foto']; // Nama file foto
+                    $active_class = $first ? 'active' : ''; // Set class active untuk item pertama
+                    $first = false;
+                    echo "
+                    <div class='carousel-item $active_class'>
+                        <img src='admin/beranda/uploads/$foto' alt='Slider Image'>
+                    </div>";
+                }
+            } else {
+                echo "<p>No images available in the slider.</p>";
+            }
+            ?>
+        </div>
 
+        <!-- Carousel Controls -->
         <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
         </a>
 
         <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
         </a>
 
-        <ol class="carousel-indicators"></ol>
-
-      </div>
-
-    </section><!-- /Hero Section -->
+        <!-- Carousel Indicators -->
+        <ol class="carousel-indicators">
+            <?php
+            // Generate indicators for the carousel based on the number of images
+            mysqli_data_seek($result, 0); // Reset the pointer to the first row
+            $index = 0;
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo "<li data-bs-target='#hero-carousel' data-bs-slide-to='$index' class='" . ($index == 0 ? 'active' : '') . "'></li>";
+                $index++;
+            }
+            ?>
+        </ol>
+    </div>
+</section><!-- /Hero Section -->
 
     <!-- About Section -->
     <section id="about" class="about section">

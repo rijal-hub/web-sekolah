@@ -6,7 +6,47 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 ?>
+<?php
+// Koneksi ke database
+include 'db_connect.php';
 
+// Ambil data untuk halaman beranda
+$id = 1; // ID tetap 1
+$query = "SELECT * FROM beranda WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $beranda = $result->fetch_assoc();
+} else {
+    echo "Data beranda tidak ditemukan.";
+    exit;
+}
+?>
+
+<?php
+// Koneksi ke database
+include 'db_connect.php';
+
+// Ambil data untuk halaman beranda
+$id = 1; // ID tetap 1
+$query = "SELECT * FROM beranda WHERE id = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Cek apakah data ditemukan
+if ($result->num_rows > 0) {
+    $beranda = $result->fetch_assoc();
+} else {
+    echo "Data beranda tidak ditemukan.";
+    exit;
+}
+?>
 <?php
 // Include file db_connect.php untuk koneksi ke database
 include 'db_connect.php';
@@ -113,7 +153,7 @@ if ($result === false) {
        <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
         
         <div class="sidebar-brand-icon d-flex flex-column align-items-center justify-content-center">
-        <img src="../img/logo sd.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">     
+        <img src="../beranda/uploads/<?php echo $beranda['logo']; ?>" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">
         </div>  
             <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center">
                 <div class="sidebar-brand-text mx-3 text-center">SDN BANGETAYU WETAN 02</div>
@@ -288,7 +328,7 @@ if ($result === false) {
 
 
                 <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Sarana Prasarana SDN Bangetayu Wetan 02</h1>
-                    <p class="mb-4">Halaman ini menampilka sarana prasarana di SDN Bangetayu Wetan 02. Pastikan data yang ditampilkan selalu diperbarui untuk memberikan gambaran yang jelas mengenai pencapaian sekolah.</p>
+                    <p class="mb-4">Halaman ini menampilkan sarana prasarana di SDN Bangetayu Wetan 02. Pastikan data yang ditampilkan selalu diperbarui untuk memberikan gambaran yang jelas mengenai pencapaian sekolah.</p>
                   
                     <!-- Konten-->
                 <div class="card shadow mb-4">
