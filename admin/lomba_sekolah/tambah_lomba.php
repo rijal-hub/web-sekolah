@@ -5,82 +5,106 @@ if (!isset($_SESSION['username'])) {
     header("Location: ../../login.php");
     exit;
 }
-?>
 
-<?php
 // Include file db_connect.php untuk koneksi ke database
 include 'db_connect.php';
 
-// Proses ketika form disubmit
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nama_lomba = $_POST['nama_lomba'];
-    $deskripsi = $_POST['deskripsi'];
-    $jenis_media = $_POST['jenis_media'];  // Menyimpan jenis media (foto/video)
-    $jenis_lomba = $_POST['jenis_lomba'];  // Menyimpan jenis lomba
-    $media = '';
+// Proses ketika form disubmit untuk menambah jenis lomba
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['jenis_lomba_baru'])) {
+    $jenis_lomba_baru = $_POST['jenis_lomba_baru'];
 
-    // Cek apakah ada URL video yang diinputkan
-    if ($jenis_media == 'video' && !empty($_POST['url_video'])) {
-        $media = $_POST['url_video'];  // Menyimpan URL video jika ada
-    } elseif ($jenis_media == 'foto') {
-        // Jika jenis media adalah foto, lakukan proses upload foto
-        if (isset($_FILES["media"]) && $_FILES["media"]["error"] == 0) {
-            $target_dir = "uploads/";
-            $target_file = $target_dir . basename($_FILES["media"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-            // Cek apakah file adalah gambar
-            $check = getimagesize($_FILES["media"]["tmp_name"]);
-            if ($check !== false) {
-                $uploadOk = 1;
-            } else {
-                echo "File is not an image.";
-                $uploadOk = 0;
-            }
-
-            // Cek jika file sudah ada
-            if (file_exists($target_file)) {
-                echo "Sorry, file already exists.";
-                $uploadOk = 0;
-            }
-
-            // Cek ukuran file
-            if ($_FILES["media"]["size"] > 500000) {
-                echo "Sorry, your file is too large.";
-                $uploadOk = 0;
-            }
-
-            // Hanya izinkan file JPG, JPEG, PNG, GIF
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-                $uploadOk = 0;
-            }
-
-            // Jika semua oke, coba upload file
-            if ($uploadOk == 1 && move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
-                $media = basename($_FILES["media"]["name"]);  // Menyimpan nama file foto
-            } else {
-                echo "Sorry, there was an error uploading your file.";
-            }
-        } else {
-            echo "Foto harus diupload.";
-        }
-    }
-
-    // Masukkan data ke database jika media tersedia
-    if ($media != '') {
-        $query = "INSERT INTO lomba_lomba (nama_lomba, media, deskripsi, jenis_media, jenis_lomba) VALUES ('$nama_lomba', '$media', '$deskripsi', '$jenis_media', '$jenis_lomba')";
+    // Masukkan data ke dalam tabel jenis_lomba
+    if (!empty($jenis_lomba_baru)) {
+        $query = "INSERT INTO jenis_lomba (nama_lomba) VALUES ('$jenis_lomba_baru')";
         if ($conn->query($query) === TRUE) {
-            header("Location: lomba.php");
-            exit;
+            echo "<script>alert('Jenis lomba berhasil ditambahkan!');</script>";
         } else {
             echo "Error: " . $query . "<br>" . $conn->error;
         }
     } else {
-        echo "Media is required.";
+        echo "<script>alert('Nama lomba tidak boleh kosong!');</script>";
     }
 }
+
+// Proses ketika form disubmit untuk menambah lomba
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nama_lomba'])) {
+    $nama_lomba = $_POST['nama_lomba'];
+    $deskripsi = $_POST['deskripsi'];
+    $jenis_media = $_POST['jenis_media'];  // Menyimpan jenis media (foto/video)
+    $jenis_lomba = $_POST['jenis_lomba']; // Menyimpan ID jenis lomba yang dipilih
+
+    // Validasi input
+    if (empty($nama_lomba) || empty($deskripsi) || empty($jenis_media) || empty($jenis_lomba)) {
+        echo "<script>alert('Semua kolom wajib diisi!');</script>";
+    } else {
+        // Proses media (foto atau video)
+        $media = '';
+        if ($jenis_media == 'video' && !empty($_POST['url_video'])) {
+            $media = $_POST['url_video'];  // Menyimpan URL video jika ada
+        } elseif ($jenis_media == 'foto') {
+            // Jika jenis media adalah foto, lakukan proses upload foto
+            if (isset($_FILES["media"]) && $_FILES["media"]["error"] == 0) {
+                $target_dir = "uploads/";
+                $target_file = $target_dir . basename($_FILES["media"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+                // Cek apakah file adalah gambar
+                $check = getimagesize($_FILES["media"]["tmp_name"]);
+                if ($check !== false) {
+                    $uploadOk = 1;
+                } else {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+                }
+
+                // Cek jika file sudah ada
+                if (file_exists($target_file)) {
+                    echo "Sorry, file already exists.";
+                    $uploadOk = 0;
+                }
+
+                // Cek ukuran file
+                if ($_FILES["media"]["size"] > 500000) {
+                    echo "Sorry, your file is too large.";
+                    $uploadOk = 0;
+                }
+
+                // Hanya izinkan file JPG, JPEG, PNG, GIF
+                if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                    $uploadOk = 0;
+                }
+
+                // Jika semua oke, coba upload file
+                if ($uploadOk == 1 && move_uploaded_file($_FILES["media"]["tmp_name"], $target_file)) {
+                    $media = basename($_FILES["media"]["name"]);  // Menyimpan nama file foto
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            } else {
+                echo "Foto harus diupload.";
+            }
+        }
+
+        // Masukkan data ke database jika media tersedia
+        if (!empty($media)) {
+            $query = "INSERT INTO lomba_lomba (nama_lomba, media, deskripsi, jenis_media, jenis_lomba) VALUES ('$nama_lomba', '$media', '$deskripsi', '$jenis_media', '$jenis_lomba')";
+            if ($conn->query($query) === TRUE) {
+                header("Location: lomba.php");
+                exit;
+            } else {
+                echo "Error: " . $query . "<br>" . $conn->error;
+            }
+        } else {
+            echo "Media is required.";
+        }
+    }
+}
+
+// Mengambil data jenis lomba dari database
+$query_jenis_lomba = "SELECT id, nama_lomba FROM jenis_lomba";
+$result_jenis_lomba = $conn->query($query_jenis_lomba);
 ?>
 
 <!DOCTYPE html>
@@ -273,21 +297,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="form-group">
                                     <label for="nama_lomba">Nama lomba</label>
                                     <input type="text" class="form-control" id="nama_lomba" name="nama_lomba" required>
-                                </div>
-                                <!-- Jenis Lomba (Dropdown) -->
+                                </div>  <!-- Jenis Lomba (Dropdown dari database) -->
                                 <div class="form-group">
                                     <label for="jenis_lomba">Jenis Lomba</label>
-                                    <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
-                                        <option>--- Pilih Jenis Lomba ---</option>
-                                        <option value="motivasi">Motivasi</option>
-                                        <option value="bahasa_jawa">Bahasa Jawa</option>
-                                        <option value="literasi">Literasi</option>
-                                        <option value="mapsi">Mapsi</option>
-                                        <option value="adiwiyata">Adiwiyata</option>
-                                        <option value="karya_ilmiah_medio">Karya Ilmiah Medio</option>
-                                        <option value="karya_ilmiah_cabster">Karya Ilmiah Cabster</option>
-                                    </select>
+                                    <div class="d-flex">
+                                        <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
+                                            <option>--- Pilih Jenis Lomba ---</option>
+                                            <?php
+                                            // Cek apakah query berhasil
+                                            if ($result_jenis_lomba->num_rows > 0) {
+                                                // Tampilkan setiap jenis lomba sebagai opsi dalam dropdown
+                                                while ($row = $result_jenis_lomba->fetch_assoc()) {
+                                                    echo "<option value='" . $row['id'] . "'>" . $row['nama_lomba'] . "</option>";
+                                                }
+                                            } else {
+                                                echo "<option disabled>No data available</option>";
+                                            }
+                                            ?>
+                                        </select>
+
+                                        <!-- Tombol + untuk menambahkan jenis lomba baru -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addJenisLombaModal">+</button>
+                                        </div>
                                 </div>
+
+                                
                                 <!-- Jenis Media (Foto/Video) -->
                                 <div class="form-group">
                                     <label for="jenis_media">Jenis Media</label>
@@ -319,7 +353,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <!-- /.container-fluid -->
 
+            </div><!-- Modal untuk Menambah Jenis Lomba -->
+<div class="modal fade" id="addJenisLombaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Jenis Lomba</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
+            <div class="modal-body">
+                <form method="POST" action="">
+                    <div class="form-group">
+                        <label for="jenis_lomba_baru">Jenis Lomba Baru</label>
+                        <input type="text" class="form-control" id="jenis_lomba_baru" name="jenis_lomba_baru" required>
+                    </div>
+                    <!-- Tombol dengan kelas ml-auto untuk menggeser ke kanan -->
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
             <!-- End of Main Content -->
 
             <!-- Footer -->

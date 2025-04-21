@@ -1,3 +1,11 @@
+<?php
+// Koneksi ke database
+include 'config/db_connect.php';
+
+// Ambil data lomba dari database
+$query_lomba = "SELECT id, nama_lomba FROM jenis_lomba";
+$result_lomba = $conn->query($query_lomba);
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -86,114 +94,42 @@
       </div>
     </div><!-- End Page Title -->
 
-   
-
     <!-- Features Section -->
     <section id="features" class="features section">
-
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Lomba Lomba</h2>
         <p>Daftar Lomba yang diikuti sekolah kami</p>
       </div><!-- End Section Title -->
 
+     
       <div class="container">
-  <div class="row gy-4 justify-content-center">
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=motivasi" class="stretched-link text-dark text-decoration-none">
-              Membuat Kalimat Motivasi
-            </a>
-          </h5>
+        <div class="row gy-4 justify-content-center">
+          <?php
+          // Periksa apakah ada lomba di database
+          if ($result_lomba->num_rows > 0) {
+            // Loop untuk menampilkan lomba
+            while($row = $result_lomba->fetch_assoc()) {
+              // Menampilkan setiap lomba dalam bentuk card
+              echo '<div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">';
+              echo '  <div class="card text-center shadow-sm p-4 w-100">';
+              echo '    <div class="card-body">';
+              echo '      <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>';
+              echo '      <h5 class="card-title">';
+              echo '        <a href="detail_lomba.php?jenis_lomba=' . $row['id'] . '" class="stretched-link text-dark text-decoration-none">';
+              echo '          ' . $row['nama_lomba'] . '</a>';
+              echo '      </h5>';
+              echo '    </div>';
+              echo '  </div>';
+              echo '</div>';
+            }
+          } else {
+            echo '<p>Tidak ada lomba yang tersedia.</p>';
+          }
+          ?>
         </div>
       </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=bahasa_jawa" class="stretched-link text-dark text-decoration-none">
-              Lomba Bahasa Jawa
-            </a>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=literasi" class="stretched-link text-dark text-decoration-none">
-              Lomba Literasi 2021
-            </a>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=mapsi" class="stretched-link text-dark text-decoration-none">
-              Lomba MAPSI
-            </a>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=adiwiyata" class="stretched-link text-dark text-decoration-none">
-              Lomba Adiwiyata
-            </a>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=karya_ilmiah_medio" class="stretched-link text-dark text-decoration-none">
-              Lomba Karya Ilmiah Medio
-            </a>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-      <div class="card text-center shadow-sm p-4 w-100">
-        <div class="card-body">
-          <i class="bi bi-trophy display-4 mb-3" style="color: #FFD700;"></i>
-          <h5 class="card-title">
-            <a href="detail_lomba.php?jenis_lomba=karya_ilmiah_cabster" class="stretched-link text-dark text-decoration-none">
-              Lomba Karya Ilmiah Cabster
-            </a>
-          </h5>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
+    </section>
   </main>
   <?php
 $kontak = [
