@@ -30,6 +30,8 @@ $kategori = $berita['kategori'];
 $query_kontak = "SELECT * FROM kontak LIMIT 1"; // Ambil satu data kontak saja
 $result_kontak = $conn->query($query_kontak);
 $kontak = $result_kontak->fetch_assoc();
+$sql = "SELECT nama_web, link FROM website";
+$result_website = $conn->query($sql);
 ?>
 
 <!DOCTYPE html>
@@ -93,11 +95,20 @@ $kontak = $result_kontak->fetch_assoc();
           </li>
           <li><a href="lomba.php">Lomba</a></li>
           <li><a href="warta.php">Warta sekolah</a></li>
-          <li class="dropdown"><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown">
+            <a href="javascript:void(0)"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/" >Pendaftaran siswa</a></li>
-              <li><a href="https://sangjuara.semarangkota.go.id/kejuaraan_siswa?tingkat=&sekolah=309&q="> Sang Juara</a></li>
-              
+              <?php
+              // Cek jika data ada
+              if ($result_website->num_rows > 0) {
+                  // Tampilkan setiap baris data sebagai item dropdown
+                  while($row = $result_website->fetch_assoc()) {
+                      echo '<li><a href="' . $row['link'] . '">' . $row['nama_web'] . '</a></li>';
+                  }
+              } else {
+                  echo '<li><a href="#">Tidak ada data</a></li>';
+              }
+              ?>
             </ul>
           </li>
           <li><a href="contact.php">Kontak</a></li>
@@ -184,17 +195,25 @@ $kontak = $result_kontak->fetch_assoc();
         <p><strong>Email:</strong> <span><?= $kontak['email']; ?></span></p>
       </div>
       <div class="col-lg-3 col-md-6  align-items-center footer-links">
-          <h4>Tautan</h4>
-          <ul>
-            <li><a href="https://www.kemdikbud.go.id/"> Kemendikbud</a></li>
-            <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
-          </ul>
-          <div class="social-links d-flex mt-4">
-            <a href="https://www.facebook.com/share/1NbvshQNt8/"><i class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/sdnbangetayuwetan02"><i class="bi bi-instagram"></i></a>
-            <a href="https://www.youtube.com/@sdnegeribangetayuwetan0259"><i class="bi bi-youtube"></i></a>
-          </div>
-        </div>
+    <h4>Tautan</h4>
+    <ul>
+        <li><a href="https://www.kemdikbud.go.id/">Kemendikbud</a></li>
+        <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
+    </ul>
+    <div class="social-links d-flex mt-4">
+        <!-- Tampilkan link sosial media secara dinamis -->
+        <?php if (!empty($kontak['facebook'])): ?>
+            <a href="<?php echo $kontak['facebook']; ?>"><i class="bi bi-facebook"></i></a>
+        <?php endif; ?>
+        <?php if (!empty($kontak['instagram'])): ?>
+            <a href="<?php echo $kontak['instagram']; ?>"><i class="bi bi-instagram"></i></a>
+        <?php endif; ?>
+        <?php if (!empty($kontak['youtube'])): ?>
+            <a href="<?php echo $kontak['youtube']; ?>"><i class="bi bi-youtube"></i></a>
+        <?php endif; ?>
+    </div>
+</div>
+
     
         <div class="col-lg-4 col-md-6 footer-about">
           <h4>Umpan Balik</h4>

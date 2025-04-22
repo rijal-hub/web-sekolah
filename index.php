@@ -58,8 +58,10 @@ if ($result_berita === false) {
 }
 
 $berita_items = $result_berita->fetch_all(MYSQLI_ASSOC);
+$sql = "SELECT nama_web, link FROM website";
+$result_website = $conn->query($sql);
 $query = "SELECT * FROM slider";
-$result = $conn->query($query);
+$result_slider = $conn->query($query);
 
 ?>
 
@@ -279,11 +281,20 @@ $result = $conn->query($query);
           </li>
           <li><a href="lomba.php">Lomba</a></li>
           <li><a href="warta.php">Warta sekolah</a></li>
-          <li class="dropdown"><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+          <li class="dropdown">
+            <a href="javascript:void(0)"> <span>website terkait</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="https://ppid.semarangkota.go.id/informasi-penerimaan-calon-peserta-didik-baru/" >Pendaftaran siswa</a></li>
-              <li><a href="https://sangjuara.semarangkota.go.id/kejuaraan_siswa?tingkat=&sekolah=309&q="> Sang Juara</a></li>
-              
+              <?php
+              // Cek jika data ada
+              if ($result_website->num_rows > 0) {
+                  // Tampilkan setiap baris data sebagai item dropdown
+                  while($row = $result_website->fetch_assoc()) {
+                      echo '<li><a href="' . $row['link'] . '">' . $row['nama_web'] . '</a></li>';
+                  }
+              } else {
+                  echo '<li><a href="#">Tidak ada data</a></li>';
+              }
+              ?>
             </ul>
           </li>
           <li><a href="contact.php">Kontak</a></li>
@@ -302,7 +313,7 @@ $result = $conn->query($query);
     
   <?php
   $first_item = true;
-  while ($row = $result->fetch_assoc()) {
+  while ($row = $result_slider->fetch_assoc()) {
       // Periksa apakah ini adalah item pertama untuk menambahkan kelas 'active'
       $active_class = $first_item ? 'active' : '';
       echo '<div class="carousel-item ' . $active_class . '">
@@ -329,11 +340,11 @@ $result = $conn->query($query);
   <div class="container">
     <div class="row position-relative">
 
-    <div class="col-lg-7 about-img" data-aos="zoom-out" data-aos-delay="200">
+    <div class="col-lg-6 about-img" data-aos="zoom-out" data-aos-delay="200">
     <img src="admin/beranda/uploads/<?php echo $beranda['foto_kepsek']; ?>" alt="Foto Kepala Sekolah" width="200">
 </div>
 
-      <div class="col-lg-7" data-aos="fade-up" data-aos-delay="100">
+      <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
         <h2 class="inner-title">Sambutan Kepala Sekolah</h2>
         <div class="our-story">
           <h5>Kepala Sekolah SDN 02 Bangetayu Wetan</h5>
@@ -410,17 +421,25 @@ $result = $conn->query($query);
         </div>
     
         <div class="col-lg-3 col-md-6  align-items-center footer-links">
-          <h4>Tautan</h4>
-          <ul>
-            <li><a href="https://www.kemdikbud.go.id/"> Kemendikbud</a></li>
-            <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
-          </ul>
-          <div class="social-links d-flex mt-4">
-            <a href="https://www.facebook.com/share/1NbvshQNt8/"><i class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/sdnbangetayuwetan02"><i class="bi bi-instagram"></i></a>
-            <a href="https://www.youtube.com/@sdnegeribangetayuwetan0259"><i class="bi bi-youtube"></i></a>
-          </div>
-        </div>
+    <h4>Tautan</h4>
+    <ul>
+        <li><a href="https://www.kemdikbud.go.id/">Kemendikbud</a></li>
+        <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
+    </ul>
+    <div class="social-links d-flex mt-4">
+        <!-- Tampilkan link sosial media secara dinamis -->
+        <?php if (!empty($kontak['facebook'])): ?>
+            <a href="<?php echo $kontak['facebook']; ?>"><i class="bi bi-facebook"></i></a>
+        <?php endif; ?>
+        <?php if (!empty($kontak['instagram'])): ?>
+            <a href="<?php echo $kontak['instagram']; ?>"><i class="bi bi-instagram"></i></a>
+        <?php endif; ?>
+        <?php if (!empty($kontak['youtube'])): ?>
+            <a href="<?php echo $kontak['youtube']; ?>"><i class="bi bi-youtube"></i></a>
+        <?php endif; ?>
+    </div>
+</div>
+
     
         <div class="col-lg-4 col-md-6 footer-about">
           <h4>Umpan Balik</h4>
