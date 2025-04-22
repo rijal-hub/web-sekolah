@@ -89,7 +89,7 @@ $result_website = $conn->query($sql);
           <li class="dropdown"><a href="profil_sekolah.php"> <span>profil</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="profil_sekolah.php">Profil sekolah</a></li>
-              <li><a href="team.php"> Daftar Guru</a></li>
+              <li><a href="team.php"> Profil Guru</a></li>
               <li><a href="prestasi_sekolah.php">Prestasi sekolah</a></li>
             </ul>
           </li>
@@ -124,11 +124,11 @@ $result_website = $conn->query($sql);
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">Portfolio Details</h1>
+        <h1 class="mb-2 mb-lg-0">WARTA SEKOLAH</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.php">Home</a></li>
-            <li class="current">Portfolio Details</li>
+            <li class="current">Warta</li>
           </ol>
         </nav>
       </div>

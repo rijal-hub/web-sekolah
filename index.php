@@ -274,8 +274,7 @@ $result_slider = $conn->query($query);
           <li class="dropdown"><a href="profil_sekolah.php"> <span>profil</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="profil_sekolah.php">Profil sekolah</a></li>
-              <li><a href="team.php"> Daftar Guru</a></li>
-              <li><a href="karyawan.php"  class="active">Daftar Karyawan</a></li>
+              <li><a href="team.php"> Profil Guru</a></li>
               <li><a href="prestasi_sekolah.php">Prestasi sekolah</a></li>
             </ul>
           </li>

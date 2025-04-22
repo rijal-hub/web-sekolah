@@ -23,7 +23,6 @@ if ($result->num_rows > 0) {
     $beranda = $result->fetch_assoc();
 } else {
     echo "Data beranda tidak ditemukan.";
-    exit;
 }
 ?>
 
