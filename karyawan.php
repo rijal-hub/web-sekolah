@@ -1,54 +1,17 @@
 <?php
-include 'config/db_connect.php';       // koneksi database
-include 'tambah_adu.php';      // fungsi pengaduan
+// Include file db_connect.php untuk koneksi ke database
+include 'config/db_connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Tangkap input dari form
-    $nama       = htmlspecialchars(trim($_POST['nama']));
-    $no_kontak  = htmlspecialchars(trim($_POST['no_kontak']));
-    $email      = htmlspecialchars(trim($_POST['email']));
-    $deskripsi  = htmlspecialchars(trim($_POST['deskripsi']));
-
-    // Validasi dasar (boleh dikembangkan lagi)
-    if (empty($nama) || empty($no_kontak) || empty($email) || empty($deskripsi)) {
-        echo "<script>alert('Semua field harus diisi.'); window.location.href='contact.php';</script>";
-        exit;
-    }
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "<script>alert('Email tidak valid.'); window.location.href='contact.php';</script>";
-        exit;
-    }
-
-    // Kirim pengaduan
-    $hasil = kirimPengaduan($conn, $nama, $no_kontak, $email, $deskripsi);
-
-    // Tampilkan pesan hasil
-    if ($hasil['status']) {
-        echo "<script>alert('{$hasil['message']}'); window.location.href='contact.php';</script>";
-    } else {
-        echo "<script>alert('Gagal mengirim pengaduan: {$hasil['message']}'); window.location.href='contact.php';</script>";
-    }
-}
-
-$id = 1;
-
-// Query untuk mengambil data beranda berdasarkan id = 1
-$query = "SELECT * FROM kontak WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
+// Query untuk mengambil semua data dari tabel profil_guru
+$query = "SELECT * FROM profil_karyawan";
+$result = $conn->query($query);
 
 // Cek apakah data ditemukan
-if ($result->num_rows > 0) {
-    $kontak = $result->fetch_assoc();
-} else {
-    echo "Data beranda tidak ditemukan.";
+if (!$result || $result->num_rows === 0) {
+    echo "Tidak ada data karyawan yang ditemukan.";
     exit;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +19,7 @@ if ($result->num_rows > 0) {
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Contact - Company Bootstrap Template</title>
+  <title>Profil Karyawan</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -88,7 +51,8 @@ if ($result->num_rows > 0) {
   ======================================================== -->
 </head>
 
-<body class="contact-page">
+<body class="team-page">
+
   <header id="header" class="header d-flex align-items-center sticky-top">
     
     <div class="container position-relative d-flex ">
@@ -98,13 +62,14 @@ if ($result->num_rows > 0) {
       <img src="aset/logo sd.png" alt="Logo SD" class="logo-img">
         <h1 class="sitename">SDN BANGETAYU WETAN 02</h1>
       </a>
-      </nav><nav id="navmenu" class="navmenu">
+      <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="index.php">Beranda</a></li>
           <li class="dropdown"><a href="profil_sekolah.php"> <span>profil</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="profil_sekolah.php">Profil sekolah</a></li>
               <li><a href="team.php"> Daftar Guru</a></li>
+              <li><a href="karyawan.php"  class="active">Daftar Karyawan</a></li>
               <li><a href="prestasi_sekolah.php">Prestasi sekolah</a></li>
             </ul>
           </li>
@@ -131,102 +96,74 @@ if ($result->num_rows > 0) {
     <!-- Page Title -->
     <div class="page-title accent-background">
       <div class="container d-lg-flex justify-content-between align-items-center">
-        <h1 class="mb-2 mb-lg-0">KONTAK</h1>
+        <h1 class="mb-2 mb-lg-0">Daftar Karyawan</h1>
         <nav class="breadcrumbs">
           <ol>
             <li><a href="index.php">BERANDA</a></li>
-            <li class="current">KONTAK</li>
           </ol>
         </nav>
       </div>
     </div><!-- End Page Title -->
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    <!-- Team Section -->
+    <section id="team" class="team section">
 
-      <div class="mb-5">
-        <iframe style="width: 100%; height: 400px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1980.1144752355945!2d110.485692!3d-6.982287!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708d2561b465cf%3A0x6f662c788b510805!2sSD%20Negeri%20Bangetayu%20Wetan%2002!5e0!3m2!1sid!2sid!4v1742620235937!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" frameborder="0" allowfullscreen=""></iframe>
-      </div><!-- End Google Maps -->
+      <div class="container">
 
-      <div class="container" data-aos="fade">
-
-        <div class="row gy-5 gx-lg-5">
-
-          <div class="col-lg-4">
-
-            <div class="info">
-              <h3>Kontak Kami</h3>
-              <p>Silahkan tinggalkan pesan Anda pada kolom yang tersedia</p>
-
-              <div class="info-item d-flex">
-  <i class="bi bi-geo-alt flex-shrink-0"></i>
-  <div>
-    <h4>Location:</h4>
-    <p><?php echo nl2br(htmlspecialchars($kontak['alamat'])); ?></p>
-  </div>
-</div><!-- End Info Item -->
-
-<div class="info-item d-flex">
-  <i class="bi bi-envelope flex-shrink-0"></i>
-  <div>
-    <h4>Email:</h4>
-    <p><?php echo nl2br(htmlspecialchars($kontak['email'])); ?></p>
-  </div>
-</div><!-- End Info Item -->
-
-<div class="info-item d-flex">
-  <i class="bi bi-phone flex-shrink-0"></i>
-  <div>
-    <h4>Telepon:</h4>
-    <p><?php echo nl2br(htmlspecialchars($kontak['telepon'])); ?></p>
-  </div>
-</div><!-- End Info Item -->
-            </div>
-
-          </div>
-
-          <div class="col-lg-8">
-          <form action="contact.php" method="POST" role="form" class="php-email-form">
-  <div class="row">
-    <div class="form-group mt-3">
-      <input type="text" class="form-control" name="nama" id="nama" placeholder="Masukkan Nama Anda" required="">
+      <div class="row gy-4">
+  <?php
+  // Menampilkan data dari database
+  // Menampilkan data dari database
+  if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+?>
+  <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+    <div class="team-member">
+      <div class="member-img">
+        <img src="admin/profil_karyawan/uploads/<?php echo htmlspecialchars($row['foto']); ?>" 
+             alt="Foto" class="img-fluid mx-auto d-block" 
+             style="width: 100%; height: auto; margin-bottom: 20px;"
+             onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+       
+      </div>
+      <div class="member-info">
+        <h4><?php echo htmlspecialchars($row['nama']); ?></h4>
+        <span><?php echo htmlspecialchars($row['jabatan']); ?></span>
+      </div>
     </div>
-    <div class="col-md-6 form-group">
-      <input type="text" name="no_kontak" class="form-control" id="no_kontak" placeholder="Masukkan No.Telepon Anda" required="">
-    </div>
-    <div class="col-md-6 form-group">
-      <input type="email" class="form-control" name="email" id="email" placeholder="Masukkan Email Anda" required="">
-    </div>
-    <div class="form-group mt-3">
-      <textarea class="form-control" name="deskripsi" placeholder="Tuliskan pengaduan Anda" required=""></textarea>
-    </div>
-  </div>
-  <div class="text-center"><button type="submit">Kirim Pengaduan</button></div>
-</form>
-
-
-
-
-            </div>
+  </div><!-- End Team Member -->
+<?php
+    }
+} else {
+    echo "<p>Tidak ada data guru yang ditemukan.</p>";
+}
+?>
+</div> <!-- tutup row gy-4 -->
         </div>
 
       </div>
 
-    </section><!-- /Contact Section -->
+    </section><!-- /Team Section -->
 
   </main>
+  <?php
+  $kontak = [
+    'alamat' => 'Jl. Sedayu Sawo Raya No.1, Bangetayu Wetan, Kec. Genuk, Kota Semarang, Jawa Tengah 50115',
+    'telp' => '(024) 76451362',
+    'email' => 'sdnbangetayuwetan34@yahoo.co.id'
+  ];
+  ?>
 
   <footer id="footer" class="footer dark-background">
     <div class="container footer-top">
       <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-            <h4>Alamat</h4>
-            <p><?php echo nl2br(htmlspecialchars($kontak['alamat'])); ?></p>
-            <p class="mt-3"><strong> Nomor telp:</strong> <?php echo nl2br(htmlspecialchars($kontak['telepon'])); ?></p>
-            <p><strong>Email:</strong> <?php echo nl2br(htmlspecialchars($kontak['email'])); ?></p>
-         
-        </div>
-    
+      <div class="col-lg-4 col-md-6 footer-about">
+        <h4>Alamat</h4>
+        <p><?= $kontak['alamat']; ?></p>
+        <p class="mt-3"><strong> Nomor telp:</strong> <span><?= $kontak['telp']; ?></span></p>
+        <p><strong>Email:</strong> <span><?= $kontak['email']; ?></span></p>
+      </div>
+
         <div class="col-lg-3 col-md-6  align-items-center footer-links">
           <h4>Tautan</h4>
           <ul>
@@ -274,6 +211,7 @@ if ($result->num_rows > 0) {
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>

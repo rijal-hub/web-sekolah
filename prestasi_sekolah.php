@@ -91,7 +91,8 @@ if ($filter == '*') {
             </ul>
           </li>
           <li><a href="contact.php">Kontak</a></li>
-          <li><a href="login.php" class="login-box">Login</a></li>
+          <li id="admin-login-btn" style="display: none;">
+          <a href="login.php" class="login-box">Login</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -321,6 +322,14 @@ $kontak = [
 
 </script>
   
+<script>
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === 'l') {
+      document.getElementById('admin-login-btn').style.display = 'block';
+    }
+  });
+</script>
+
 </body>
 
 </html>
