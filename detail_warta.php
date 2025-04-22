@@ -2,44 +2,34 @@
 // Menyertakan file koneksi database
 include('config/db_connect.php');
 
-// Menangkap ID berita dari URL
-$id = isset($_GET['id']) ? $_GET['id'] : null;
+// Menangkap ID berita dari URL dan validasi
+$id = isset($_GET['id']) && is_numeric($_GET['id']) ? (int)$_GET['id'] : null;
 
-if ($id) {
-    // Menentukan query untuk mengambil data berdasarkan ID berita
-    $query = "SELECT judul, media, isi, kategori FROM berita_sekolah WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $id);  // "i" berarti integer untuk ID
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    // Mengecek apakah data ditemukan
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $judul = $row['judul'];
-        $media = $row['media'];
-        $isi = $row['isi'];
-        $kategori = $row['kategori'];
-    } else {
-        echo "Data tidak ditemukan.";
-    }
-} else {
-    echo "ID berita tidak tersedia.";
+if (!$id) {
+    die("ID berita tidak valid.");
 }
 
-$query = "SELECT * FROM kontak WHERE id = ?";
+// Query untuk mengambil data berita
+$query = "SELECT judul, media, isi, kategori FROM berita_sekolah WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Cek apakah data ditemukan
-if ($result->num_rows > 0) {
-    $kontak = $result->fetch_assoc();
-} else {
-    echo "Data beranda tidak ditemukan.";
-    exit;
+if ($result->num_rows === 0) {
+    die("Berita tidak ditemukan.");
 }
+
+$berita = $result->fetch_assoc();
+$judul = $berita['judul'];
+$media = $berita['media'];
+$isi = $berita['isi'];
+$kategori = $berita['kategori'];
+
+// Query terpisah untuk data kontak (jika diperlukan)
+$query_kontak = "SELECT * FROM kontak LIMIT 1"; // Ambil satu data kontak saja
+$result_kontak = $conn->query($query_kontak);
+$kontak = $result_kontak->fetch_assoc();
 ?>
 
 <!DOCTYPE html>
@@ -133,36 +123,18 @@ if ($result->num_rows > 0) {
     </div><!-- End Page Title -->
 
     <!-- Portfolio Details Section -->
+     <!-- Portfolio Details Section -->
     <section id="portfolio-details" class="portfolio-details section">
       <div class="container" data-aos="fade-up">
         <div class="portfolio-details-slider swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "navigation": {
-                "nextEl": ".swiper-button-next",
-                "prevEl": ".swiper-button-prev"
-              },
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              }
-            }
-          </script>
+          <!-- Konfigurasi swiper -->
           <div class="swiper-wrapper align-items-center">
             <div class="swiper-slide">
-              <!-- Menampilkan gambar media (foto atau video) -->
-              <?php if (filter_var($media, FILTER_VALIDATE_URL)) { ?>
-                <iframe width="100%" height="500" src="<?php echo $media; ?>" frameborder="0" allowfullscreen></iframe>
-              <?php } else { ?>
-                <img src="admin/berita_sekolah/uploads/<?php echo $media; ?>" class="img-fluid" alt="<?php echo $judul; ?>">
-              <?php } ?>
+              <?php if (filter_var($media, FILTER_VALIDATE_URL)): ?>
+                <iframe width="100%" height="500" src="<?= htmlspecialchars($media) ?>" frameborder="0" allowfullscreen></iframe>
+              <?php else: ?>
+                <img src="admin/berita_sekolah/uploads/<?= htmlspecialchars($media) ?>" class="img-fluid" alt="<?= htmlspecialchars($judul) ?>">
+              <?php endif; ?>
             </div>
           </div>
           <div class="swiper-button-prev"></div>
@@ -173,25 +145,33 @@ if ($result->num_rows > 0) {
         <div class="row justify-content-between gy-4 mt-4">
           <div class="col-lg-8" data-aos="fade-up">
             <div class="portfolio-description">
-              <h2><?php echo $judul; ?></h2>
-              <p>
-                <?php echo nl2br($isi); ?>
-              </p>
+              <h2><?= htmlspecialchars($judul) ?></h2>
+              <p><?= nl2br(htmlspecialchars($isi)) ?></p>
+            </div>
+          </div>
+          
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="portfolio-info">
+              <h3>Informasi Warta</h3>
+              <ul>
+                <li><strong>Kategori</strong>: <?= htmlspecialchars($kategori) ?></li>
+                <li><strong>Tanggal Publikasi</strong>: <?= date('d F Y') ?></li>
+              </ul>
             </div>
           </div>
         </div>
+        
+        <div class="container mt-5">
+          <div class="d-flex justify-content-end">
+            <a href="javascript:history.back()" class="btn px-4 py-2 rounded-pill" style="background-color: #4a4c58; color: white;">
+              <i class="bi bi-arrow-left me-2"></i>Kembali
+            </a>
+          </div>
+        </div>
       </div>
-      <div class="container mt-5">
-  <div class="d-flex justify-content-end">
-    <a href="javascript:history.back()" 
-       class="btn px-4 py-2 rounded-pill" 
-       style="background-color: #4a4c58; color: white; border-color: #4a4c58;">
-      <i class="bi bi-arrow-left me-2"></i>Kembali
-    </a>
-  </div>
-</div>
-    </section><!-- /Portfolio Details Section -->
+    </section>
   </main>
+
 
   <footer id="footer" class="footer dark-background">
     <div class="container footer-top">
