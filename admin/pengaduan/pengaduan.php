@@ -1,28 +1,8 @@
 <?php
-session_start(); // WAJIB sebelum HTML atau echo apapun
+session_start(); 
 
 if (!isset($_SESSION['username'])) {
     header("Location: ../../login.php");
-    exit;
-}
-?>
-<?php
-// Koneksi ke database
-include 'db_connect.php';
-
-// Ambil data untuk halaman beranda
-$id = 1; // ID tetap 1
-$query = "SELECT * FROM beranda WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-// Cek apakah data ditemukan
-if ($result->num_rows > 0) {
-    $beranda = $result->fetch_assoc();
-} else {
-    echo "Data beranda tidak ditemukan.";
     exit;
 }
 ?>
@@ -132,7 +112,7 @@ if ($result === false) {
         <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
         
         <div class="sidebar-brand-icon d-flex flex-column align-items-center justify-content-center">
-        <img src="../beranda/uploads/<?php echo $beranda['logo']; ?>" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">
+        <img src="../img/logo sd.png" alt="Logo" style="width: 80px; height: 80px; margin-bottom: 5px; margin-top: 20px;">     
         </div>  
             <a class="sidebar-brand d-flex flex-column align-items-center justify-content-center">
                 <div class="sidebar-brand-text mx-3 text-center">SDN BANGETAYU WETAN 02</div>
@@ -159,6 +139,7 @@ if ($result === false) {
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="../profil_sekolah/profil_sekolah.php">Profil Sekolah</a>
                     <a class="collapse-item" href="../profil_guru/guru.php">Profil Guru</a>
+                    <a class="collapse-item" href="../profil_karyawan/profil_karyawan.php">Profil Karyawan</a>
                     <a class="collapse-item" href="../prestasi_sekolah/prestasi_sekolah.php">Prestasi Sekolah</a>
                 </div>
             </div>
@@ -272,7 +253,7 @@ if ($result === false) {
             <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div cslass="modal-header">
                             <h5 class="modal-title" id="hapusModalLabel">Konfirmasi Hapus</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -313,8 +294,17 @@ if ($result === false) {
                                     <img src="../img/avatar.png" class="pengaduan-img rounded-circle" alt="Avatar">
                                     <div>
                                         <h3><?= $nama; ?></h3>
-                                        <h4 class="text-muted small">Email: <?= $email; ?> | Telp: <?= $no_kontak; ?></h4>
-                                       
+                                        <?php
+                                        $subject = rawurlencode("Tanggapan Pengaduan");
+                                        $body = rawurlencode("Halo $nama,\n\nKami telah menerima pengaduan Anda dan akan segera menindaklanjuti.\n\nTerima kasih.");
+                                        $gmailLink = "https://mail.google.com/mail/?view=cm&fs=1&to=$email&su=$subject&body=$body";
+                                        $wa_number = preg_replace('/[^0-9]/', '', $no_kontak);
+                                        ?>
+                                        <h4 class="text-muted small">
+                                            Email: <a href="<?= $gmailLink; ?>" target="_blank"><?= $email; ?></a> |
+                                            Telp: <a href="https://wa.me/+62<?= $wa_number; ?>" target="_blank"><?= $no_kontak; ?></a>
+                                        </h4>
+                                                          
                                     </div>
                                 </div>
                                 
