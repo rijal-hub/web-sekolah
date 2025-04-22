@@ -98,3 +98,39 @@ input {
 .login-button:hover {
   background-color: darkred;
 }
+
+/*--------------------------------------------------------------
+# LogOut
+--------------------------------------------------------------*/
+.back-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: linear-gradient(135deg, #0044ff, #3b82f6);
+  color: white;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.back-button .arrow {
+  font-size: 20px;
+  margin-right: 8px;
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover {
+  background: linear-gradient(135deg, #0030cc, #2563eb);
+  transform: translateY(-2px);
+}
+
+.back-button:hover .arrow {
+  transform: translateX(-4px);
+}
