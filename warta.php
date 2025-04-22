@@ -286,6 +286,14 @@ if ($filter == 'all') {
   });
 </script>
 
+<script>
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && e.key.toLowerCase() === 'l') {
+      document.getElementById('admin-login-btn').style.display = 'block';
+    }
+  });
+</script>
+
 </body>
 
 </html>
