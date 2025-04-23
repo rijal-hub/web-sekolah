@@ -57,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: inline-flex;
             align-items: center;
             padding: 10px 20px;
-            background-color: #3498db;
+            background-color: #0000FF;
             color: white;
             text-decoration: none;
             border-radius: 30px;
@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         
         .back-button:hover {
-            background-color: #2980b9;
+            background-color: #0000FF;
             transform: translateY(-3px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
