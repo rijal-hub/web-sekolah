@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include 'admin/lomba_sekolah/db_connect.php';
@@ -16,8 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result && $result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Cek password (gunakan password_verify jika password di-hash)
-        if ($password === $user['password']) {
+        // Cek password dengan password_verify (bcrypt)
+        if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['username'];
 
             // Remember me
@@ -86,8 +87,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <a href="index.php" class="back-button">
         <span class="arrow">←</span> Kembali
     </a>
-
-
 
     <div class="login-container">
         <div class="login-box">
