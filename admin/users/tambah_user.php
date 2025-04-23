@@ -12,14 +12,13 @@ if (!isset($_SESSION['username'])) {
 include 'db_connect.php';
 
 // Ambil data untuk halaman beranda
-$id = 1; // ID tetap 1
+$id = 1;
 $query = "SELECT * FROM beranda WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Cek apakah data ditemukan
 if ($result->num_rows > 0) {
     $beranda = $result->fetch_assoc();
 } else {
@@ -29,26 +28,29 @@ if ($result->num_rows > 0) {
 ?>
 
 <?php
-// Include file db_connect.php untuk koneksi ke database
-include 'db_connect.php';
-
 // Proses ketika form disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include 'db_connect.php';
+
     $username = $_POST['username'];
-    $password = $_POST['password']; 
-    
-    // Masukkan data ke database
-    $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
-    if ($conn->query($query) === TRUE) {
+    $password = $_POST['password'];
+
+    // Enkripsi password menggunakan bcrypt
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Simpan data ke database dengan prepared statement
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt->bind_param("ss", $username, $hashed_password);
+
+    if ($stmt->execute()) {
         header("Location: users.php");
         exit;
     } else {
-        echo "Error: " . $query . "<br>" . $conn->error;
+        echo "Error: " . $stmt->error;
     }
-} else {
-    echo "Sorry, there was an error uploading your file.";
-}
 
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
