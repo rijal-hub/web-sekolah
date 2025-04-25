@@ -214,7 +214,10 @@ $result_website = $conn->query($sql);
   </div>
   <div class="text-center"><button type="submit">Kirim Pengaduan</button></div>
 </form>
-
+<!-- Di bagian footer atau di halaman contact -->
+<div class="text-center mt-3">
+    <p>Ingin melacak pengaduan Anda? <a href="lacak_pengaduan.php">Klik di sini</a></p>
+</div>
 
 
 

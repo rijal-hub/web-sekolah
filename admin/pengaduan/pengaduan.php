@@ -5,17 +5,32 @@ if (!isset($_SESSION['username'])) {
     header("Location: ../../login.php");
     exit;
 }
-?>
 
-<?php
 // Include file db_connect.php untuk koneksi ke database
 include 'db_connect.php';
 
-// Query untuk mengambil data dari tabel pengaduan
-$query = "SELECT * FROM pengaduan";
+// Update status jika ada request
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_status'])) {
+    $id = $_POST['id'];
+    $status = $_POST['status'];
+    
+    $stmt = $conn->prepare("UPDATE pengaduan SET status = ? WHERE id = ?");
+    $stmt->bind_param("si", $status, $id);
+    $stmt->execute();
+    
+    header("Location: pengaduan.php");
+    exit;
+}
+
+// Query untuk mengambil data dari tabel pengaduan dengan sorting
+$query = "SELECT * FROM pengaduan ORDER BY 
+          CASE status 
+            WHEN 'belum diproses' THEN 1
+            WHEN 'diproses' THEN 2
+            WHEN 'selesai' THEN 3
+          END, tanggal DESC";
 $result = $conn->query($query);
 
-// Cek apakah query berhasil
 if ($result === false) {
     echo "Error: " . $conn->error;
     exit;
@@ -28,57 +43,98 @@ if ($result === false) {
 <head>
     <style>
         .testimonial-item {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 30px;
-}
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
 
-.testimonial-item:hover {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
+        .testimonial-item:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
-.testimonial-header {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+        .status-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
 
-.pengaduan-img {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 50%;
-}
+        .status-badge.belum {
+            background-color: #ffc107;
+            color: #000;
+        }
 
-.testimonial-header h3 {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.2rem;
-}
+        .status-badge.diproses {
+            background-color: #17a2b8;
+            color: #fff;
+        }
 
-.testimonial-header h4 {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #6c757d;
-}
+        .status-badge.selesai {
+            background-color: #28a745;
+            color: #fff;
+        }
 
-.stars i {
-    color: #ffbc00;
-}
+        .progress-container {
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
 
-.quote-icon-left,
-.quote-icon-right {
-    font-size: 20px;
-    color: #ccc;
-}
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
 
-.text-right {
-    font-size: 14px;
-    color: #6c757d;
-}
+        .progress-bar {
+            border-radius: 5px;
+        }
 
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .pengaduan-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .testimonial-header h3 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .testimonial-header h4 {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .quote-icon-left,
+        .quote-icon-right {
+            font-size: 20px;
+            color: #ccc;
+        }
+
+        .text-right {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        .action-buttons {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
     </style>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,9 +146,7 @@ if ($result === false) {
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -270,63 +324,107 @@ if ($result === false) {
                 </div>
             </div>
         <!-- Page Heading -->
+        <!-- Begin Page Content -->
         <div class="container-fluid">
                     <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Pengaduan</h1>
-                    <p class="mb-4">Halaman ini menampilkan daftar pengaduan yang masuk ke SDN Bangetayu Wetan 02. Pastikan data yang ditampilkan selalu diperbarui untuk memberikan informasi yang jelas.</p>
+                    <p class="mb-4">Kelola pengaduan yang masuk dengan mengupdate status progresnya.</p>
 
                     <div class="container mt-4">
-                    <div class="row gy-4">
-                        <?php
-                        $count = 0;
-                        while ($row = $result->fetch_assoc()) {
-                            $nama = htmlspecialchars($row['nama']);
-                            $deskripsi = htmlspecialchars($row['deskripsi']);
-                            $email = htmlspecialchars($row['email']);
-                            $no_kontak = htmlspecialchars($row['no_kontak']);
-                            $tanggal = htmlspecialchars($row['tanggal']);
-                            
-                            $delay = 100 * ($count + 1);
-                        ?>
-                        <div class="col-lg-6" data-aos="fade-up" data-aos-delay="<?= $delay; ?>">
-                            <div class="testimonial-item shadow p-4 rounded">
-                                <!-- Testimonial Header with avatar, name, email, and phone -->
-                                <div class="testimonial-header">
-                                    <img src="../img/avatar.png" class="pengaduan-img rounded-circle" alt="Avatar">
-                                    <div>
-                                        <h3><?= $nama; ?></h3>
-                                        <?php
-                                        $subject = rawurlencode("Tanggapan Pengaduan");
-                                        $body = rawurlencode("Halo $nama,\n\nKami telah menerima pengaduan Anda dan akan segera menindaklanjuti.\n\nTerima kasih.");
-                                        $gmailLink = "https://mail.google.com/mail/?view=cm&fs=1&to=$email&su=$subject&body=$body";
-                                        $wa_number = preg_replace('/[^0-9]/', '', $no_kontak);
-                                        ?>
-                                        <h4 class="text-muted small">
-                                            Email: <a href="<?= $gmailLink; ?>" target="_blank"><?= $email; ?></a> |
-                                            Telp: <a href="https://wa.me/+62<?= $wa_number; ?>" target="_blank"><?= $no_kontak; ?></a>
-                                        </h4>
-                                                          
+                        <div class="row gy-4">
+                            <?php
+                            $count = 0;
+                            while ($row = $result->fetch_assoc()) {
+                                $nama = htmlspecialchars($row['nama']);
+                                $deskripsi = htmlspecialchars($row['deskripsi']);
+                                $email = htmlspecialchars($row['email']);
+                                $no_kontak = htmlspecialchars($row['no_kontak']);
+                                $tanggal = htmlspecialchars($row['tanggal']);
+                                $status = htmlspecialchars($row['status']);
+                                $no_tiket = htmlspecialchars($row['no_tiket']);
+                                
+                                // Tentukan warna badge berdasarkan status
+                                $badge_class = '';
+                                if ($status == 'belum diproses') $badge_class = 'belum';
+                                elseif ($status == 'diproses') $badge_class = 'diproses';
+                                elseif ($status == 'selesai') $badge_class = 'selesai';
+                                
+                                // Tentukan progress bar
+                                $progress = 0;
+                                if ($status == 'diproses') $progress = 50;
+                                elseif ($status == 'selesai') $progress = 100;
+                                
+                                $delay = 100 * ($count + 1);
+                            ?>
+                            <div class="col-lg-6" data-aos="fade-up" data-aos-delay="<?= $delay; ?>">
+                                <div class="testimonial-item shadow p-4 rounded">
+                                    <!-- Status Badge -->
+                                    <span class="status-badge <?= $badge_class ?>"><?= strtoupper($status) ?></span>
+                                    
+                                    <!-- Testimonial Header -->
+                                    <div class="testimonial-header">
+                                        <img src="../img/avatar.png" class="pengaduan-img rounded-circle" alt="Avatar">
+                                        <div>
+                                            <h3><?= $nama; ?></h3>
+                                            <h4 class="text-muted small">
+                                                No. Tiket: <?= $no_tiket; ?>
+                                            </h4>
+                                            <?php
+                                            $subject = rawurlencode("Tanggapan Pengaduan #$no_tiket");
+                                            $body = rawurlencode("Halo $nama,\n\nKami telah menerima pengaduan Anda (No. Tiket: $no_tiket) dan status saat ini: $status.\n\nTerima kasih.");
+                                            $gmailLink = "https://mail.google.com/mail/?view=cm&fs=1&to=$email&su=$subject&body=$body";
+                                            $wa_number = preg_replace('/[^0-9]/', '', $no_kontak);
+                                            ?>
+                                            <h4 class="text-muted small">
+                                                Email: <a href="<?= $gmailLink; ?>" target="_blank"><?= $email; ?></a> |
+                                                Telp: <a href="https://wa.me/+62<?= $wa_number; ?>" target="_blank"><?= $no_kontak; ?></a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    
+                                    <hr class="my-3">
+                                    
+                                    <!-- Progress Bar -->
+                                    <div class="progress-container">
+                                        <div class="progress">
+                                            <div class="progress-bar bg-<?= $badge_class ?>" role="progressbar" style="width: <?= $progress ?>%" 
+                                                aria-valuenow="<?= $progress ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <small class="text-muted">Progres: <?= $progress ?>%</small>
+                                    </div>
+                                    
+                                    <!-- Deskripsi Pengaduan -->
+                                    <h5>
+                                        <i class="bi bi-quote quote-icon-left"></i>
+                                        <span><?= $deskripsi; ?></span>
+                                        <i class="bi bi-quote quote-icon-right"></i>
+                                    </h5>
+                                    
+                                    <!-- Form Update Status -->
+                                    <form method="POST" class="mt-3">
+    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+    <input type="hidden" name="update_status" value="1"> <!-- Tambahkan ini -->
+    <div class="form-group">
+        <label for="status">Update Status:</label>
+        <select name="status" class="form-control" onchange="this.form.submit()">
+            <option value="belum diproses" <?= $status == 'belum diproses' ? 'selected' : '' ?>>Belum Diproses</option>
+            <option value="diproses" <?= $status == 'diproses' ? 'selected' : '' ?>>Sedang Diproses</option>
+            <option value="selesai" <?= $status == 'selesai' ? 'selected' : '' ?>>Selesai</option>
+        </select>
+    </div>
+</form>
+
+                                    
+                                    <!-- Tanggal -->
+                                    <div class="text-right text-muted small mt-2">
+                                        <?= date('d M Y H:i', strtotime($tanggal)); ?>
                                     </div>
                                 </div>
-                                
-                                <hr class="my-3">
-                                
-                                <!-- Testimonial Description -->
-                                <h5>
-                                    <i class="bi bi-quote quote-icon-left"></i>
-                                    <span><?= $deskripsi; ?></span>
-                                    <i class="bi bi-quote quote-icon-right"></i>
-                        </h5>
-                                
-                                <!-- Date -->
-                                <div class="text-right text-muted small">
-                                    <?= $tanggal; ?>
-                                </div>
                             </div>
+                            <?php
+                                $count++;
+                            }
+                            ?>
                         </div>
-                        <?php
-                            $count++;
-                        }
-                        ?>
                     </div>
                 </div>
 
@@ -394,7 +492,6 @@ if ($result === false) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
-
 </body>
 <?php
 // Menutup koneksi database
