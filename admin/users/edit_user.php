@@ -1,53 +1,38 @@
 <?php
 session_start(); // WAJIB sebelum HTML atau echo apapun
-
 if (!isset($_SESSION['username'])) {
     header("Location: ../../login.php");
     exit;
 }
-?>
 
-<?php
 // Koneksi ke database
 include 'db_connect.php';
 
-// Ambil data untuk halaman beranda
-$id = 1; // ID tetap 1
+// Ambil data beranda
+$id_beranda = 1;
 $query = "SELECT * FROM beranda WHERE id = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id);
+$stmt->bind_param("i", $id_beranda);
 $stmt->execute();
 $result = $stmt->get_result();
-
-// Cek apakah data ditemukan
 if ($result->num_rows > 0) {
     $beranda = $result->fetch_assoc();
 } else {
     echo "Data beranda tidak ditemukan.";
     exit;
 }
-?>
 
-<?php
-// Include file db_connect.php untuk koneksi ke database
-include 'db_connect.php';
-
-// Cek apakah ada parameter 'id' di URL
+// Ambil data user
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-
-    // Query untuk mengambil data user berdasarkan id
-    $query = "SELECT * FROM users WHERE id = ?";
-    $stmt = $conn->prepare($query);
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
-
-    // Cek apakah data ditemukan
     if ($result->num_rows > 0) {
-        $users = $result->fetch_assoc();
+        $user = $result->fetch_assoc();
     } else {
-        echo "Admin tidak ditemukan.";
+        echo "User tidak ditemukan.";
         exit;
     }
 } else {
@@ -55,23 +40,29 @@ if (isset($_GET['id'])) {
     exit;
 }
 
-// Proses update data jika form disubmit
+// Proses update data
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password = $_POST['password']; // kosong jika tidak diubah
 
-    // Buat query update
-    $query = "UPDATE users SET username = ?, password = ? WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssi", $username, $password, $id);
-        
-    // Eksekusi query update
+    if (!empty($password)) {
+        // Hash password jika diisi
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "UPDATE users SET username = ?, password = ? WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssi", $username, $hashed_password, $id);
+    } else {
+        // Hanya update username jika password tidak diisi
+        $query = "UPDATE users SET username = ? WHERE id = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("si", $username, $id);
+    }
+
     if ($stmt->execute()) {
-        echo "Admin berhasil diperbarui!";
-        header("Location: users.php"); // Kembali ke halaman daftar user setelah update
+        header("Location: users.php");
         exit;
     } else {
-        echo "Error: " . $conn->error;
+        echo "Error: " . $stmt->error;
     }
 }
 ?>
@@ -250,37 +241,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+        <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Edit User</h1>
+        <p class="mb-4">Halaman ini digunakan untuk mengedit data user.</p>
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Tambah User</h1>
-                    <p class="mb-4">Halaman ini digunakan untuk menambah data user sekolah.</p>
-
-                    <!-- Konten-->
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Form Tambah User</h6>
-                        </div>
-                        <div class="card-body">
-                        <form action="edit_user.php?id=<?php echo $users['id']; ?>" method="POST" enctype="multipart/form-data">
-                            <div>
-                                <label for="username">Username:</label>
-                                <input type="text" class="form-control" name="username" id="username" value="<?php echo $users['username']; ?>" required>
-                            </div>                            
-                            <div>
-                                <label for="password">Password:</label>
-                                <textarea name="password" class="form-control" id="password" required><?php echo $users['password']; ?></textarea>
-                            </div>
-                            <div>
-                                <button type="submit" class="btn btn-primary" >Update User</button>
-                            </div>
-                        </form>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- /.container-fluid -->
-
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Form Edit User</h6>
             </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" 
+                               value="<?php echo htmlspecialchars($user['username']); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password (Biarkan kosong jika tidak ingin mengubah)</label>
+                        <input type="password" class="form-control" id="password" name="password" 
+                               placeholder="Masukkan password baru">
+                        <small class="text-muted">Password saat ini disimpan dalam bentuk terenkripsi</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update User</button>
+                    <a href="users.php" class="btn btn-secondary">Batal</a>
+                </form>
+            </div>
+        </div>
+    </div>
             <!-- End of Main Content -->
 
             <!-- Footer -->

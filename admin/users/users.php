@@ -1,44 +1,33 @@
 <?php
-session_start(); // WAJIB sebelum HTML atau echo apapun
-
+session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: ../../login.php");
     exit;
 }
-?>
 
-<?php
 // Koneksi ke database
 include 'db_connect.php';
 
-// Ambil data untuk halaman beranda
-$id = 1; // ID tetap 1
+// Ambil data beranda
+$id = 1;
 $query = "SELECT * FROM beranda WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Cek apakah data ditemukan
 if ($result->num_rows > 0) {
     $beranda = $result->fetch_assoc();
 } else {
     echo "Data beranda tidak ditemukan.";
     exit;
 }
-?>
 
-<?php
-// Include file db_connect.php untuk koneksi ke database
-include 'db_connect.php';
-
-// Query untuk mengambil data dari tabel users
-$query = "SELECT * FROM users";
+// Query untuk mengambil data dari tabel users (TANPA password)
+$query = "SELECT id, username FROM users"; // Hanya ambil id dan username
 $result = $conn->query($query);
 
-// Cek apakah query berhasil
 if ($result === false) {
-    // Jika gagal, tampilkan error SQL
     echo "Error: " . $conn->error;
     exit;
 }
@@ -219,58 +208,60 @@ if ($result === false) {
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+        <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Admin SDN Bangetayu Wetan 02</h1>
+        <p class="mb-4">Halaman ini menampilkan daftar admin SDN Bangetayu Wetan 02.</p>
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800 font-weight-bold">Admin SDN Bangetayu Wetan 02</h1>
-                    <p class="mb-4">Halaman ini menampilkan daftar admin SDN Bangetayu Wetan 02. Pastikan data yang ditampilkan selalu diperbarui untuk memberikan gambaran yang jelas mengenai admin sekolah.</p>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                <a href="tambah_user.php" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Tambah User
+                </a>
+            </div>
 
-                    <!-- Konten-->
-                <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                    <!-- Tombol Tambah dengan Icon Plus -->
-                    <a href="tambah_user.php" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> Tambah User
-                    </a>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Username</th>
+                                <th>Status Password</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($result->num_rows > 0) {
+                                $no = 1;
+                                while($user = $result->fetch_assoc()) {
+                                    echo "<tr>";
+                                    echo "<td>{$no}</td>";
+                                    echo "<td>".htmlspecialchars($user['username'])."</td>";
+                                    echo "<td>
+                                            <span class='badge badge-success'>Password Terenkripsi</span>
+                                            <small class='text-muted d-block'>••••••••</small>
+                                          </td>";
+                                    echo "<td class='text-center'>
+                                            <a href='edit_user.php?id={$user['id']}' class='btn btn-warning btn-sm mr-1'>
+                                                <i class='fas fa-edit'></i>
+                                            </a>
+                                            <a href='hapus_user.php?id={$user['id']}' class='btn btn-danger btn-sm' onclick='return confirm(\"Yakin ingin menghapus?\")'>
+                                                <i class='fas fa-trash'></i>
+                                            </a>
+                                          </td>";
+                                    echo "</tr>";
+                                    $no++;
+                                }
+                            } else {
+                                echo "<tr><td colspan='4' class='text-center'>Data tidak tersedia</td></tr>";
+                            }
+                            ?>
+                        </tbody>
+                    </table>
                 </div>
-
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Username</th>                                        
-                                        <th>Password</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    // Mengecek apakah ada data
-                                    if ($result->num_rows > 0) {
-                                        // Menampilkan data dari tabel users
-                                        $no = 1;
-                                        while($users = $result->fetch_assoc()) {
-                                            echo "<tr>";
-                                            echo "<td>{$no}</td>";
-                                            echo "<td>{$users['username']}</td>";                                            
-                                            echo "<td>{$users['password']}</td>";
-                                            echo "<td>
-                                                    <a href='edit_user.php?id={$users['id']}' class='btn btn-warning d-flex justify-content-center'>Edit</a>
-                                                    <a href='hapus_user.php?id={$users['id']}' class='btn btn-danger d-flex justify-content-center'>Hapus</a>
-                                                </td>";
-                                            echo "</tr>";
-                                            $no++;
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='5' class='text-center'>Data tidak tersedia</td></tr>";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+            </div>
+        </div>
+    </div>
 
                 <!-- /.container-fluid -->
 
