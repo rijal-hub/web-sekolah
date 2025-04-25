@@ -1,70 +1,105 @@
 <?php
 session_start();
+
+// Header Keamanan
+// Header Keamanan
+header("X-Frame-Options: DENY");
+header("X-Content-Type-Options: nosniff");
+
 include 'admin/lomba_sekolah/db_connect.php';
+
+// Inisialisasi rate limiting
+if (!isset($_SESSION['login_attempts'])) {
+    $_SESSION['login_attempts'] = 0;
+    $_SESSION['last_attempt'] = time();
+}
 
 $message = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validasi reCAPTCHA
-    $recaptcha_secret = "6LdNBCMrAAAAAK2dhOlXYsnbTlOWLaQfwQb7wfsf";
-    $recaptcha_response = $_POST['g-recaptcha-response'];
-    
-    $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
-    $recaptcha_data = [
-        'secret' => $recaptcha_secret,
-        'response' => $recaptcha_response,
-        'remoteip' => $_SERVER['REMOTE_ADDR']
-    ];
-    
-    $recaptcha_options = [
-        'http' => [
-            'header' => "Content-type: application/x-www-form-urlencoded\r\n",
-            'method' => 'POST',
-            'content' => http_build_query($recaptcha_data)
-        ]
-    ];
-    
-    $recaptcha_context = stream_context_create($recaptcha_options);
-    $recaptcha_result = file_get_contents($recaptcha_url, false, $recaptcha_context);
-    $recaptcha_json = json_decode($recaptcha_result);
-    
-    if (!$recaptcha_json->success) {
-        $message = "Silakan verifikasi bahwa Anda bukan robot!";
+    // Cek rate limiting sebelum proses login
+    if ($_SESSION['login_attempts'] > 3 && (time() - $_SESSION['last_attempt']) < 300) {
+        $message = "Terlalu banyak percobaan login. Silakan coba lagi setelah 5 menit.";
     } else {
-        $username = trim($_POST['username']);
-        $password = trim($_POST['password']);
-
-        $sql = "SELECT username, password FROM users WHERE username = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result && $result->num_rows > 0) {
-            $user = $result->fetch_assoc();
-
-            if (password_verify($password, $user['password'])) {
-                $_SESSION['username'] = $user['username'];
-
-                if (isset($_POST['remember'])) {
-                    setcookie('username', $username, time() + (86400 * 30), "/");
-                } else {
-                    setcookie('username', '', time() - 3600, "/");
-                }
-
-                header("Location: admin/beranda/beranda.php");
-                exit;
-            } else {
-                $message = "Password salah!";
-            }
+        // Validasi reCAPTCHA
+        $recaptcha_secret = "6LdNBCMrAAAAAK2dhOlXYsnbTlOWLaQfwQb7wfsf";
+        $recaptcha_response = $_POST['g-recaptcha-response'];
+        
+        $recaptcha_url = 'https://www.google.com/recaptcha/api/siteverify';
+        $recaptcha_data = [
+            'secret' => $recaptcha_secret,
+            'response' => $recaptcha_response,
+            'remoteip' => $_SERVER['REMOTE_ADDR']
+        ];
+        
+        $recaptcha_options = [
+            'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($recaptcha_data)
+            ]
+        ];
+        
+        $recaptcha_context = stream_context_create($recaptcha_options);
+        $recaptcha_result = file_get_contents($recaptcha_url, false, $recaptcha_context);
+        $recaptcha_json = json_decode($recaptcha_result);
+        
+        if (!$recaptcha_json->success) {
+            $message = "Silakan verifikasi bahwa Anda bukan robot!";
+            $_SESSION['login_attempts']++;
+            $_SESSION['last_attempt'] = time();
         } else {
-            $message = "Username tidak ditemukan!";
-        }
+            $username = trim($_POST['username']);
+            $password = trim($_POST['password']);
 
-        $stmt->close();
-        $conn->close();
+            $sql = "SELECT username, password FROM users WHERE username = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result && $result->num_rows > 0) {
+                $user = $result->fetch_assoc();
+
+                if (password_verify($password, $user['password'])) {
+                    // Reset login attempts on successful login
+                    $_SESSION['login_attempts'] = 0;
+                    
+                    $_SESSION['username'] = $user['username'];
+
+                    if (isset($_POST['remember'])) {
+                        setcookie('username', $username, time() + (86400 * 30), "/");
+                    } else {
+                        setcookie('username', '', time() - 3600, "/");
+                    }
+
+                    header("Location: admin/beranda/beranda.php");
+                    exit;
+                } else {
+                    $message = "Password salah!";
+                    $_SESSION['login_attempts']++;
+                    $_SESSION['last_attempt'] = time();
+                    
+                    // Logging untuk percobaan gagal
+                    $log = date('Y-m-d H:i:s') . " - Failed login attempt for username: " . $username . " from IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
+                    file_put_contents('admin/login_attempts.log', $log, FILE_APPEND);
+                }
+            } else {
+                $message = "Username tidak ditemukan!";
+                $_SESSION['login_attempts']++;
+                $_SESSION['last_attempt'] = time();
+                
+                // Logging untuk percobaan gagal
+                $log = date('Y-m-d H:i:s') . " - Failed login attempt for non-existent username: " . $username . " from IP: " . $_SERVER['REMOTE_ADDR'] . "\n";
+                file_put_contents('admin/login_attempts.log', $log, FILE_APPEND);
+            }
+
+            $stmt->close();
+            $conn->close();
+        }
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
