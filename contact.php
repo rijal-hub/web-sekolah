@@ -1,6 +1,6 @@
 <?php
-include 'config/db_connect.php';       // koneksi database
-include 'tambah_adu.php';      // fungsi pengaduan
+include 'config/db_connect.php';       // Koneksi database
+include 'tambah_adu.php';      // Fungsi pengaduan
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap input dari form
@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Kirim pengaduan
+    // Kirim pengaduan ke database
     $hasil = kirimPengaduan($conn, $nama, $no_kontak, $email, $deskripsi);
 
     // Tampilkan pesan hasil
@@ -30,23 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Gagal mengirim pengaduan: {$hasil['message']}'); window.location.href='contact.php';</script>";
     }
 }
-
-$id = 1;
-
-// Query untuk mengambil data beranda berdasarkan id = 1
-$query = "SELECT * FROM kontak WHERE id = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-// Cek apakah data ditemukan
-if ($result->num_rows > 0) {
-    $kontak = $result->fetch_assoc();
-} else {
-    echo "Data beranda tidak ditemukan.";
-    exit;
-}
+$query_kontak = "SELECT * FROM kontak LIMIT 1"; // Ambil satu data kontak saja
+$result_kontak = $conn->query($query_kontak);
+$kontak = $result_kontak->fetch_assoc();
 $sql = "SELECT nama_web, link FROM website";
 $result_website = $conn->query($sql);
 ?>
@@ -216,7 +202,7 @@ $result_website = $conn->query($sql);
 </form>
 <!-- Di bagian footer atau di halaman contact -->
 <div class="text-center mt-3">
-    <p>Ingin melacak pengaduan Anda? <a href="lacak_pengaduan.php">Klik di sini</a></p>
+    <p>Ingin melacak pengaduan Anda? <a href="lacak_pengaduan.php"><b>Klik di sini</b></a></p>
 </div>
 
 

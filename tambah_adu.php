@@ -5,49 +5,36 @@ function kirimPengaduan($conn, $nama, $no_kontak, $email, $deskripsi) {
     
     // Generate nomor tiket dengan timestamp lengkap (tahun-bulan-tanggal-jam-menit-detik)
     $no_tiket = 'TKT-' . date('YmdHis') . '-' . bin2hex(random_bytes(2));
-    
-    // Siapkan query
-    $query = "INSERT INTO pengaduan (nama, no_kontak, email, deskripsi, status, no_tiket, created_at) 
+
+    // Debugging: Cek data yang diterima
+    echo "Data yang diterima: Nama: $nama, No Kontak: $no_kontak, Email: $email, Deskripsi: $deskripsi, No Tiket: $no_tiket<br>";
+
+    // Siapkan query untuk menyimpan pengaduan
+    $query = "INSERT INTO pengaduan (nama, no_kontak, email, deskripsi, status, no_tiket, tanggal) 
               VALUES (?, ?, ?, ?, 'belum diproses', ?, NOW())";  // Gunakan NOW() untuk waktu server
     
-    // Prepare statement
+    // Persiapkan statement
     $stmt = $conn->prepare($query);
     
-    // Jika prepare gagal
+    // Cek apakah persiapan query berhasil
     if (!$stmt) {
-        return [
-            'status' => false,
-            'message' => 'Gagal menyiapkan query: ' . $conn->error
-        ];
+        die("Gagal menyiapkan query: " . $conn->error);
     }
-    
-    function kirimNotifikasiStatus($email, $no_tiket, $status_baru) {
-        $subject = "Update Status Pengaduan #$no_tiket";
-        $message = "Status pengaduan Anda dengan nomor tiket $no_tiket telah diubah menjadi: $status_baru.\n\n";
-        $message .= "Anda dapat melacak status pengaduan di: http://domainanda.com/lacak_pengaduan.php";
-        
-        $headers = "From: no-reply@domainanda.com";
-        
-        mail($email, $subject, $message, $headers);
-    }
-    
+
     // Bind parameter
     $stmt->bind_param("sssss", $nama, $no_kontak, $email, $deskripsi, $no_tiket);
-    
-    // Eksekusi
+
+    // Debugging: Cek apakah query berhasil dijalankan
     if ($stmt->execute()) {
+        echo "Data berhasil dimasukkan ke database.<br>";
         return [
             'status' => true,
             'message' => 'Pengaduan berhasil dikirim. Nomor tiket Anda: ' . $no_tiket,
             'no_tiket' => $no_tiket
         ];
     } else {
-        return [
-            'status' => false,
-            'message' => 'Gagal mengirim pengaduan: ' . $stmt->error
-        ];
+        // Debugging: Jika query gagal, tampilkan error
+        die("Gagal mengirim pengaduan: " . $stmt->error);
     }
 }
-
-
 ?>
