@@ -1,39 +1,36 @@
 <?php
 function kirimPengaduan($conn, $nama, $no_kontak, $email, $deskripsi) {
-    // Atur zona waktu (sesuaikan dengan lokasi Anda)
-    date_default_timezone_set('Asia/Jakarta');  // Contoh untuk WIB
+    // Set the timezone (adjust as needed)
+    date_default_timezone_set('Asia/Jakarta');  // For example, WIB timezone
     
-    // Generate nomor tiket dengan timestamp lengkap (tahun-bulan-tanggal-jam-menit-detik)
+    // Generate ticket number using timestamp (year-month-day-hour-minute-second)
     $no_tiket = 'TKT-' . date('YmdHis') . '-' . bin2hex(random_bytes(2));
 
-    // Debugging: Cek data yang diterima
-    echo "Data yang diterima: Nama: $nama, No Kontak: $no_kontak, Email: $email, Deskripsi: $deskripsi, No Tiket: $no_tiket<br>";
-
-    // Siapkan query untuk menyimpan pengaduan
+    // Prepare the query to insert the complaint
     $query = "INSERT INTO pengaduan (nama, no_kontak, email, deskripsi, status, no_tiket, tanggal) 
-              VALUES (?, ?, ?, ?, 'belum diproses', ?, NOW())";  // Gunakan NOW() untuk waktu server
+              VALUES (?, ?, ?, ?, 'belum diproses', ?, NOW())";  // NOW() for server's current time
     
-    // Persiapkan statement
+    // Prepare the statement
     $stmt = $conn->prepare($query);
     
-    // Cek apakah persiapan query berhasil
+    // Check if the preparation was successful
     if (!$stmt) {
-        die("Gagal menyiapkan query: " . $conn->error);
+        die("Gagal menyiapkan query:" . $conn->error);
     }
 
-    // Bind parameter
+    // Bind the parameters
     $stmt->bind_param("sssss", $nama, $no_kontak, $email, $deskripsi, $no_tiket);
 
-    // Debugging: Cek apakah query berhasil dijalankan
+    // Debugging: Check if the query executed successfully
     if ($stmt->execute()) {
-        echo "Data berhasil dimasukkan ke database.<br>";
         return [
             'status' => true,
-            'message' => 'Pengaduan berhasil dikirim. Nomor tiket Anda: ' . $no_tiket,
-            'no_tiket' => $no_tiket
+            'message' => 'Pengaduan berhasil dikirim. Nomor tiket Anda:' . $no_tiket,
+            'no_tiket' => $no_tiket,
+            'tanggal' => date('Y-m-d H:i:s')  // Capture the submission time
         ];
     } else {
-        // Debugging: Jika query gagal, tampilkan error
+        // If the query failed, display the error
         die("Gagal mengirim pengaduan: " . $stmt->error);
     }
 }
