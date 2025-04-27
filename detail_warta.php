@@ -184,16 +184,16 @@ $result_website = $conn->query($sql);
     </section>
   </main>
 
-
   <footer id="footer" class="footer dark-background">
     <div class="container footer-top">
       <div class="row gy-4">
       <div class="col-lg-4 col-md-6 footer-about">
         <h4>Alamat</h4>
         <p><?= $kontak['alamat']; ?></p>
-        <p class="mt-3"><strong> Nomor telp:</strong> <span><?= $kontak['telp']; ?></span></p>
+        <p class="mt-3"><strong> Nomor telp:</strong> <span><?= $kontak['telepon']; ?></span></p>
         <p><strong>Email:</strong> <span><?= $kontak['email']; ?></span></p>
       </div>
+
       <div class="col-lg-3 col-md-6  align-items-center footer-links">
     <h4>Tautan</h4>
     <ul>
@@ -214,7 +214,6 @@ $result_website = $conn->query($sql);
     </div>
 </div>
 
-    
         <div class="col-lg-4 col-md-6 footer-about">
           <h4>Umpan Balik</h4>
           <p>Silakan berikan kritik dan saran Anda untuk membantu kami menjadi lebih baik.</p>
@@ -240,6 +239,7 @@ $result_website = $conn->query($sql);
     </div>
 
   </footer>
+
 
 
   <!-- Scroll Top -->
