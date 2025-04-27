@@ -368,7 +368,7 @@ $kontak = [
 <div class="col-lg-3 col-md-6  align-items-center footer-links">
     <h4>Tautan</h4>
     <ul>
-        <li><a href="https://www.kemdikbud.go.id/">Kemendikbud</a></li>
+        <li><a href="http://www.kemdikbud.go.id/">Kemendikbud</a></li>
         <li><a href="https://disdiksmg.semarangkota.go.id/">Dinas Pendidikan</a></li>
     </ul>
     <div class="social-links d-flex mt-4">
