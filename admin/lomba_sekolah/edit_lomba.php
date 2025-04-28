@@ -25,6 +25,9 @@ if ($result->num_rows > 0) {
     echo "Data beranda tidak ditemukan.";
     exit;
 }
+// Koneksi ke database untuk mengambil data jenis lomba
+$query_jenis_lomba = "SELECT * FROM jenis_lomba"; // Menampilkan semua jenis lomba
+$result_jenis_lomba = $conn->query($query_jenis_lomba);
 ?>
 
 <?php
@@ -307,18 +310,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <label for="nama_lomba">Nama lomba:</label>
                                 <input type="text" class="form-control" name="nama_lomba" id="nama_lomba" value="<?php echo $lomba['nama_lomba']; ?>" required>
                             </div>
-                            <!-- Jenis Lomba -->
+                                                
+                        <!-- Dropdown untuk memilih jenis lomba -->
                         <div class="form-group">
                             <label for="jenis_lomba">Jenis Lomba</label>
-                            <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
-                                <option value="motivasi" <?php echo ($jenis_lomba == 'motivasi') ? 'selected' : ''; ?>>Motivasi</option>
-                                <option value="bahasa_jawa" <?php echo ($jenis_lomba == 'bahasa_jawa') ? 'selected' : ''; ?>>Bahasa Jawa</option>
-                                <option value="literasi" <?php echo ($jenis_lomba == 'literasi') ? 'selected' : ''; ?>>Literasi</option>
-                                <option value="mapsi" <?php echo ($jenis_lomba == 'mapsi') ? 'selected' : ''; ?>>Mapsi</option>
-                                <option value="adiwiyata" <?php echo ($jenis_lomba == 'adiwiyata') ? 'selected' : ''; ?>>Adiwiyata</option>
-                                <option value="karya_ilmiah_medio" <?php echo ($jenis_lomba == 'karya_ilmiah_medio') ? 'selected' : ''; ?>>Karya Ilmiah Medio</option>
-                                <option value="karya_ilmiah_cabster" <?php echo ($jenis_lomba == 'karya_ilmiah_cabster') ? 'selected' : ''; ?>>Karya Ilmiah Cabster</option>
-                            </select>
+                            <div class="d-flex">
+                                <select class="form-control" id="jenis_lomba" name="jenis_lomba" required>
+                                    <option>--- Pilih Jenis Lomba ---</option>
+                                    <?php
+                                    // Cek apakah query berhasil
+                                    if ($result_jenis_lomba->num_rows > 0) {
+                                        // Tampilkan setiap jenis lomba sebagai opsi dalam dropdown
+                                        while ($row = $result_jenis_lomba->fetch_assoc()) {
+                                            // Jika jenis lomba ini adalah yang terpilih
+                                            $selected = ($row['id'] == $jenis_lomba) ? 'selected' : '';
+                                            echo "<option value='" . $row['id'] . "' $selected>" . $row['nama_lomba'] . "</option>";
+                                        }
+                                    } else {
+                                        echo "<option disabled>No data available</option>";
+                                    }
+                                    ?>
+                                </select>
+
+                                <!-- Tombol + untuk menambahkan jenis lomba baru -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addJenisLombaModal">+</button>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="jenis_media">Jenis Media</label>
@@ -354,11 +370,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                             // Jika media berupa file gambar
                                             echo "<img src='uploads/{$lomba['media']}' alt='media lomba' width='200'>";
                                         }?><br>
-                            <label for="media">Media:</label>
-                                <input type="file" class="form-control" name="media" id="media">
-                                <p>Atau masukkan URL YouTube:</p>
-                                <input type="url" class="form-control" name="media" id="media" value="<?php echo $lomba['media']; ?>">
-                                
+                                     <label for="media">Media:</label>
+                                        <!-- Input untuk file media -->
+                                        <input type="file" class="form-control" name="media" id="media">
+
+                                        <p>Atau masukkan URL YouTube:</p>
+                                        <!-- Input untuk URL YouTube, tidak menampilkan nilai sebelumnya -->
+                                        <input type="url" class="form-control" name="media" id="media" placeholder="https://youtu.be/">
+
                             <div>
                                 <label for="deskripsi">Deskripsi:</label>
                                 <textarea name="deskripsi" class="form-control" id="deskripsi" required><?php echo $lomba['deskripsi']; ?></textarea>
